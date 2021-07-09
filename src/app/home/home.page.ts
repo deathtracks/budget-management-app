@@ -1,4 +1,7 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { Component } from '@angular/core';
+import firebase from 'firebase/app';
+import * as firebaseui from 'firebaseui';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +10,7 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor() {
+  }
 
 }
