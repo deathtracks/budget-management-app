@@ -5,30 +5,4 @@
 </ion-header>
 
 <ion-content>
-  <div id="container">
-    <h1>This is the connexion page</h1>
-    <ion-button routerLink='/home'>Vers la page home</ion-button>
-    <form [formGroup]="signInForm" (ngSubmit)="onSignIn()">
-      <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" id="email" formControlName="email"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Password</ion-label>
-        <ion-input type="password" id="password" formControlName="password"></ion-input>
-      </ion-item>
-      <ion-button type="submit">S'inscrire</ion-button>
-    </form>
-    <form [formGroup]="logInForm" (ngSubmit)="onLogIn()">
-      <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" id="email" formControlName="email"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Password</ion-label>
-        <ion-input type="password" id="password" formControlName="password"></ion-input>
-      </ion-item>
-      <ion-button type="submit">Se connecter</ion-button>
-    </form>
-  </div>
 </ion-content>

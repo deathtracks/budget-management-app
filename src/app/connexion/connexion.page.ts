@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import firebase from 'firebase/app';
+import { AuthService } from '../services/base/auth.service';
 
 @Component({
   selector: 'app-connexion',
@@ -8,11 +9,15 @@ import firebase from 'firebase/app';
   styleUrls: ['./connexion.page.scss'],
 })
 export class ConnexionPage implements OnInit {
+  public logIn = true;
 
   public signInForm: FormGroup;
   public logInForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private auth: AuthService
+  ) { }
 
   ngOnInit() {
     this.signInForm = this.formBuilder.group({
@@ -27,33 +32,19 @@ export class ConnexionPage implements OnInit {
 
   onSignIn(){
     const formValue = this.signInForm.value;
-    firebase.auth().createUserWithEmailAndPassword(formValue.email, formValue.password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-        // ...
-      })
-      .catch((error) => {
-        console.log(error);
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
+    this.auth.createUser(
+      formValue.email,
+      formValue.password
+    )
+    .then(
+      res =>{
+        console.log(res);
+      }
+    )
+    .catch(err => console.log(err));
   }
 
   onLogIn(){
-    const formValue = this.logInForm.value;
-    firebase.auth().signInWithEmailAndPassword(formValue.email, formValue.password)
-  .then((userCredential) => {
-    // Signed in
-    const user = userCredential.user;
-    console.log(user);
-    // ...
-  })
-  .catch((error) => {
-    console.log(error);
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  });
+    this.logIn = false;
   }
 }

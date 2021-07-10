@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Sign-in</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="signInForm" (ngSubmit)="onSignIn()">
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" id="email" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" id="email" formControlName="password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Repeat password</ion-label>
+      <ion-input type="password" id="repeat" formControlName="repeatPassword"></ion-input>
+    </ion-item>
+    <ion-item color="danger" *ngIf="errorMessage && errorMessage.length>0">
+      <p>{{ errorMessage }}</p>
+    </ion-item>
+    <ion-item color="danger" *ngIf="notSamePassword">
+      <p>The passwords does not match</p>
+    </ion-item>
+    <ion-button type="submit" [disabled]="signInForm.invalid">Se connecter</ion-button>
+  </form>
+  <p>You already have an account ?</p>
+  <a routerLink="/connexion/log-in">log in</a>
+</ion-content>

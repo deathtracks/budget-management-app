@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Log in</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="logInForm" (ngSubmit)="onLogIn()">
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="text" id="email" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" id="email" formControlName="password"></ion-input>
+    </ion-item>
+    <ion-item color="danger" *ngIf="error">
+      <ion-label>Email or password invalid.</ion-label>
+    </ion-item>
+    <ion-button type="submit" [disabled]="logInForm.invalid">Se connecter</ion-button>
+  </form>
+  <p>You do not have an account yet ?</p>
+  <a routerLink="/connexion/sign-in">Create one now !</a>
+</ion-content>
