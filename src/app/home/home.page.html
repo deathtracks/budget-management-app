@@ -1,15 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Month List
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div id="container">
-    <h1>This is the home page</h1>
-    <ion-button routerLink='/connexion/log-in'>Vers la page de connexion</ion-button>
-    <ion-button (click)="onTest()">Test</ion-button>
-  </div>
+  <ion-item *ngFor="let month of monthList">
+    <ion-label>{{ month.getName() }}</ion-label>
+  </ion-item>
 </ion-content>
