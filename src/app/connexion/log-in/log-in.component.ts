@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ThrowStmt } from '@angular/compiler';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/base/auth.service';
 
 @Component({
@@ -8,7 +10,7 @@ import { AuthService } from 'src/app/services/base/auth.service';
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.scss'],
 })
-export class LogInComponent implements OnInit {
+export class LogInComponent implements OnInit,OnDestroy {
   public logInForm: FormGroup;
   public error= false;
 
@@ -17,6 +19,7 @@ export class LogInComponent implements OnInit {
     'auth/user-not-found',
     'auth/wrong-password'
   ];
+  private authSub: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,10 +28,21 @@ export class LogInComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.authSub = this.auth.user.subscribe(
+      userCred =>{
+        if(userCred){
+          this.router.navigate(['']);
+        }
+      }
+    );
     this.logInForm = this.formBuilder.group({
       email:['',Validators.required],
       password:['',Validators.required]
     });
+  }
+
+  ngOnDestroy(): void {
+    this.authSub.unsubscribe();
   }
 
   onLogIn(){

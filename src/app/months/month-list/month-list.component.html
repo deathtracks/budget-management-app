@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Month list
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onAddMonth()" ><ion-icon name="add-outline"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item *ngFor="let m of monthList">
+    <ion-label>{{ m.getName() }}</ion-label>
+  </ion-item>
+</ion-content>

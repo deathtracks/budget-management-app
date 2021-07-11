@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import firebase from 'firebase/app';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +12,14 @@ export class AuthService {
   private currentUser: firebase.User;
   private db: firebase.firestore.Firestore;
 
-  constructor() {
+  constructor(
+    private router: Router
+  ) {
     this.db = firebase.firestore();
     firebase.auth().onAuthStateChanged(
       (user) =>{
         if(user){
+          console.log('user connected');
           this.currentUser = user;
           this.updateUser();
         }else{
@@ -26,7 +30,24 @@ export class AuthService {
     );
   }
 
+  public isUserLogedIn(): boolean{
+    if(this.currentUser){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public getUserUID(): string{
+    if(this.currentUser){
+      return this.currentUser.uid;
+    } else {
+      return null;
+    }
+  }
+
   public updateUser(){
+    console.log('update user');
     this.user.next(this.currentUser);
   }
 
