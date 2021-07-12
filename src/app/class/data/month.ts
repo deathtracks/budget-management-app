@@ -1,4 +1,8 @@
+import firebase from 'firebase/app';
+import { Expense } from './expense';
+
 export class Month {
+    public expenses: Expense[];
     private name: string;
     private id: string;
     private startDate: Date;
@@ -56,5 +60,38 @@ export class Month {
         const middleMs = (startMs+endMs)/2;
         const middleDate = new Date(middleMs);
         return middleDate;
+    }
+
+    public setId(newId: string){
+        this.id = newId;
+    }
+
+    public getId(){
+        return this.id;
+    }
+
+    public setAllExpense(expenses: Expense[]){
+        this.expenses = expenses;
+    }
+
+    public addOneExpense(expense: Expense){
+        this.expenses.push(expense);
+    }
+
+    public removeOneExpense(expense: Expense){
+        this.expenses = this.expenses.slice(0,this.expenses.indexOf(expense)).concat(this.expenses.slice(this.expenses.indexOf(expense)+1));
+    }
+
+    public getObject(){
+        const expenseIdList: string[] = [];
+        this.expenses.forEach(data =>{
+            expenseIdList.push(data.getId());
+        });
+        return {
+            budget: this.budget,
+            end: this.endDate,
+            start: this.startDate,
+            expenses: expenseIdList
+        };
     }
 }

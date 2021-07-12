@@ -13,11 +13,21 @@ export class UserInfoService {
   }
 
   public addMonthId(uid: string,monthId){
-    this.getUserInfo(uid)
+    return this.getUserInfo(uid)
     .then(
       data =>{
         data.months.push(monthId);
-        this.writeUserInfo(uid,data);
+        return this.writeUserInfo(uid,data);
+      }
+    );
+  }
+
+  public removeMonthId(uid: string,monthId: string){
+    return this.getUserInfo(uid)
+    .then(
+      data =>{
+        data.months = data.months.slice(0,data.months.indexOf(monthId)).concat(data.months.slice(data.months.indexOf(monthId)+1));
+        return this.writeUserInfo(uid,data);
       }
     );
   }

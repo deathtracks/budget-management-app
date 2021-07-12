@@ -5,6 +5,7 @@ import { Month } from 'src/app/class/data/month';
 import { AuthService } from 'src/app/services/base/auth.service';
 import { MonthService } from 'src/app/services/data/month.service';
 import { AddMonthComponent } from '../add-month/add-month.component';
+import { SingleMonthComponent } from '../single-month/single-month.component';
 
 @Component({
   selector: 'app-month-list',
@@ -39,7 +40,21 @@ export class MonthListComponent implements OnInit,OnDestroy {
     const modal = await this.modalController.create({
       component : AddMonthComponent
     });
-    return await await modal.present();
+    return await modal.present();
+  }
+
+  public onDelete(id: string){
+    this.months.removeMonth(id);
+  }
+
+  public async onOpenMonth(m: Month){
+    const modal = await this.modalController.create({
+      component : SingleMonthComponent,
+      componentProps: {
+        singleMonth:m
+      }
+    });
+    return await modal.present();
   }
 
 }

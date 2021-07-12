@@ -16,7 +16,7 @@ export class ConnexionGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if(this.auth.isUserLogedIn){
+      if(this.auth.isUserLogedIn()){
         return true;
       } else {
         this.router.navigate(['connexion']);

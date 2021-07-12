@@ -44,7 +44,30 @@ export class MonthService implements OnDestroy{
   }
 
   public createMonth(start: Date,end: Date,budget: number){
-    this.userInfo.addMonthId(this.auth.getUserUID(),'test');
+    const newMonth = new Month(undefined,start,end,budget);
+    return this.db.collection('months').add(newMonth.getObject())
+    .then(docRef =>{
+      console.log(docRef);
+      console.log(docRef.id);
+      this.userInfo.addMonthId(this.auth.getUserUID(),docRef.id)
+      .then(
+        value =>{
+          this.getAllMonthsOfUser(this.auth.getUserUID());
+        }
+      );
+    })
+    .catch(err => console.log(err));
+  }
+
+  public removeMonth(monthId: string){
+    return this.db.collection('months').doc(monthId).delete()
+    .then(
+      () =>this.userInfo.removeMonthId(this.auth.getUserUID(),monthId)
+        .then(() => {
+          this.getAllMonthsOfUser(this.auth.getUserUID());
+        })
+    )
+    .catch(err => console.log(err));
   }
 
   public getMonthOfUser(uid: string){
@@ -58,12 +81,16 @@ export class MonthService implements OnDestroy{
     .then(
       data =>{
         const monthData = data.data();
-        return new Month(
-          monthId,
-          new Date(monthData.start.seconds*1000),
-          new Date(monthData.end.seconds*1000),
-          monthData.budget
-        );
+        if(monthData){
+          return new Month(
+            monthId,
+            new Date(monthData.start.seconds*1000),
+            new Date(monthData.end.seconds*1000),
+            monthData.budget
+          );
+        } else {
+          return undefined;
+        }
       }
     )
     .catch(err => console.log(err));

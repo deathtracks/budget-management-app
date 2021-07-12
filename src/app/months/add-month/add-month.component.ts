@@ -35,7 +35,12 @@ export class AddMonthComponent implements OnInit {
 
   onCreateMonth(){
     const formValue = this.newMonthForm.value;
-    this.month.createMonth(formValue.start,formValue.end,formValue.budget);
+    this.month.createMonth(new Date(formValue.start),new Date(formValue.end),formValue.budget)
+    .then(
+      value =>{
+        this.onDismiss();
+      }
+    );
   }
 
 }
