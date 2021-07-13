@@ -19,8 +19,8 @@ export class AddMonthComponent implements OnInit {
 
   ngOnInit() {
     this.newMonthForm = this.formBuilder.group({
-      start:[new Date(),Validators.required],
-      end:[new Date(),Validators.required],
+      start:['',Validators.required],
+      end:['',Validators.required],
       budget:['',Validators.required]
     });
   }

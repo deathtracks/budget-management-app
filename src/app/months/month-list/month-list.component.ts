@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Month } from 'src/app/class/data/month';
 import { AuthService } from 'src/app/services/base/auth.service';
@@ -19,7 +19,8 @@ export class MonthListComponent implements OnInit,OnDestroy {
   constructor(
     private months: MonthService,
     private auth: AuthService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -43,8 +44,22 @@ export class MonthListComponent implements OnInit,OnDestroy {
     return await modal.present();
   }
 
-  public onDelete(id: string){
-    this.months.removeMonth(id);
+  public async onDelete(month: Month){
+    const alert = await this.alertController.create({
+      header:'Confirm',
+      message:'Are you sure you want to delete this month?',
+      buttons:[
+        {
+          text:'Cancel',
+          role:'cancel'
+        },
+        {
+          text:'OK',
+          handler:() =>this.months.deleteOneMonth(month)
+        }
+      ]
+    });
+    await alert.present();
   }
 
   public async onOpenMonth(m: Month){

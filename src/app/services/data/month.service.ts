@@ -53,9 +53,10 @@ export class MonthService implements OnDestroy{
     .catch(err => console.log(err));
   }
 
-  public removeMonth(monthId: string){
-    return this.db.collection('months').doc(monthId).delete()
-    .then( () =>this.userInfo.removeMonthId(this.auth.getUserUID(),monthId)
+  public deleteOneMonth(month: Month){
+    month.expenses.forEach(e => this.expense.deleteOneExpense(e.getId()));
+    return this.db.collection('months').doc(month.getId()).delete()
+    .then( () =>this.userInfo.removeMonthId(this.auth.getUserUID(),month.getId())
       .then(() => {
         this.getAllMonthsOfUser(this.auth.getUserUID());
       })
@@ -130,6 +131,7 @@ export class MonthService implements OnDestroy{
           }
         });
       }
+      this.updateMonths();
     })
     .catch(err => console.log(err));
   }

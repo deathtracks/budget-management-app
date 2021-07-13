@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Expense } from 'src/app/class/data/expense';
 import { Month } from 'src/app/class/data/month';
 import { AddExpenseComponent } from 'src/app/expense/add-expense/add-expense.component';
@@ -16,7 +16,8 @@ export class SingleMonthComponent implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private month: MonthService
+    private month: MonthService,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {}
@@ -35,8 +36,22 @@ export class SingleMonthComponent implements OnInit {
     this.modalController.dismiss();
   }
 
-  public onDeleteExpense(expense: Expense){
-    this.month.deleteOneExpense(this.singleMonth,expense);
+  public async onDeleteExpense(expense: Expense){
+    const alert = await this.alertController.create({
+      header : 'Confirm',
+      message : 'Are you sure you want to delete this expense ?',
+      buttons:[
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text : 'OK',
+          handler: ()=> this.month.deleteOneExpense(this.singleMonth,expense)
+        }
+      ]
+    });
+    await alert.present();
   }
 
   public async onEditExpense(expense: Expense){

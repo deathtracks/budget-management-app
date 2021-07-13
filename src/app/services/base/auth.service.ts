@@ -19,7 +19,6 @@ export class AuthService {
     firebase.auth().onAuthStateChanged(
       (user) =>{
         if(user){
-          console.log('user connected');
           this.currentUser = user;
           this.updateUser();
         }else{
@@ -47,7 +46,6 @@ export class AuthService {
   }
 
   public updateUser(){
-    console.log('update user');
     this.user.next(this.currentUser);
   }
 
