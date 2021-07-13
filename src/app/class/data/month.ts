@@ -3,11 +3,9 @@ import { Expense } from './expense';
 
 export class Month {
     public expenses: Expense[];
-    private name: string;
+    public startDate: Date;
+    public endDate: Date;
     private id: string;
-    private startDate: Date;
-    private endDate: Date;
-    private total: number;
     private budget: number;
 
     private monthStr = [
@@ -39,6 +37,7 @@ export class Month {
                 this.startDate = start;
                 this.endDate = end;
                 this.budget = budget;
+                this.expenses = [];
             }
         } catch (error){
             alert(error.message);
@@ -47,6 +46,16 @@ export class Month {
 
     public getBudget(): number {
         return this.budget;
+    }
+
+    public getTotal(): number{
+        let total = 0;
+        this.expenses.forEach(expense => total+=expense.amount);
+        return total;
+    }
+
+    public getRemaining(): number{
+        return this.budget-this.getTotal();
     }
 
     public getName(): string{
@@ -89,8 +98,8 @@ export class Month {
         });
         return {
             budget: this.budget,
-            end: this.endDate,
-            start: this.startDate,
+            end: firebase.firestore.Timestamp.fromDate(this.endDate),
+            start: firebase.firestore.Timestamp.fromDate(this.startDate),
             expenses: expenseIdList
         };
     }

@@ -8,7 +8,9 @@ import { Expense } from 'src/app/class/data/expense';
 export class ExpenseService {
 
   private db: firebase.firestore.Firestore;
-  constructor() { }
+  constructor() {
+    this.db = firebase.firestore();
+   }
 
   public getOneExpense(expenseId: string){
     return this.db.collection('expenses').doc(expenseId).get()
@@ -28,5 +30,18 @@ export class ExpenseService {
       }
     )
     .catch(err => console.log(err));
+  }
+
+  public createNewExpense(name: string, amount: number, date: Date){
+    const newExpense = new Expense(undefined,name,amount,date);
+    return this.db.collection('expenses').add(newExpense.getObject())
+    .then(docRef =>{
+      newExpense.setId(docRef.id);
+      return newExpense;
+    });
+  }
+
+  public deleteOneExpense(expenseId: string){
+    return this.db.collection('expenses').doc(expenseId).delete();
   }
 }

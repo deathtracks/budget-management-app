@@ -1,7 +1,52 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)='onDismiss()'><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
+    </ion-buttons>
     <ion-title>
       {{ singleMonth.getName() }}
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)='onAddExpense()'><ion-icon name="add-outline"></ion-icon></ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            From : {{ singleMonth.startDate | date }}
+          </ion-col>
+          <ion-col>
+            To : {{ singleMonth.endDate | date }}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            Budget : {{ singleMonth.getBudget() }} €
+          </ion-col>
+          <ion-col>
+            Remaining : {{ singleMonth.getRemaining() }} €
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            Total : {{ singleMonth.getTotal() }} €
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <ion-list>
+    <ion-item *ngFor="let e of singleMonth.expenses">
+      <ion-label>
+        <h2>{{ e.name }}</h2>
+        <p>{{ e.date | date }}</p>
+      </ion-label>
+      <ion-note slot="end" color="tertiary">{{ e.amount }} €</ion-note>
+    </ion-item>
+  </ion-list>
+</ion-content>

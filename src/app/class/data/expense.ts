@@ -1,3 +1,5 @@
+import firebase from 'firebase/app';
+
 export class Expense {
     public name: string;
     public amount: number;
@@ -22,5 +24,13 @@ export class Expense {
 
     public getId(){
         return this.id;
+    }
+
+    public getObject(){
+        return {
+            name : this.name,
+            amount : this.amount,
+            date : firebase.firestore.Timestamp.fromDate(this.date)
+        };
     }
 }

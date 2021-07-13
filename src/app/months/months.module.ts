@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { MonthRoutingModule } from './months-routing.module';
 import { MonthListComponent } from './month-list/month-list.component';
 import { SingleMonthComponent } from './single-month/single-month.component';
+import { ExpenseModule } from '../expense/expense.module';
 
 
 
@@ -19,6 +20,7 @@ import { SingleMonthComponent } from './single-month/single-month.component';
     CommonModule,
     FormsModule,
     IonicModule,
+    ExpenseModule,
     ReactiveFormsModule,
     MonthRoutingModule
   ],
