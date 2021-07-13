@@ -33,6 +33,7 @@ export class AddExpenseComponent implements OnInit {
 
   onAddExpense(){
     const formValue = this.newExpenseForm.value;
+    console.log(formValue.date);
     this.monthService.addOneExpense(
       this.month,
       formValue.name,

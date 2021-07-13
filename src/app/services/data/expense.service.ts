@@ -44,4 +44,8 @@ export class ExpenseService {
   public deleteOneExpense(expenseId: string){
     return this.db.collection('expenses').doc(expenseId).delete();
   }
+
+  public editOneExpense(editedExpense: Expense){
+    return this.db.collection('expenses').doc(editedExpense.getId()).set(editedExpense.getObject());
+  }
 }
