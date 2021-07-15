@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ConnexionGuard } from './guards/connexion.guard';
+import { UserSettingsModule } from './user-settings/user-settings.module';
 
 const routes: Routes = [
   {
@@ -16,6 +17,11 @@ const routes: Routes = [
     path: 'months',
     canActivate: [ConnexionGuard],
     loadChildren: () => import('./months/months.module').then(m => m.MonthsModule)
+  },
+  {
+    path: 'settings',
+    canActivate: [ConnexionGuard],
+    loadChildren: () => import('./user-settings/user-settings.module').then(m => UserSettingsModule)
   }
 ];
 

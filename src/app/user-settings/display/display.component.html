@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Settings
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onLogOut()"><ion-icon name="log-out-outline"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label>
+      <h3>Email :</h3>
+      <h2 readonly>{{ userInf.email  }}</h2>
+    </ion-label>
+    <ion-button slot="end" fill="clear" color="dark" (click)='onUpdateEmail()'><ion-icon name="create-outline" ></ion-icon></ion-button>
+  </ion-item>
+  <ion-item *ngIf="updatingEmail">
+    <form [formGroup]="updateEmailForm" (ngSubmit)="onValidUpdateEmail()">
+      <ion-item>
+        <ion-label position="floating">new email :</ion-label>
+        <ion-input type="text" id="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Password :</ion-label>
+        <ion-input type="password" id="password" formControlName="password"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="errorMessageEmail && errorMessageEmail.length>0" color="danger">
+        <p>{{ errorMessageEmail }}</p>
+      </ion-item>
+      <ion-button type="submit">Update email</ion-button>
+    </form>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      <h3>Password :</h3>
+      <h2 readonly>*********</h2>
+    </ion-label>
+    <ion-button slot="end" fill="clear" color="dark" (click)='onUpdatePassword()'><ion-icon name="create-outline" ></ion-icon></ion-button>
+  </ion-item>
+  <ion-item *ngIf="updatingPassword">
+    <form [formGroup]="updatePasswordForm" (ngSubmit)="onValidUpdatePassword()">
+      <ion-item>
+        <ion-label position="floating">Old password</ion-label>
+        <ion-input type="password" id="oldpassword" formControlName="oldPassword"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">New Password</ion-label>
+        <ion-input type="password" id="newpassword" formControlName="newPassword"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Confirm</ion-label>
+        <ion-input type="password" id="confirm" formControlName="confirm"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="errorMessagePassword && errorMessagePassword.length>0" color="danger">
+        <p>{{ errorMessagePassword }}</p>
+      </ion-item>
+      <ion-button type="submit">Update password</ion-button>
+    </form>
+  </ion-item>
+</ion-content>

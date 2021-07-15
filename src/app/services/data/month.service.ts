@@ -47,7 +47,7 @@ export class MonthService implements OnDestroy{
     const newMonth = new Month(undefined,start,end,budget);
     return this.db.collection('months').add(newMonth.getObject())
     .then(docRef =>{
-      this.userInfo.addMonthId(this.auth.getUserUID(),docRef.id)
+      this.userInfo.addMonthId(docRef.id)
       .then( value => this.getAllMonthsOfUser(this.auth.getUserUID()));
     })
     .catch(err => console.log(err));
@@ -56,7 +56,7 @@ export class MonthService implements OnDestroy{
   public deleteOneMonth(month: Month){
     month.expenses.forEach(e => this.expense.deleteOneExpense(e.getId()));
     return this.db.collection('months').doc(month.getId()).delete()
-    .then( () =>this.userInfo.removeMonthId(this.auth.getUserUID(),month.getId())
+    .then(() =>this.userInfo.removeMonthId(month.getId())
       .then(() => {
         this.getAllMonthsOfUser(this.auth.getUserUID());
       })

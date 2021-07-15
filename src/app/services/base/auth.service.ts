@@ -11,7 +11,6 @@ export class AuthService {
 
   private currentUser: firebase.User;
   private db: firebase.firestore.Firestore;
-
   constructor(
     private router: Router
   ) {
@@ -60,8 +59,27 @@ export class AuthService {
     );
   }
 
+  public updateEmail(email: string,password: string){
+    return this.logInUser(this.currentUser.email,password)
+    .then(authCred =>this.currentUser.updateEmail(email));
+  }
+
+  public updatePassword(oldpassword: string,password: string){
+    return this.logInUser(this.currentUser.email,oldpassword)
+    .then(authCred=>this.currentUser.updatePassword(password));
+  }
+
   public logInUser(email: string, password: string){
-    return firebase.auth().signInWithEmailAndPassword(email,password);
+    return firebase.auth().signInWithEmailAndPassword(email,password)
+    .then(userCred => userCred.credential);
+  }
+
+  public logOutUser() {
+    firebase.auth().signOut()
+    .then(() =>{
+      this.router.navigate(['connexion']);
+    })
+    .catch(err => console.log(err));
   }
 
   private createUserData(uid: string,email: string){
