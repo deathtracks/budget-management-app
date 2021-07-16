@@ -1,26 +1,39 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { Expense } from 'src/app/class/data/expense';
 import { Month } from 'src/app/class/data/month';
 import { AddExpenseComponent } from 'src/app/expense/add-expense/add-expense.component';
 import { EditExpenseComponent } from 'src/app/expense/edit-expense/edit-expense.component';
 import { MonthService } from 'src/app/services/data/month.service';
+import { UserInfoService } from 'src/app/services/data/user-info.service';
 
 @Component({
   selector: 'app-single-month',
   templateUrl: './single-month.component.html',
   styleUrls: ['./single-month.component.scss'],
 })
-export class SingleMonthComponent implements OnInit {
+export class SingleMonthComponent implements OnInit,OnDestroy {
   @Input() singleMonth: Month;
+  public userCategory;
 
+  private userSub: Subscription;
   constructor(
     private modalController: ModalController,
     private month: MonthService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private user: UserInfoService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userSub = this.user.userInfo.subscribe(
+      value =>this.userCategory=value.settings.categorie);
+    this.user.updateInfo(false);
+  }
+
+  ngOnDestroy(): void {
+    this.userSub.unsubscribe();
+  }
 
   public async onAddExpense(){
     const modal = await this.modalController.create({

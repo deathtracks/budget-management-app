@@ -64,8 +64,8 @@ export class MonthService implements OnDestroy{
     .catch(err => console.log(err));
   }
 
-  public addOneExpense(month: Month,name: string, amount: number, date: Date){
-    return this.expense.createNewExpense(name,amount,date)
+  public addOneExpense(month: Month,name: string, amount: number, date: Date,category: number){
+    return this.expense.createNewExpense(name,amount,date,category)
     .then( newExpense =>{
       month.addOneExpense(newExpense);
       return this.updateOneMonth(month);

@@ -33,7 +33,8 @@ export class Expense {
         return {
             name : this.name,
             amount : this.amount,
-            date : firebase.firestore.Timestamp.fromDate(this.date)
+            date : firebase.firestore.Timestamp.fromDate(this.date),
+            category: this.category
         };
     }
 }

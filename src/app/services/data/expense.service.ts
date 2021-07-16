@@ -22,7 +22,8 @@ export class ExpenseService {
             expenseId,
             expenseData.name,
             expenseData.amount,
-            new Date(expenseData.date.seconds*1000)
+            new Date(expenseData.date.seconds*1000),
+            expenseData.category
           );
         } else {
           return undefined;
@@ -32,8 +33,8 @@ export class ExpenseService {
     .catch(err => console.log(err));
   }
 
-  public createNewExpense(name: string, amount: number, date: Date){
-    const newExpense = new Expense(undefined,name,amount,date);
+  public createNewExpense(name: string, amount: number, date: Date,category: number){
+    const newExpense = new Expense(undefined,name,amount,date,category);
     return this.db.collection('expenses').add(newExpense.getObject())
     .then(docRef =>{
       newExpense.setId(docRef.id);
