@@ -4,18 +4,21 @@ export class Expense {
     public name: string;
     public amount: number;
     public date: Date;
+    public category: number;
     private id: string;
 
     constructor(
         id: string,
         name: string,
         amount: number,
-        date: Date
+        date: Date,
+        category: number = 0
     ) {
         this.id = id;
         this.name = name;
         this.amount = amount;
         this.date = date;
+        this.category = category;
     }
 
     public setId(newId: string){

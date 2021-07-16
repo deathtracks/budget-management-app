@@ -15,12 +15,17 @@ export class DisplayComponent implements OnInit,OnDestroy {
   public userInf: UserInfo;
   public updatingEmail: boolean;
   public updatingPassword: boolean;
+  public updatingCategorie: boolean;
+  public addingCategory: boolean;
   public updateEmailForm: FormGroup;
   public updatePasswordForm: FormGroup;
+  public updateCategoryForm: FormGroup;
+  public addCategoryForm: FormGroup;
   public errorMessageEmail: string;
   public errorMessagePassword: string;
 
   private userInfoSub: Subscription;
+  private updatingIndexCategorie: number;
   private printableError = [
     'auth/email-already-in-use',
     'auth/invalid-email',
@@ -39,6 +44,7 @@ export class DisplayComponent implements OnInit,OnDestroy {
     this.user.updateInfo(false);
     this.initEmailForm();
     this.initPasswordForm();
+    this.initCategoryForm();
   }
 
   async presentToast() {
@@ -64,6 +70,18 @@ export class DisplayComponent implements OnInit,OnDestroy {
     });
   }
 
+  initCategoryForm(){
+    this.addCategoryForm = this.formBuilder.group({
+      name: ['',Validators.required]
+    });
+  }
+
+  initCategoryUpdateForm(index: number){
+    this.updateCategoryForm = this.formBuilder.group({
+      name: [this.userInf.settings.categorie[index],Validators.required]
+    });
+  }
+
   ngOnDestroy(): void {
     this.userInfoSub.unsubscribe();
   }
@@ -78,6 +96,20 @@ export class DisplayComponent implements OnInit,OnDestroy {
 
   onUpdatePassword(){
     this.updatingPassword = !this.updatingPassword;
+  }
+
+  onAddCategory(){
+    this.addingCategory = !this.addingCategory;
+  }
+
+  onUpdateCategory(index: number){
+    if(this.updatingIndexCategorie && index===this.updatingIndexCategorie){
+      this.updatingCategorie=false;
+    } else {
+      this.updatingCategorie = true;
+      this.updatingIndexCategorie = index;
+      this.initCategoryUpdateForm(index);
+    }
   }
 
   onValidUpdateEmail(){
@@ -114,6 +146,25 @@ export class DisplayComponent implements OnInit,OnDestroy {
     }else{
       this.errorMessagePassword='Password should be the same';
     }
+  }
+
+  onValidAddCategory(){
+    console.log('button pressed');
+    const formValue = this.addCategoryForm.value;
+    this.user.addCategory(formValue.name);
+    this.addingCategory= false;
+    this.initCategoryForm();
+  }
+
+  onValidUpdateCategory(){
+    const formValue = this.updateCategoryForm.value;
+    this.user.editCategory(this.updatingIndexCategorie,formValue.name);
+    this.updatingCategorie = false;
+    this.updatingIndexCategorie = undefined;
+  }
+
+  onDeleteCategorie(index: number){
+    this.user.removeCategory(index);
   }
 
 }

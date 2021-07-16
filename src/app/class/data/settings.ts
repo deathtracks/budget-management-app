@@ -6,7 +6,7 @@ export class Settings {
 
     constructor(data: any=undefined){
         if(data && data.categorie){
-            this.categorie = this.categorie;
+            this.categorie = data.categorie;
         }else{
             this.categorie = ['Autre'];
         }
@@ -22,5 +22,9 @@ export class Settings {
             langue : this.langue,
             categorie: this.categorie
         };
+    }
+
+    public removeCategory(index: number){
+        this.categorie = this.categorie.slice(0,index).concat(this.categorie.slice(index+1));
     }
 }

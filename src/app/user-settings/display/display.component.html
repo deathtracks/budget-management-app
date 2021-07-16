@@ -63,4 +63,47 @@
       <ion-button type="submit">Update password</ion-button>
     </form>
   </ion-item>
+  <ion-item>
+    <ion-label>Categories :</ion-label>
+    <ion-button slot="end" fill="clear" color="dark" (click)="onAddCategory()">
+      <ion-icon  name="add-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+  <ion-item *ngIf="addingCategory">
+    <form [formGroup]="addCategoryForm" (ngSubmit)="onValidAddCategory()">
+      <ion-item>
+        <ion-label position="floating">Name for new category :</ion-label>
+        <ion-input type="text" id="nameC" formControlName="name"></ion-input>
+        <ion-button slot="end" fill="clear" color="dark" type="submit"><ion-icon name="checkmark-outline"></ion-icon></ion-button>
+      </ion-item>
+    </form>
+  </ion-item>
+  <ion-item *ngIf="updatingCategorie">
+    <form [formGroup]="updateCategoryForm" (ngSubmit)="onValidUpdateCategory()">
+      <ion-item>
+        <ion-label position="floating">New name:</ion-label>
+        <ion-input type="text" id="nameCU" formControlName="name"></ion-input>
+        <ion-button slot="end" fill="clear" color="dark" [disabled]="updateCategoryForm.invalid" type="submit">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </form>
+  </ion-item>
+  <ion-list class="ion-padding-start">
+    <ion-item-sliding *ngFor="let c of userInf.settings.categorie; let index=index">
+      <ion-item-options  side="start">
+        <ion-item-option (click)="onUpdateCategory(index)">
+          <ion-icon name="create-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      <ion-item>
+        <ion-label>{{ c }}</ion-label>
+      </ion-item>
+      <ion-item-options *ngIf="index!==0" side="end">
+        <ion-item-option color="danger"(click)='onDeleteCategorie(index)'>
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>

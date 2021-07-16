@@ -66,6 +66,30 @@ export class UserInfoService implements OnDestroy {
     });
   }
 
+  public addCategory(name: string){
+    return new Promise<void>((next)=>{
+      this.loadedInfo.settings.categorie.push(name);
+      this.updateInfo();
+      next();
+    });
+  }
+
+  public removeCategory(index: number){
+    return new Promise<void>((next)=>{
+      this.loadedInfo.settings.removeCategory(index);
+      this.updateInfo();
+      next();
+    });
+  }
+
+  public editCategory(index: number, newName: string){
+    return new Promise<void>((next)=>{
+      this.loadedInfo.settings.categorie[index]= newName;
+      this.updateInfo();
+      next();
+    });
+  }
+
   private getUserInfo(uid: string): Promise<void>{
     if(uid && uid.length>0){
       return this.db.collection('users').doc(uid).get()
