@@ -26,6 +26,7 @@ export class MonthService implements OnDestroy{
     this.authSub = this.auth.user.subscribe(
       userCred =>{
         if(userCred){
+          this.monthList = [];
           this.getAllMonthsOfUser(userCred.uid);
         } else {
           this.monthList = [];
@@ -87,7 +88,7 @@ export class MonthService implements OnDestroy{
   }
 
   public getMonthOfUser(uid: string){
-    if(uid && uid.length>0){
+    if(uid && uid.length>0 && this.monthList.length<1){
       this.getAllMonthsOfUser(uid);
     }
   }

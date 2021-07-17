@@ -29,7 +29,6 @@ export class MonthListComponent implements OnInit,OnDestroy {
         this.monthList = value;
       }
     );
-    this.months.getMonthOfUser(this.auth.getUserUID());
     this.months.updateMonths();
   }
 

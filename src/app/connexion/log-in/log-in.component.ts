@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/base/auth.service';
+import { MonthService } from 'src/app/services/data/month.service';
 import { LoadingPageComponent } from 'src/app/tools/loading-page/loading-page.component';
 
 @Component({
@@ -28,7 +29,8 @@ export class LogInComponent implements OnInit,OnDestroy {
     private formBuilder: FormBuilder,
     private auth: AuthService,
     private router: Router,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private month: MonthService,
   ) { }
 
   ngOnInit() {
@@ -62,12 +64,10 @@ export class LogInComponent implements OnInit,OnDestroy {
 
   onLogIn(){
     const formValue = this.logInForm.value;
-    this.showLoading();
     this.auth.logInUser(formValue.email,formValue.password)
     .then(
       result =>{
         //It means it's a success
-        this.dismissLoading();
         this.router.navigate(['/']);
       }
     ).catch(err =>{
