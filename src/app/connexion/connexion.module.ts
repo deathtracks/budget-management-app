@@ -8,10 +8,12 @@ import { ConnexionPageRoutingModule } from './connexion-routing.module';
 
 import { LogInComponent } from './log-in/log-in.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { ToolsModule } from '../tools/tools.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    ToolsModule,
     FormsModule,
     IonicModule,
     ReactiveFormsModule,

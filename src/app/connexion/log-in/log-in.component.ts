@@ -1,9 +1,12 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { async } from '@angular/core/testing';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/base/auth.service';
+import { LoadingPageComponent } from 'src/app/tools/loading-page/loading-page.component';
 
 @Component({
   selector: 'app-log-in',
@@ -24,7 +27,8 @@ export class LogInComponent implements OnInit,OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -45,12 +49,25 @@ export class LogInComponent implements OnInit,OnDestroy {
     this.authSub.unsubscribe();
   }
 
+  async showLoading(){
+    const modal = await this.modalController.create({
+      component: LoadingPageComponent
+    });
+    return await modal.present();
+  }
+
+  dismissLoading(){
+    this.modalController.dismiss();
+  }
+
   onLogIn(){
     const formValue = this.logInForm.value;
+    this.showLoading();
     this.auth.logInUser(formValue.email,formValue.password)
     .then(
       result =>{
         //It means it's a success
+        this.dismissLoading();
         this.router.navigate(['/']);
       }
     ).catch(err =>{

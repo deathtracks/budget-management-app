@@ -126,6 +126,7 @@ export class MonthService implements OnDestroy{
   }
 
   private getAllMonthsOfUser(userUID: string){
+    this.monthList = [];
     this.db.collection('users').doc(userUID).get()
     .then(data =>{
       const monthIdList = data.data().months;
