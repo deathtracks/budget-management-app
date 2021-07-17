@@ -50,11 +50,9 @@ export class UserInfoService implements OnDestroy {
   }
 
   public addMonthId(monthId: string){
-    return new Promise<void>((next)=>{
       this.loadedInfo.months.push(monthId);
       this.updateInfo();
-      next();
-    });
+      return this.writeUserInfo();
   }
 
   public removeMonthId(monthId: string){
