@@ -65,29 +65,36 @@ export class MonthService implements OnDestroy{
   }
 
   public addOneExpense(month: Month,name: string, amount: number, date: Date,category: number){
-    return this.expense.createNewExpense(name,amount,date,category)
-    .then( newExpense =>{
-      month.addOneExpense(newExpense);
-      return this.updateOneMonth(month);
-    })
-    .catch(err => console.log(err));
+    if(!month.ended()){
+      return this.expense.createNewExpense(name,amount,date,category)
+      .then( newExpense =>{
+        month.addOneExpense(newExpense);
+        return this.updateOneMonth(month);
+      })
+      .catch(err => console.log(err));
+    }
   }
 
   public deleteOneExpense(month: Month, expense: Expense){
-    return this.expense.deleteOneExpense(expense.getId())
-    .then(() =>{
-      month.removeOneExpense(expense);
-      return this.updateOneMonth(month);
-    })
-    .catch(err => console.log(err));
+    if(!month.ended()){
+      return this.expense.deleteOneExpense(expense.getId())
+      .then(() =>{
+        month.removeOneExpense(expense);
+        return this.updateOneMonth(month);
+      })
+      .catch(err => console.log(err));
+    }
   }
-
-
 
   public getMonthOfUser(uid: string){
     if(uid && uid.length>0){
       this.getAllMonthsOfUser(uid);
     }
+  }
+
+  public endOneMonth(month: Month){
+    month.end();
+    this.updateOneMonth(month);
   }
 
   private getOneMonth(monthId){
@@ -99,13 +106,14 @@ export class MonthService implements OnDestroy{
           monthId,
           new Date(monthData.start.seconds*1000),
           new Date(monthData.end.seconds*1000),
-          monthData.budget
+          monthData.budget,
+          monthData.isEnded
         );
         monthData.expenses.forEach(expenseId =>{
           this.expense.getOneExpense(expenseId)
           .then(loadedExpense => {
             if(loadedExpense){
-              loadedMonth.addOneExpense(loadedExpense);
+              loadedMonth.addOneExpense(loadedExpense,true);
             }
           });
         });

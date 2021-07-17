@@ -7,6 +7,7 @@ export class Month {
     public endDate: Date;
     private id: string;
     private budget: number;
+    private isEnded: boolean;
 
     private monthStr = [
         'January',
@@ -27,7 +28,8 @@ export class Month {
         id: string,
         start: Date,
         end: Date,
-        budget: number
+        budget: number,
+        isEnded: boolean = false
     ){
         try{
             if(start>end){
@@ -38,10 +40,19 @@ export class Month {
                 this.endDate = end;
                 this.budget = budget;
                 this.expenses = [];
+                this.isEnded = isEnded;
             }
         } catch (error){
             alert(error.message);
         }
+    }
+
+    public ended(): boolean{
+        return this.isEnded;
+    }
+
+    public end(){
+        this.isEnded = true;
     }
 
     public getBudget(): number {
@@ -83,12 +94,17 @@ export class Month {
         this.expenses = expenses;
     }
 
-    public addOneExpense(expense: Expense){
-        this.expenses.push(expense);
+    public addOneExpense(expense: Expense, override: boolean = false){
+        if(!this.isEnded || override){
+            this.expenses.push(expense);
+        }
     }
 
     public removeOneExpense(expense: Expense){
-        this.expenses = this.expenses.slice(0,this.expenses.indexOf(expense)).concat(this.expenses.slice(this.expenses.indexOf(expense)+1));
+        if(!this.isEnded){
+            this.expenses = this.expenses.slice(0,this.expenses.indexOf(expense))
+            .concat(this.expenses.slice(this.expenses.indexOf(expense)+1));
+        }
     }
 
     public getObject(){
@@ -100,7 +116,9 @@ export class Month {
             budget: this.budget,
             end: firebase.firestore.Timestamp.fromDate(this.endDate),
             start: firebase.firestore.Timestamp.fromDate(this.startDate),
-            expenses: expenseIdList
+            expenses: expenseIdList,
+            isEnded : this.isEnded
         };
     }
+
 }

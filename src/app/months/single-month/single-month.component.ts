@@ -29,6 +29,7 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
     this.userSub = this.user.userInfo.subscribe(
       value =>this.userCategory=value.settings.categorie);
     this.user.updateInfo(false);
+    console.log(this.singleMonth);
   }
 
   ngOnDestroy(): void {
@@ -75,6 +76,10 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
       }
     });
     return await modal.present();
+  }
+
+  public onEndMonth(){
+    this.month.endOneMonth(this.singleMonth);
   }
 
 }
