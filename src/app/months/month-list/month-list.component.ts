@@ -14,6 +14,7 @@ import { SingleMonthComponent } from '../single-month/single-month.component';
 })
 export class MonthListComponent implements OnInit,OnDestroy {
   public monthList: Month[];
+  public loading: boolean;
 
   private monthSub: Subscription;
   constructor(
@@ -24,9 +25,11 @@ export class MonthListComponent implements OnInit,OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.loading = true;
     this.monthSub = this.months.months.subscribe(
       value =>{
         this.monthList = value;
+        this.loading = false;
       }
     );
     this.months.updateMonths();

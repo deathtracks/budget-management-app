@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding-top">
   <form [formGroup]="logInForm" (ngSubmit)="onLogIn()">
     <ion-item>
       <ion-label position="floating">Email</ion-label>
@@ -17,8 +17,8 @@
     <ion-item color="danger" *ngIf="error">
       <ion-label>Email or password invalid.</ion-label>
     </ion-item>
-    <ion-button type="submit" [disabled]="logInForm.invalid">Se connecter</ion-button>
+    <ion-button expand="full" type="submit" [disabled]="logInForm.invalid">Se connecter</ion-button>
   </form>
-  <p>You do not have an account yet ?</p>
-  <a routerLink="/connexion/sign-in">Create one now !</a>
+  <p class="ion-margin">You do not have an account yet ? <a routerLink="/connexion/sign-in">Create one now !</a></p>
+  
 </ion-content>

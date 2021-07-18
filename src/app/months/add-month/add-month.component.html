@@ -23,7 +23,6 @@
       <ion-label position="floating">Budget</ion-label>
       <ion-input type="number" id="budget" formControlName="budget"></ion-input>
     </ion-item>
-    <ion-button type="submit" [disabled]="newMonthForm.invalid" >Create new month</ion-button>
-    <ion-button (click)="onUpdate()">update</ion-button>
+    <ion-button expand="full" type="submit" [disabled]="newMonthForm.invalid" >Create new month</ion-button>
   </form>
 </ion-content>

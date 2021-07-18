@@ -78,8 +78,22 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
     return await modal.present();
   }
 
-  public onEndMonth(){
-    this.month.endOneMonth(this.singleMonth);
+  public async onEndMonth(){
+    const alert = await this.alertController.create({
+      header: 'Confirm',
+      message : 'Are you sure you want to end this month ? You will not be able to make any modification after',
+      buttons : [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text:'OK',
+          handler: () => this.month.endOneMonth(this.singleMonth)
+        }
+      ]
+    });
+    return await alert.present();
   }
 
 }
