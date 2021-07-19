@@ -1,0 +1,6 @@
+{
+	"appId": "fr.Nebre.budget-management-app.",
+	"appName": "budget-management-app",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">budget-management-app</string>
+    <string name="title_activity_main">budget-management-app</string>
+    <string name="package_name">fr.nebre.budgetApp</string>
+    <string name="custom_url_scheme">fr.nebre.budgetApp</string>
+</resources>
