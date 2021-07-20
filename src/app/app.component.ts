@@ -4,6 +4,7 @@ import { MenuController } from '@ionic/angular';
 import firebase from 'firebase';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './services/base/auth.service';
+import { TranslationService } from './tools/translation/translation.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,8 @@ import { AuthService } from './services/base/auth.service';
 })
 export class AppComponent {
   constructor(
-    private menuController: MenuController
+    private menuController: MenuController,
+    private translation: TranslationService
   ) {
     firebase.initializeApp(environment.firebaseConfig);
   }
