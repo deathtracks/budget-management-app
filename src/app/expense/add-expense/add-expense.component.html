@@ -4,7 +4,7 @@
       <ion-button (click)='onDismiss()'><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
     </ion-buttons>
     <ion-title>
-      New expense
+      <app-text id="expense-add-expense-title"></app-text>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,21 +12,31 @@
 <ion-content>
   <form [formGroup]="newExpenseForm" (ngSubmit)="onAddExpense()">
     <ion-item>
-      <ion-label position="floating">Name</ion-label>
+      <ion-label position="floating">
+        <app-text id="expense-add-expense-name"></app-text>
+      </ion-label>
       <ion-input type="text" id="name" formControlName="name"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Amount</ion-label>
+      <ion-label position="floating">
+        <app-text id="expense-add-expense-amount"></app-text>
+      </ion-label>
       <ion-input type="number" id="amount" formControlName="amount"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Date</ion-label>
+      <ion-label position="floating">
+        <app-text id="expense-add-expense-date"></app-text>
+      </ion-label>
       <ion-datetime id="date" formControlName="date"></ion-datetime>
     </ion-item>
     <ion-item (click)='openPicker()' class="ion-no-margin">
-      <p>Category : </p>
+      <p>
+        <app-text id="expense-add-expense-category"></app-text>
+      </p>
       <p class="ion-float-right"> {{ this.userCategories[this.selectedCategory] }}</p>
     </ion-item>
-    <ion-button expand="full" type="submit" [disabled]="newExpenseForm.invalid">Add expense</ion-button>
+    <ion-button expand="full" type="submit" [disabled]="newExpenseForm.invalid">
+      <app-text id="expense-add-expense-add"></app-text>
+    </ion-button>
   </form>
 </ion-content>

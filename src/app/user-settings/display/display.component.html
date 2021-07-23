@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Settings
+      <app-text id="user-settings-display-title"></app-text>
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="onLogOut()"><ion-icon name="log-out-outline"></ion-icon></ion-button>
@@ -15,7 +15,9 @@
 <ion-content>
   <ion-item>
     <ion-label>
-      <h3>Email :</h3>
+      <h3>
+        <app-text id="user-settings-display-email"></app-text> :
+      </h3>
       <h2 readonly>{{ userInf.email  }}</h2>
     </ion-label>
     <ion-button slot="end" fill="clear" color="dark" (click)='onUpdateEmail()'><ion-icon name="create-outline" ></ion-icon></ion-button>
@@ -23,22 +25,30 @@
   <ion-item *ngIf="updatingEmail">
     <form [formGroup]="updateEmailForm" (ngSubmit)="onValidUpdateEmail()">
       <ion-item>
-        <ion-label position="floating">new email :</ion-label>
+        <ion-label position="floating">
+          <app-text id="user-settings-display-new-email"></app-text> :
+        </ion-label>
         <ion-input type="text" id="email" formControlName="email"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Password :</ion-label>
+        <ion-label position="floating">
+          <app-text id="user-settings-display-password"></app-text> :
+        </ion-label>
         <ion-input type="password" id="password" formControlName="password"></ion-input>
       </ion-item>
       <ion-item *ngIf="errorMessageEmail && errorMessageEmail.length>0" color="danger">
         <p>{{ errorMessageEmail }}</p>
       </ion-item>
-      <ion-button type="submit">Update email</ion-button>
+      <ion-button size="block" type="submit">
+        <app-text id="user-settings-display-update-email"></app-text>
+      </ion-button>
     </form>
   </ion-item>
   <ion-item>
     <ion-label>
-      <h3>Password :</h3>
+      <h3>
+        <app-text id="user-settings-display-password"></app-text> :
+      </h3>
       <h2 readonly>*********</h2>
     </ion-label>
     <ion-button slot="end" fill="clear" color="dark" (click)='onUpdatePassword()'><ion-icon name="create-outline" ></ion-icon></ion-button>
@@ -46,25 +56,35 @@
   <ion-item *ngIf="updatingPassword">
     <form [formGroup]="updatePasswordForm" (ngSubmit)="onValidUpdatePassword()">
       <ion-item>
-        <ion-label position="floating">Old password</ion-label>
+        <ion-label position="floating">
+          <app-text id="user-settings-display-old-password"></app-text> :
+        </ion-label>
         <ion-input type="password" id="oldpassword" formControlName="oldPassword"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">New Password</ion-label>
+        <ion-label position="floating">
+          <app-text id="user-settings-display-new-password"></app-text> :
+        </ion-label>
         <ion-input type="password" id="newpassword" formControlName="newPassword"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Confirm</ion-label>
+        <ion-label position="floating">
+          <app-text id="user-settings-display-confirm"></app-text> :
+        </ion-label>
         <ion-input type="password" id="confirm" formControlName="confirm"></ion-input>
       </ion-item>
       <ion-item *ngIf="errorMessagePassword && errorMessagePassword.length>0" color="danger">
         <p>{{ errorMessagePassword }}</p>
       </ion-item>
-      <ion-button type="submit">Update password</ion-button>
+      <ion-button type="submit">
+        <app-text id="user-settings-display-update-password"></app-text>
+      </ion-button>
     </form>
   </ion-item>
   <ion-item>
-    <ion-label>Categories :</ion-label>
+    <ion-label>
+      <app-text id="user-settings-display-categories"></app-text> :
+    </ion-label>
     <ion-button slot="end" fill="clear" color="dark" (click)="onAddCategory()">
       <ion-icon  name="add-outline"></ion-icon>
     </ion-button>
@@ -72,7 +92,9 @@
   <ion-item *ngIf="addingCategory">
     <form [formGroup]="addCategoryForm" (ngSubmit)="onValidAddCategory()">
       <ion-item>
-        <ion-label position="floating">Name for new category :</ion-label>
+        <ion-label position="floating">
+          <app-text id="user-settings-display-name-category"></app-text> :
+        </ion-label>
         <ion-input type="text" id="nameC" formControlName="name"></ion-input>
         <ion-button slot="end" fill="clear" color="dark" type="submit"><ion-icon name="checkmark-outline"></ion-icon></ion-button>
       </ion-item>
@@ -81,7 +103,9 @@
   <ion-item *ngIf="updatingCategorie">
     <form [formGroup]="updateCategoryForm" (ngSubmit)="onValidUpdateCategory()">
       <ion-item>
-        <ion-label position="floating">New name:</ion-label>
+        <ion-label position="floating">
+          <app-text id="user-settings-display-new-name-category"></app-text> :
+        </ion-label>
         <ion-input type="text" id="nameCU" formControlName="name"></ion-input>
         <ion-button slot="end" fill="clear" color="dark" [disabled]="updateCategoryForm.invalid" type="submit">
           <ion-icon name="checkmark-outline"></ion-icon>

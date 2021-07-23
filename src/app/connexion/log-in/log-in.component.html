@@ -1,6 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Log in</ion-title>
+    <ion-title>
+      <app-text id="connexion-log-in-title"></app-text>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -23,12 +25,13 @@
         <app-text id="connexion-log-in-error"></app-text>
       </ion-label>
     </ion-item>
-    <ion-button expand="full" type="submit" [disabled]="logInForm.invalid">Se connecter</ion-button>
+    <ion-button expand="full" type="submit" [disabled]="logInForm.invalid">
+      <app-text id="connexion-log-in-log-in"></app-text>
+    </ion-button>
   </form>
   <p class="ion-margin">
     <app-text id="connexion-log-in-no-account"></app-text>
     <a routerLink="/connexion/sign-in">
       <app-text id="connexion-log-in-no-account-link"></app-text>
     </a></p>
-  
 </ion-content>

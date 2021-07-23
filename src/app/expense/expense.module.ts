@@ -4,6 +4,7 @@ import { AddExpenseComponent } from './add-expense/add-expense.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { EditExpenseComponent } from './edit-expense/edit-expense.component';
+import { ToolsModule } from '../tools/tools.module';
 
 
 
@@ -15,6 +16,7 @@ import { EditExpenseComponent } from './edit-expense/edit-expense.component';
   imports: [
     CommonModule,
     FormsModule,
+    ToolsModule,
     ReactiveFormsModule,
     IonicModule
   ],

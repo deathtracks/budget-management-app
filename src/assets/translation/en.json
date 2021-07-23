@@ -11,9 +11,10 @@
     "connexion-sign-in-email":"Email",
     "connexion-sign-in-password":"Password",
     "connexion-sign-in-confirm":"Confirm password",
+    "connexion-sign-in-password-error":"The passwords does not match",
     "connexion-sign-in-create":"Create an account",
     "connexion-sign-in-already-account":"You already have an account ?",
-    "connexion-sign-in-already-acccount-link":"Log in",
+    "connexion-sign-in-already-account-link":"Log in",
     "month-month-list-title":"Month list",
     "month-month-list-no-month":"You don't have any month registered for now",
     "month-add-month-title":"New month",
@@ -36,6 +37,7 @@
     "expense-edit-expense-title":"Edit expense",
     "expense-edit-expense-name":"Name",
     "expense-edit-expense-amount":"Amount",
+    "expense-edit-expense-category":"Category",
     "expense-edit-expense-date":"Date",
     "expense-edit-expense-edit":"Edit expense",
     "user-settings-display-title":"Settings",
@@ -49,6 +51,6 @@
     "user-settings-display-update-password":"Update password",
     "user-settings-display-categories":"Categories",
     "user-settings-display-name-category":"Name for new category",
-    "user-settings-display-new-name-category":"New name:"
+    "user-settings-display-new-name-category":"New name"
     }
 }

@@ -7,6 +7,7 @@ import { MonthRoutingModule } from './months-routing.module';
 import { MonthListComponent } from './month-list/month-list.component';
 import { SingleMonthComponent } from './single-month/single-month.component';
 import { ExpenseModule } from '../expense/expense.module';
+import { ToolsModule } from '../tools/tools.module';
 
 
 
@@ -21,6 +22,7 @@ import { ExpenseModule } from '../expense/expense.module';
     FormsModule,
     IonicModule,
     ExpenseModule,
+    ToolsModule,
     ReactiveFormsModule,
     MonthRoutingModule
   ],

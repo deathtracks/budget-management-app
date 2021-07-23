@@ -4,7 +4,7 @@
       <ion-button (click)="onDismiss()"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
     </ion-buttons>
     <ion-title>
-      Edit expense
+      <app-text id="expense-edit-expense-title"></app-text>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,21 +12,39 @@
 <ion-content>
   <form [formGroup]="editExpenseForm" (ngSubmit)="onEditExpense()">
     <ion-item>
-      <ion-label position="floating">Name</ion-label>
+      <ion-label position="floating">
+        <app-text id="expense-edit-expense-name"></app-text>
+      </ion-label>
       <ion-input type="text" id="name" formControlName="name"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Amount</ion-label>
+      <ion-label position="floating">
+        <app-text id="expense-edit-expense-amount"></app-text>
+      </ion-label>
       <ion-input type="number" id="amount" formControlName="amount"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Date</ion-label>
+      <ion-label position="floating">
+        <app-text id="expense-edit-expense-date"></app-text>
+      </ion-label>
       <ion-datetime id="date" formControlName="date" ></ion-datetime>
     </ion-item>
     <ion-item (click)='openPicker()' class="ion-justify-content-between">
-      <p>Category : </p>
-      <p class="ion-float-right"> {{ this.userCategory[this.selectedCategory] }}</p>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="ion-no-padding">
+            <p class="ion-no-margin">
+              <app-text id="expense-edit-expense-category"></app-text> : 
+            </p>
+          </ion-col>
+          <ion-col class="ion-no-padding">
+            <p class="ion-no-margin"> {{ this.userCategory[this.selectedCategory] }}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
-    <ion-button expand="full" type="submit">Edit expense</ion-button>
+    <ion-button expand="full" type="submit">
+      <app-text id="expense-edit-expense-edit"></app-text>
+    </ion-button>
   </form>
 </ion-content>

@@ -4,7 +4,7 @@
       <ion-button (click)="onDismiss()"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
     </ion-buttons>
     <ion-title>
-      New Month
+      <app-text id="month-add-month-title"></app-text>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,17 +12,25 @@
 <ion-content>
   <form [formGroup]="newMonthForm" (ngSubmit)="onCreateMonth()">
     <ion-item>
-      <ion-label position="floating">Start date</ion-label>
+      <ion-label position="floating">
+        <app-text id="month-add-month-start-date"></app-text>
+      </ion-label>
       <ion-datetime id="start" formControlName="start"></ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">End date</ion-label>
+      <ion-label position="floating">
+        <app-text id="month-add-month-end-date"></app-text>
+      </ion-label>
       <ion-datetime id="end" formControlName="end"></ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Budget</ion-label>
+      <ion-label position="floating">
+        <app-text id="month-add-month-budget"></app-text>
+      </ion-label>
       <ion-input type="number" id="budget" formControlName="budget"></ion-input>
     </ion-item>
-    <ion-button expand="full" type="submit" [disabled]="newMonthForm.invalid" >Create new month</ion-button>
+    <ion-button expand="full" type="submit" [disabled]="newMonthForm.invalid" >
+      <app-text id="month-add-month-create"></app-text>
+    </ion-button>
   </form>
 </ion-content>

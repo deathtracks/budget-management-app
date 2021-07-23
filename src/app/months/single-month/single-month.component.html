@@ -18,28 +18,28 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            From : {{ singleMonth.startDate | date }}
+            <app-text id="month-single-month-from"></app-text>: {{ singleMonth.startDate | date }}
           </ion-col>
           <ion-col>
-            To : {{ singleMonth.endDate | date }}
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            Budget : {{ singleMonth.getBudget() }} €
-          </ion-col>
-          <ion-col>
-            Remaining : {{ singleMonth.getRemaining() }} €
+            <app-text id="month-single-month-to"></app-text>: {{ singleMonth.endDate | date }}
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            Total : {{ singleMonth.getTotal() }} €
+            <app-text id="month-single-month-budget"></app-text>: {{ singleMonth.getBudget() }} €
+          </ion-col>
+          <ion-col>
+            <app-text id="month-single-month-remaining"></app-text>: {{ singleMonth.getRemaining() }} €
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <app-text id="month-single-month-total"></app-text> : {{ singleMonth.getTotal() }} €
           </ion-col>
         </ion-row>
       </ion-grid>
       <ion-button size="small" expand="block" *ngIf="!this.singleMonth.ended()" (click)='onEndMonth()'>
-        End month
+        <app-text id="month-single-month-end"></app-text>
       </ion-button>
     </ion-card-content>
   </ion-card>

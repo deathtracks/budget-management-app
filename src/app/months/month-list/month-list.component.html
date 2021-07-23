@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Month list
+      <app-text id="month-month-list-title"></app-text>
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="onAddMonth()" ><ion-icon name="add-outline"></ion-icon></ion-button>
@@ -25,7 +25,9 @@
       </ion-item-sliding>
     </div>
     <div *ngIf="monthList && monthList.length<1" class="ion-margin">
-      <ion-label>You don't have any month registered for now</ion-label>
+      <ion-label>
+        <app-text id="month-month-list-no-month"></app-text>
+      </ion-label>
     </div>
   </div>
   
