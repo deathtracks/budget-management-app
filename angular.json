@@ -20,7 +20,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              "assets",
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "src/assets",

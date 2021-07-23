@@ -1,75 +1,54 @@
 {
-    "connexion":{
-        "log-in":{
-            "title":"Log in",
-            "email":"Email",
-            "password":"Eassword",
-            "log-in":"Log in",
-            "no-account":"You do not have an account yet ?",
-            "no-account-link": "Create one now !"
-        },
-        "sign-in":{
-            "title":"Sign in",
-            "email":"Email",
-            "password":"Password",
-            "confirm":"Confirm password",
-            "create":"Create an account",
-            "already-account":"You already have an account ?",
-            "already-acccount-link":"Log in"
-        }
-    },
-    "month":{
-        "month-list":{
-            "title":"Month list",
-            "no-month":"You don't have any month registered for now"
-        },
-        "add-month":{
-            "title":"New month",
-            "start-date":"Start date",
-            "end-date":"End date",
-            "budget":"Budget",
-            "create":"Create new month"
-        },
-        "single-month":{
-            "from":"From",
-            "to":"To",
-            "budget":"Budget",
-            "remaining":"Remainning",
-            "total":"Total",
-            "end":"Close month"
-        }
-    },
-    "expense":{
-        "add-expense":{
-            "title":"New expense",
-            "name":"Name",
-            "amount":"Amount",
-            "category":"Category",
-            "date":"Date",
-            "add":"Add expense"
-        },
-        "edit-expense":{
-            "title":"Edit expense",
-            "name":"Name",
-            "amount":"Amount",
-            "date":"Date",
-            "edit":"Edit expense"
-        }
-    },
-    "user-settings":{
-        "display":{
-            "title":"Settings",
-            "email":"Email",
-            "new-email":"New email",
-            "password":"Password",
-            "update-email":"Update email",
-            "old-password":"Old password",
-            "new-password":"New password",
-            "confirm":"Confirm password",
-            "update-password":"Update password",
-            "categories":"Categories",
-            "name-category":"Name for new category",
-            "new-name-category":"New name:"
-        }
+    "text":{
+    "connexion-log-in-title":"Log in",
+    "connexion-log-in-email":"Email",
+    "connexion-log-in-password":"Password",
+    "connexion-log-in-log-in":"Log in",
+    "connexion-log-in-no-account":"You do not have an account yet ?",
+    "connexion-log-in-no-account-link": "Create one now !",
+    "connexion-log-in-error":"Email or password invalid.",
+    "connexion-sign-in-title":"Sign in",
+    "connexion-sign-in-email":"Email",
+    "connexion-sign-in-password":"Password",
+    "connexion-sign-in-confirm":"Confirm password",
+    "connexion-sign-in-create":"Create an account",
+    "connexion-sign-in-already-account":"You already have an account ?",
+    "connexion-sign-in-already-acccount-link":"Log in",
+    "month-month-list-title":"Month list",
+    "month-month-list-no-month":"You don't have any month registered for now",
+    "month-add-month-title":"New month",
+    "month-add-month-start-date":"Start date",
+    "month-add-month-end-date":"End date",
+    "month-add-month-budget":"Budget",
+    "month-add-month-create":"Create new month",
+    "month-single-month-from":"From",
+    "month-single-month-to":"To",
+    "month-single-month-budget":"Budget",
+    "month-single-month-remaining":"Remainning",
+    "month-single-month-total":"Total",
+    "month-single-month-end":"Close month",
+    "expense-add-expense-title":"New expense",
+    "expense-add-expense-name":"Name",
+    "expense-add-expense-amount":"Amount",
+    "expense-add-expense-category":"Category",
+    "expense-add-expense-date":"Date",
+    "expense-add-expense-add":"Add expense",
+    "expense-edit-expense-title":"Edit expense",
+    "expense-edit-expense-name":"Name",
+    "expense-edit-expense-amount":"Amount",
+    "expense-edit-expense-date":"Date",
+    "expense-edit-expense-edit":"Edit expense",
+    "user-settings-display-title":"Settings",
+    "user-settings-display-email":"Email",
+    "user-settings-display-new-email":"New email",
+    "user-settings-display-password":"Password",
+    "user-settings-display-update-email":"Update email",
+    "user-settings-display-old-password":"Old password",
+    "user-settings-display-new-password":"New password",
+    "user-settings-display-confirm":"Confirm password",
+    "user-settings-display-update-password":"Update password",
+    "user-settings-display-categories":"Categories",
+    "user-settings-display-name-category":"Name for new category",
+    "user-settings-display-new-name-category":"New name:"
     }
 }
