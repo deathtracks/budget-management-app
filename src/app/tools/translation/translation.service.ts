@@ -6,7 +6,8 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class TranslationService {
-  public translation = new Subject<string>();
+  public translation = new Subject<number>();
+  public languages = ['English','Français'];
 
   private data: any;
   private language = 'en';
@@ -17,15 +18,14 @@ export class TranslationService {
     this.readFile();
    }
 
-  public switchTo(newLanguage: string){
-    if(this.knownLanguage.includes(newLanguage)){
-      this.language = newLanguage;
+  public switchTo(newLanguage: number){
+      this.language = this.knownLanguage[newLanguage];
       this.readFile();
-    }
   }
 
   public updateTranslation(){
-    this.translation.next(this.language);
+    console.log(this.knownLanguage.indexOf(this.language));
+    this.translation.next(this.knownLanguage.indexOf(this.language));
   }
 
 

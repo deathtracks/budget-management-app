@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
+import { NumericValueAccessor, PickerController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { UserInfo } from 'src/app/class/user-info';
 import { AuthService } from 'src/app/services/base/auth.service';
 import { UserInfoService } from 'src/app/services/data/user-info.service';
+import { TranslationService } from 'src/app/tools/translation/translation.service';
 
 @Component({
   selector: 'app-display',
@@ -23,9 +24,12 @@ export class DisplayComponent implements OnInit,OnDestroy {
   public addCategoryForm: FormGroup;
   public errorMessageEmail: string;
   public errorMessagePassword: string;
+  public language: string[];
+  public chooseLanguage: number;
 
   private userInfoSub: Subscription;
   private updatingIndexCategorie: number;
+  private transSub: Subscription;
   private printableError = [
     'auth/email-already-in-use',
     'auth/invalid-email',
@@ -35,16 +39,29 @@ export class DisplayComponent implements OnInit,OnDestroy {
     private auth: AuthService,
     private user: UserInfoService,
     private formBuilder: FormBuilder,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private translation: TranslationService,
+    private pickerController: PickerController
   ) { }
 
   ngOnInit() {
+    this.language = this.translation.languages;
     this.userInfoSub = this.user.userInfo
     .subscribe(value =>this.userInf = value);
     this.user.updateInfo(false);
+    this.transSub = this.translation.translation
+    .subscribe(value => this.chooseLanguage = value);
+    this.translation.updateTranslation();
     this.initEmailForm();
     this.initPasswordForm();
     this.initCategoryForm();
+    console.log(this.language);
+    console.log(this.language[this.chooseLanguage]);
+  }
+
+  ngOnDestroy(): void {
+    this.userInfoSub.unsubscribe();
+    this.transSub.unsubscribe();
   }
 
   async presentToast() {
@@ -53,6 +70,42 @@ export class DisplayComponent implements OnInit,OnDestroy {
       duration: 2000
     });
     toast.present();
+  }
+
+  getColumnOptions(){
+    const options = [];
+    for(let i=0;i<this.language.length;i++){
+      options.push({
+        text: this.language[i],
+        value: i
+      });
+    }
+    return options;
+  }
+
+  async openPicker(){
+    const picker = await this.pickerController.create({
+      columns : [
+        {
+          name: `col`,
+          options: this.getColumnOptions()
+        }],
+      buttons:[
+        {
+          text:'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Confirm',
+          handler: (value)=>{
+            console.log(value.col.value);
+            console.log(this.language[value.col.value]);
+            this.translation.switchTo(value.col.value);
+          }
+        }
+      ]
+    });
+    return await picker.present();
   }
 
   initEmailForm(){
@@ -80,10 +133,6 @@ export class DisplayComponent implements OnInit,OnDestroy {
     this.updateCategoryForm = this.formBuilder.group({
       name: [this.userInf.settings.categorie[index],Validators.required]
     });
-  }
-
-  ngOnDestroy(): void {
-    this.userInfoSub.unsubscribe();
   }
 
   onLogOut(){

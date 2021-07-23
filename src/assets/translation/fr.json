@@ -40,7 +40,7 @@
     "expense-edit-expense-category":"Catégorie",
     "expense-edit-expense-date":"Date",
     "expense-edit-expense-edit":"Editer",
-    "user-settings-display-title":"Réglage",
+    "user-settings-display-title":"Réglages",
     "user-settings-display-email":"Adresse mail",
     "user-settings-display-new-email":"Nouvelle adresse mail",
     "user-settings-display-password":"mot de passe",
@@ -51,6 +51,7 @@
     "user-settings-display-update-password":"Mettre à jour",
     "user-settings-display-categories":"Catégories",
     "user-settings-display-name-category":"Nom pour une nouvelle catégorie",
-    "user-settings-display-new-name-category":"Nouveau nom"
+    "user-settings-display-new-name-category":"Nouveau nom",
+    "user-settings-display-language":"Langue"
     }
 }

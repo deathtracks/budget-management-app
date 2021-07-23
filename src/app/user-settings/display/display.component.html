@@ -18,7 +18,7 @@
       <h3>
         <app-text id="user-settings-display-email"></app-text> :
       </h3>
-      <h2 readonly>{{ userInf.email  }}</h2>
+      <h2 readonly>{{ userInf.email }}</h2>
     </ion-label>
     <ion-button slot="end" fill="clear" color="dark" (click)='onUpdateEmail()'><ion-icon name="create-outline" ></ion-icon></ion-button>
   </ion-item>
@@ -80,6 +80,20 @@
         <app-text id="user-settings-display-update-password"></app-text>
       </ion-button>
     </form>
+  </ion-item>
+  <ion-item (click)='openPicker()' class="ion-no-margin">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="ion-no-padding">
+          <p>
+            <app-text id="user-settings-display-language"></app-text> :
+          </p>
+        </ion-col>
+        <ion-col class="ion-no-padding">
+           <p class="ion-float-right"> {{ this.language[this.chooseLanguage] }}</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-item>
   <ion-item>
     <ion-label>

@@ -51,6 +51,7 @@
     "user-settings-display-update-password":"Update password",
     "user-settings-display-categories":"Categories",
     "user-settings-display-name-category":"Name for new category",
-    "user-settings-display-new-name-category":"New name"
+    "user-settings-display-new-name-category":"New name",
+    "user-settings-display-language":"Language"
     }
 }
