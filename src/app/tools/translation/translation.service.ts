@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { UserInfoService } from 'src/app/services/data/user-info.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,11 @@ export class TranslationService {
   private language = 'en';
   private knownLanguage = ['en','fr'];
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private user: UserInfoService
   ) {
     this.readFile();
+    console.log(this.data);
    }
 
   public switchTo(newLanguage: number){
@@ -24,12 +27,12 @@ export class TranslationService {
   }
 
   public updateTranslation(){
-    console.log(this.knownLanguage.indexOf(this.language));
     this.translation.next(this.knownLanguage.indexOf(this.language));
   }
 
 
   public getText(id: string): string{
+    console.log(id);
     if(this.data.text[id]){
       return this.data.text[id];
     }else{
@@ -41,6 +44,7 @@ export class TranslationService {
     this.http.get(`../../../assets/translation/${this.language}.json`)
     .subscribe(data =>{
       this.data = data;
+      console.log('done');
       this.updateTranslation();
     });
   }

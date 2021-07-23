@@ -18,7 +18,10 @@ export class TextComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     this.translationSub = this.translation.translation
-    .subscribe(value => this.text = this.translation.getText(this.id));
+    .subscribe(value => {
+      console.log('maj of',this.id);
+      this.text = this.translation.getText(this.id);
+    });
     this.translation.updateTranslation();
   }
 

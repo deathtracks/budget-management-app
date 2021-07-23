@@ -13,8 +13,7 @@ import { TranslationService } from './tools/translation/translation.service';
 })
 export class AppComponent {
   constructor(
-    private menuController: MenuController,
-    private translation: TranslationService
+    private menuController: MenuController
   ) {
     firebase.initializeApp(environment.firebaseConfig);
   }
