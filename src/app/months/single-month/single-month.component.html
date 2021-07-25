@@ -26,15 +26,15 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <app-text id="month-single-month-budget"></app-text>: {{ singleMonth.getBudget() }} €
+            <app-text id="month-single-month-budget"></app-text>: {{ singleMonth.getBudget() | rounded }} €
           </ion-col>
           <ion-col>
-            <app-text id="month-single-month-remaining"></app-text>: {{ singleMonth.getRemaining() }} €
+            <app-text id="month-single-month-remaining"></app-text>: {{ singleMonth.getRemaining() | rounded }} €
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <app-text id="month-single-month-total"></app-text> : {{ singleMonth.getTotal() }} €
+            <app-text id="month-single-month-total"></app-text> : {{ singleMonth.getTotal() | rounded }} €
           </ion-col>
         </ion-row>
       </ion-grid>

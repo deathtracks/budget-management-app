@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { LoadingPageComponent } from './loading-page/loading-page.component';
 import { TextComponent } from './translation/text/text.component';
 import { DatePipe } from './date.pipe';
+import { RoundedPipe } from './rounded.pipe';
 
 
 
@@ -11,7 +12,8 @@ import { DatePipe } from './date.pipe';
   declarations: [
     LoadingPageComponent,
     TextComponent,
-    DatePipe
+    DatePipe,
+    RoundedPipe
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { DatePipe } from './date.pipe';
   exports:[
     LoadingPageComponent,
     TextComponent,
-    DatePipe
+    DatePipe,
+    RoundedPipe
   ]
 })
 export class ToolsModule { }
