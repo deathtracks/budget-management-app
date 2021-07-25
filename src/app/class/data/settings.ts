@@ -1,7 +1,5 @@
-import { Langue } from './langue';
-
 export class Settings {
-    public langue: Langue;
+    public langue: string;
     public categorie: string[];
 
     constructor(data: any=undefined){
@@ -13,7 +11,7 @@ export class Settings {
         if(data && data.langue){
             this.langue = data.langue;
         }else{
-            this.langue = Langue.en;
+            this.langue = 'English';
         }
     }
 

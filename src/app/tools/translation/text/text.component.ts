@@ -9,6 +9,7 @@ import { TranslationService } from '../translation.service';
 })
 export class TextComponent implements OnInit,OnDestroy {
   @Input() id: string;
+  @Input() defaultText: string;
 
   public text: string;
   private translationSub: Subscription;
@@ -19,8 +20,10 @@ export class TextComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     this.translationSub = this.translation.translation
     .subscribe(value => {
-      console.log('maj of',this.id);
       this.text = this.translation.getText(this.id);
+      if(!this.text){
+        this.text = this.defaultText;
+      }
     });
     this.translation.updateTranslation();
   }

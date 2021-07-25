@@ -14,11 +14,9 @@ export class TranslationService {
   private language = 'en';
   private knownLanguage = ['en','fr'];
   constructor(
-    private http: HttpClient,
-    private user: UserInfoService
+    private http: HttpClient
   ) {
     this.readFile();
-    console.log(this.data);
    }
 
   public switchTo(newLanguage: number){
@@ -32,11 +30,12 @@ export class TranslationService {
 
 
   public getText(id: string): string{
-    console.log(id);
-    if(this.data.text[id]){
-      return this.data.text[id];
-    }else{
-      throw new Error('This text is not referenced in the source file');
+    if(this.data){
+      if(this.data.text[id]){
+        return this.data.text[id];
+      }else{
+        throw new Error(`This text [id=${id}] is not referenced in the source file`);
+      }
     }
   }
 
@@ -44,7 +43,6 @@ export class TranslationService {
     this.http.get(`../../../assets/translation/${this.language}.json`)
     .subscribe(data =>{
       this.data = data;
-      console.log('done');
       this.updateTranslation();
     });
   }

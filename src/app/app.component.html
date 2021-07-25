@@ -2,13 +2,19 @@
   <ion-menu side="start" menuId="first" contentId="main">
     <ion-header>
       <ion-toolbar color="primary">
-        <ion-title>Start Menu</ion-title>
+        <ion-title>
+          <app-text id="menu-title" defaultText="Menu"></app-text>
+        </ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
       <ion-list>
-        <ion-item routerLink="/months" (click)="onLink()">Month List</ion-item>
-        <ion-item routerLink="/settings" (click)="onLink()">Settings</ion-item>
+        <ion-item routerLink="/months" (click)="onLink()">
+          <app-text id="menu-month-list"></app-text>
+        </ion-item>
+        <ion-item routerLink="/settings" (click)="onLink()">
+          <app-text id="menu-settings"></app-text>
+        </ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>

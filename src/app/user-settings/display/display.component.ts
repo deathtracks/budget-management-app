@@ -55,8 +55,6 @@ export class DisplayComponent implements OnInit,OnDestroy {
     this.initEmailForm();
     this.initPasswordForm();
     this.initCategoryForm();
-    console.log(this.language);
-    console.log(this.language[this.chooseLanguage]);
   }
 
   ngOnDestroy(): void {
@@ -98,9 +96,7 @@ export class DisplayComponent implements OnInit,OnDestroy {
         {
           text: 'Confirm',
           handler: (value)=>{
-            console.log(value.col.value);
-            console.log(this.language[value.col.value]);
-            this.translation.switchTo(value.col.value);
+            this.user.updateLangue(value.col.value);
           }
         }
       ]

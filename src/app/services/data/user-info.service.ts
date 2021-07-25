@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import firebase from 'firebase/app';
 import { Subject, Subscription } from 'rxjs';
 import { UserInfo } from 'src/app/class/user-info';
+import { TranslationService } from 'src/app/tools/translation/translation.service';
 import { AuthService } from '../base/auth.service';
 
 @Injectable({
@@ -14,7 +15,8 @@ export class UserInfoService implements OnDestroy {
   private db: firebase.firestore.Firestore;
   private authSub: Subscription;
   constructor(
-    private auth: AuthService
+    private auth: AuthService,
+    private translation: TranslationService
   ) {
     this.db = firebase.firestore();
     this.authSub = this.auth.user.subscribe(
@@ -88,11 +90,21 @@ export class UserInfoService implements OnDestroy {
     });
   }
 
+  public updateLangue(newLangue: number){
+    return new Promise<void>((next)=>{
+      this.loadedInfo.settings.langue=this.translation.languages[newLangue];
+      this.translation.switchTo(newLangue);
+      this.updateInfo();
+      next();
+    });
+  }
+
   private getUserInfo(uid: string): Promise<void>{
     if(uid && uid.length>0){
       return this.db.collection('users').doc(uid).get()
       .then( value =>{
         this.loadedInfo = new UserInfo(uid,value.data());
+        this.translation.switchTo(this.translation.languages.indexOf(this.loadedInfo.settings.langue));
         this.updateInfo();
       });
     }
