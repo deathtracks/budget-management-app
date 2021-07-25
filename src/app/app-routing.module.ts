@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { ConnexionGuard } from './guards/connexion.guard';
+import { ReverseConnexionGuard } from './guards/reverse-connexion.guard';
 import { UserSettingsModule } from './user-settings/user-settings.module';
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'connexion',
+    canActivate: [ReverseConnexionGuard],
     loadChildren: () => import('./connexion/connexion.module').then( m => m.ConnexionPageModule)
   },
   {
