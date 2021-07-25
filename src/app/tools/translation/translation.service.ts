@@ -28,6 +28,10 @@ export class TranslationService {
     this.translation.next(this.knownLanguage.indexOf(this.language));
   }
 
+  public getCurrentLanguage(){
+    return this.language;
+  }
+
 
   public getText(id: string): string{
     if(this.data){

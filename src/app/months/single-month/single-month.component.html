@@ -18,10 +18,10 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <app-text id="month-single-month-from"></app-text>: {{ singleMonth.startDate | date }}
+            <app-text id="month-single-month-from"></app-text>: {{ singleMonth.startDate | dateToString:'short-str' }}
           </ion-col>
           <ion-col>
-            <app-text id="month-single-month-to"></app-text>: {{ singleMonth.endDate | date }}
+            <app-text id="month-single-month-to"></app-text>: {{ singleMonth.endDate | dateToString:'short-str' }}
           </ion-col>
         </ion-row>
         <ion-row>
@@ -52,7 +52,7 @@
         <ion-label>
           <h2>{{ e.name }}</h2>
           <h3>{{ userCategory[e.category] }}</h3>
-          <p>{{ e.date | date }}</p>
+          <p>{{ e.date | dateToString:'short-str' }}</p>
         </ion-label>
         <ion-note slot="end" color="tertiary">{{ e.amount }} €</ion-note>
       </ion-item>

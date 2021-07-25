@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { LoadingPageComponent } from './loading-page/loading-page.component';
 import { TextComponent } from './translation/text/text.component';
+import { DatePipe } from './date.pipe';
 
 
 
 @NgModule({
   declarations: [
     LoadingPageComponent,
-    TextComponent
+    TextComponent,
+    DatePipe
   ],
   imports: [
     CommonModule,
@@ -17,7 +19,8 @@ import { TextComponent } from './translation/text/text.component';
   ],
   exports:[
     LoadingPageComponent,
-    TextComponent
+    TextComponent,
+    DatePipe
   ]
 })
 export class ToolsModule { }
