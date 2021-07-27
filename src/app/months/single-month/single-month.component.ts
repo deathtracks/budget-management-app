@@ -1,5 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
+import { Chart } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { Expense } from 'src/app/class/data/expense';
 import { Month } from 'src/app/class/data/month';
@@ -17,6 +18,7 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
   @Input() singleMonth: Month;
   public userCategory;
 
+  bars: any;
   private userSub: Subscription;
   constructor(
     private modalController: ModalController,
@@ -29,10 +31,17 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
     this.userSub = this.user.userInfo.subscribe(
       value =>this.userCategory=value.settings.categorie);
     this.user.updateInfo(false);
+    this.initBar();
   }
 
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
+  }
+
+  initBar(){
+    const bar = document.querySelectorAll('#prog-bar > .progress-bar')[0] as HTMLElement;
+    bar.style.width = `${100*this.singleMonth.getTotal()/this.singleMonth.getBudget()}%`;
+    console.log(bar.style);
   }
 
   public async onAddExpense(){

@@ -37,6 +37,16 @@
             <app-text id="month-single-month-total"></app-text> : {{ singleMonth.getTotal() | rounded }} €
           </ion-col>
         </ion-row>
+        <ion-row>
+          <ion-col>
+            <div id="prog-bar" class="progress">
+              <div class="text">
+                {{ 100*singleMonth.getTotal()/singleMonth.getBudget() | rounded:1}}%
+              </div>
+              <div class="progress-bar"></div>
+            </div>
+          </ion-col>
+        </ion-row>
       </ion-grid>
       <ion-button size="small" expand="block" *ngIf="!this.singleMonth.ended()" (click)='onEndMonth()'>
         <app-text id="month-single-month-end"></app-text>
