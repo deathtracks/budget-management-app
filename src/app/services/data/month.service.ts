@@ -45,7 +45,7 @@ export class MonthService implements OnDestroy{
   }
 
   public createMonth(start: Date,end: Date,budget: number){
-    const newMonth = new Month(undefined,start,end,budget);
+    const newMonth = new Month(undefined,this.auth.getUserUID(),start,end,budget);
     return this.db.collection('months').add(newMonth.getObject())
     .then(docRef =>{
       this.userInfo.addMonthId(docRef.id)
@@ -107,6 +107,7 @@ export class MonthService implements OnDestroy{
       if(monthData){
         const loadedMonth = new Month(
           monthId,
+          monthData.owner,
           new Date(monthData.start.seconds*1000),
           new Date(monthData.end.seconds*1000),
           monthData.budget,

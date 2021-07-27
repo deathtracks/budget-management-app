@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/app';
 import { Expense } from 'src/app/class/data/expense';
+import { AuthService } from '../base/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,9 @@ import { Expense } from 'src/app/class/data/expense';
 export class ExpenseService {
 
   private db: firebase.firestore.Firestore;
-  constructor() {
+  constructor(
+    private auth: AuthService
+  ) {
     this.db = firebase.firestore();
    }
 
@@ -20,6 +23,7 @@ export class ExpenseService {
         if(expenseData){
           return new Expense(
             expenseId,
+            expenseData.owner,
             expenseData.name,
             expenseData.amount,
             new Date(expenseData.date.seconds*1000),
@@ -34,7 +38,7 @@ export class ExpenseService {
   }
 
   public createNewExpense(name: string, amount: number, date: Date,category: number){
-    const newExpense = new Expense(undefined,name,amount,date,category);
+    const newExpense = new Expense(undefined,this.auth.getUserUID(),name,amount,date,category);
     return this.db.collection('expenses').add(newExpense.getObject())
     .then(docRef =>{
       newExpense.setId(docRef.id);

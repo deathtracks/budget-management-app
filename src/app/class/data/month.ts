@@ -5,6 +5,7 @@ export class Month {
     public expenses: Expense[];
     public startDate: Date;
     public endDate: Date;
+    readonly owner: string;
     private id: string;
     private budget: number;
     private isEnded: boolean;
@@ -26,6 +27,7 @@ export class Month {
 
     constructor(
         id: string,
+        owner: string,
         start: Date,
         end: Date,
         budget: number,
@@ -35,6 +37,7 @@ export class Month {
             if(start>end){
                 alert('The start date can\'t be after the end date');
             } else {
+                this.owner = owner;
                 this.id = id;
                 this.startDate = start;
                 this.endDate = end;
@@ -117,7 +120,8 @@ export class Month {
             end: firebase.firestore.Timestamp.fromDate(this.endDate),
             start: firebase.firestore.Timestamp.fromDate(this.startDate),
             expenses: expenseIdList,
-            isEnded : this.isEnded
+            isEnded : this.isEnded,
+            owner: this.owner
         };
     }
 

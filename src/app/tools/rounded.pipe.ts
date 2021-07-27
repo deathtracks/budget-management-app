@@ -11,7 +11,6 @@ export class RoundedPipe implements PipeTransform {
     }
     const res = `${value}`;
     const dotIndex = res.indexOf('.');
-    console.log(dotIndex);
     if(dotIndex>0){
       return res.slice(0,dotIndex+args[0]+1);
     }else{

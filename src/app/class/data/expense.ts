@@ -5,15 +5,18 @@ export class Expense {
     public amount: number;
     public date: Date;
     public category: number;
+    readonly owner: string;
     private id: string;
 
     constructor(
         id: string,
+        owner: string,
         name: string,
         amount: number,
         date: Date,
         category: number = 0
     ) {
+        this.owner = owner;
         this.id = id;
         this.name = name;
         this.amount = amount;
@@ -34,7 +37,8 @@ export class Expense {
             name : this.name,
             amount : this.amount,
             date : firebase.firestore.Timestamp.fromDate(this.date),
-            category: this.category
+            category: this.category,
+            owner: this.owner
         };
     }
 }
