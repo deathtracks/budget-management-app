@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import firebase from 'firebase/app';
 import { Router } from '@angular/router';
+import { ErrorHandlingService } from 'src/app/tools/error-handling.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class AuthService {
   private currentUser: firebase.User;
   private db: firebase.firestore.Firestore;
   constructor(
-    private router: Router
+    private router: Router,
+    private error: ErrorHandlingService
   ) {
     this.db = firebase.firestore();
     firebase.auth().onAuthStateChanged(
@@ -56,22 +58,38 @@ export class AuthService {
         const userUid = result.user.uid;
         this.createUserData(userUid,result.user.email);
       }
-    );
+    )
+    .catch(err =>{
+      console.log(err);
+      this.error.showError('createUser','auth.service',err.message);
+    });
   }
 
   public updateEmail(email: string,password: string){
     return this.logInUser(this.currentUser.email,password)
-    .then(authCred =>this.currentUser.updateEmail(email));
+    .then(authCred =>this.currentUser.updateEmail(email))
+    .catch(err =>{
+      console.log(err);
+      this.error.showError('updateEmail','auth.service',err.message);
+    });
   }
 
   public updatePassword(oldpassword: string,password: string){
     return this.logInUser(this.currentUser.email,oldpassword)
-    .then(authCred=>this.currentUser.updatePassword(password));
+    .then(authCred=>this.currentUser.updatePassword(password))
+    .catch(err =>{
+      console.log(err);
+      this.error.showError('updatePassword','auth.service',err.message);
+    });
   }
 
   public logInUser(email: string, password: string){
     return firebase.auth().signInWithEmailAndPassword(email,password)
-    .then(userCred => userCred.credential);
+    .then(userCred => userCred.credential)
+    .catch(err =>{
+      console.log(err);
+      this.error.showError('logInUser','auth.service',err.message);
+    });
   }
 
   public logOutUser() {
@@ -79,7 +97,10 @@ export class AuthService {
     .then(() =>{
       this.router.navigate(['connexion']);
     })
-    .catch(err => console.log(err));
+    .catch(err =>{
+      console.log(err);
+      this.error.showError('logOutUser','auth.service',err.message);
+    });
   }
 
   private createUserData(uid: string,email: string){
@@ -90,9 +111,10 @@ export class AuthService {
     .then(
       result => console.log(result)
     )
-    .catch(error => {
-      console.log(error.message); //TODO : manage error
-  });
+    .catch(err =>{
+      console.log(err);
+      this.error.showError('createUserDate','auth.service',err.message);
+    });
   }
 
 }

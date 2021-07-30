@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import firebase from 'firebase/app';
 import { Subject, Subscription } from 'rxjs';
 import { UserInfo } from 'src/app/class/user-info';
+import { ErrorHandlingService } from 'src/app/tools/error-handling.service';
 import { TranslationService } from 'src/app/tools/translation/translation.service';
 import { AuthService } from '../base/auth.service';
 
@@ -16,7 +17,8 @@ export class UserInfoService implements OnDestroy {
   private authSub: Subscription;
   constructor(
     private auth: AuthService,
-    private translation: TranslationService
+    private translation: TranslationService,
+    private error: ErrorHandlingService
   ) {
     this.db = firebase.firestore();
     this.authSub = this.auth.user.subscribe(
@@ -112,6 +114,9 @@ export class UserInfoService implements OnDestroy {
 
   private writeUserInfo(){
     return this.db.collection('users').doc(this.loadedInfo.getUID()).set(this.loadedInfo.getData())
-    .catch(err =>console.log(err));
+    .catch(err =>{
+      console.log(err);
+      this.error.showError('writeUserInfo','user-info.service',err.message);
+    });
   }
 }

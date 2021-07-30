@@ -3,6 +3,7 @@ import firebase from 'firebase/app';
 import { Subject, Subscription } from 'rxjs';
 import { Expense } from 'src/app/class/data/expense';
 import { Month } from 'src/app/class/data/month';
+import { ErrorHandlingService } from 'src/app/tools/error-handling.service';
 import { AuthService } from '../base/auth.service';
 import { ExpenseService } from './expense.service';
 import { UserInfoService } from './user-info.service';
@@ -20,7 +21,8 @@ export class MonthService implements OnDestroy{
   constructor(
     private auth: AuthService,
     private expense: ExpenseService,
-    private userInfo: UserInfoService
+    private userInfo: UserInfoService,
+    private error: ErrorHandlingService
     ) {
     this.db = firebase.firestore();
     this.authSub = this.auth.user.subscribe(
@@ -53,7 +55,10 @@ export class MonthService implements OnDestroy{
         this.getAllMonthsOfUser(this.auth.getUserUID());
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+      this.error.showError('createMonth','month.service',err.message);
+    });
   }
 
   public deleteOneMonth(month: Month){
@@ -64,17 +69,25 @@ export class MonthService implements OnDestroy{
         this.getAllMonthsOfUser(this.auth.getUserUID());
       })
     )
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+      this.error.showError('deleteOneMonth','month.service',err.message);
+    });
   }
 
   public addOneExpense(month: Month,name: string, amount: number, date: Date,category: number){
     if(!month.ended()){
       return this.expense.createNewExpense(name,amount,date,category)
       .then( newExpense =>{
-        month.addOneExpense(newExpense);
-        return this.updateOneMonth(month);
+        if(newExpense){
+          month.addOneExpense(newExpense);
+          return this.updateOneMonth(month);
+        }
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        this.error.showError('addOneExpense','month.service',err.message);
+      });
     }
   }
 
@@ -85,7 +98,10 @@ export class MonthService implements OnDestroy{
         month.removeOneExpense(expense);
         return this.updateOneMonth(month);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        this.error.showError('deleteOneExpense','month.service',err.message);
+      });
     }
   }
 
@@ -126,7 +142,10 @@ export class MonthService implements OnDestroy{
         return undefined;
       }
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+      this.error.showError('getOneMonth','month.service',err.message);
+    });
   }
 
   private getAllMonthsOfUser(userUID: string){
@@ -146,7 +165,10 @@ export class MonthService implements OnDestroy{
       }
       this.updateMonths();
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+      this.error.showError('getAllMonthsOfUser','month.service',err.message);
+    });
   }
 
   private updateOneMonth(month: Month){
