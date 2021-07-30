@@ -8,6 +8,7 @@ import { MonthListComponent } from './month-list/month-list.component';
 import { SingleMonthComponent } from './single-month/single-month.component';
 import { ExpenseModule } from '../expense/expense.module';
 import { ToolsModule } from '../tools/tools.module';
+import { SingleMonthDetailComponent } from './single-month-detail/single-month-detail.component';
 
 
 
@@ -15,7 +16,8 @@ import { ToolsModule } from '../tools/tools.module';
   declarations: [
     AddMonthComponent,
     MonthListComponent,
-    SingleMonthComponent
+    SingleMonthComponent,
+    SingleMonthDetailComponent
   ],
   imports: [
     CommonModule,

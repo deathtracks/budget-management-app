@@ -53,6 +53,9 @@
       </ion-button>
     </ion-card-content>
   </ion-card>
+  <div class="end-link">
+    <a (click)="onDetail()">See more -></a>
+  </div>
   <ion-list>
     <ion-item-sliding *ngFor="let e of singleMonth.expenses">
       <ion-item-options side="start" *ngIf="!this.singleMonth.ended()">

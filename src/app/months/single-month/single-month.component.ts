@@ -8,6 +8,7 @@ import { AddExpenseComponent } from 'src/app/expense/add-expense/add-expense.com
 import { EditExpenseComponent } from 'src/app/expense/edit-expense/edit-expense.component';
 import { MonthService } from 'src/app/services/data/month.service';
 import { UserInfoService } from 'src/app/services/data/user-info.service';
+import { SingleMonthDetailComponent } from '../single-month-detail/single-month-detail.component';
 
 @Component({
   selector: 'app-single-month',
@@ -41,7 +42,6 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
   initBar(){
     const bar = document.querySelectorAll('#prog-bar > .progress-bar')[0] as HTMLElement;
     bar.style.width = `${100*this.singleMonth.getTotal()/this.singleMonth.getBudget()}%`;
-    console.log(bar.style);
   }
 
   public async onAddExpense(){
@@ -102,6 +102,16 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
       ]
     });
     return await alert.present();
+  }
+
+  public async onDetail(){
+    const modal = await this.modalController.create({
+      component : SingleMonthDetailComponent,
+      componentProps:{
+        singleMonth: this.singleMonth
+      }
+    });
+    return await modal.present();
   }
 
 }
