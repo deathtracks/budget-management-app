@@ -31,6 +31,7 @@
     "firebase": "^8.7.1",
     "firebaseui": "^4.8.0",
     "fs": "^0.0.1-security",
+    "progressbar.js": "^1.1.0",
     "rxjs": "~6.6.0",
     "timers-browserify": "^2.0.12",
     "tslib": "^2.0.0",

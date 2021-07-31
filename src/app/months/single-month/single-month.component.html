@@ -39,12 +39,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <div id="prog-bar" class="progress">
-              <div class="text">
-                {{ 100*singleMonth.getTotal()/singleMonth.getBudget() | rounded:1}}%
-              </div>
-              <div class="progress-bar"></div>
-            </div>
+            <div id="progress"></div>
           </ion-col>
         </ion-row>
       </ion-grid>

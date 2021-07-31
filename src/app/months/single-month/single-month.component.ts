@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
-import { Chart } from 'chart.js';
+import { Line } from 'progressbar.js';
 import { Subscription } from 'rxjs';
 import { Expense } from 'src/app/class/data/expense';
 import { Month } from 'src/app/class/data/month';
@@ -40,8 +40,36 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
   }
 
   initBar(){
-    const bar = document.querySelectorAll('#prog-bar > .progress-bar')[0] as HTMLElement;
-    bar.style.width = `${100*this.singleMonth.getTotal()/this.singleMonth.getBudget()}%`;
+    const barBis = document.querySelector('#progress') as HTMLElement;
+    const progressBar = new Line(barBis,{
+      strokeWidth: 4,
+      easing: 'easeInOut',
+      duration: 1400,
+      color: '#3880ff',
+      trailColor: '#eee',
+      trailWidth: 1,
+      svgStyle: {width: '100%', height: '100%'},
+      text: {
+        style: {
+          // Text color.
+          // Default: same as stroke color (options.color)
+          color: '#fff',
+          position: 'absolute',
+          right: '45%',
+          top: '3px',
+          padding: 0,
+          margin: 0,
+          transform: null
+        },
+        autoStyleContainer: false
+      },
+      from: {color: '#FFEA82'},
+      to: {color: '#ED6A5A'},
+      step: (state, b) => {
+        b.setText(Math.round(b.value() * 100) + ' %');
+      }
+    });
+    progressBar.animate(this.singleMonth.getTotal()/this.singleMonth.getBudget());
   }
 
   public async onAddExpense(){
