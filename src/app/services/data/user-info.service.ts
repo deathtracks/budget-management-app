@@ -69,7 +69,7 @@ export class UserInfoService implements OnDestroy {
     });
   }
 
-  public addCategory(name: string,color: number[]){
+  public addCategory(name: string,color: string){
     return new Promise<void>((next)=>{
       const newCat = new Category(name, this.loadedInfo.settings.categorie.length ,color);
       this.loadedInfo.settings.categorie.push(newCat);
@@ -86,7 +86,7 @@ export class UserInfoService implements OnDestroy {
     });
   }
 
-  public editCategory(index: number, newName: string,newColor: number[]){
+  public editCategory(index: number, newName: string,newColor: string){
     return new Promise<void>((next)=>{
       this.loadedInfo.settings.categorie[index].name= newName;
       this.loadedInfo.settings.categorie[index].color = newColor; //TODO : secure the way color are assigned

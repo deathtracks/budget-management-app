@@ -12,7 +12,7 @@ export class Settings {
                 this.categorie.push(newCat);
             }
         }else{
-            this.categorie = [new Category('Autre',0,[0,0,255])];
+            this.categorie = [new Category('Autre',0,'#0000ff')];
         }
         if(data && data.langue){
             this.langue = data.langue;
@@ -26,7 +26,6 @@ export class Settings {
         for(const c of this.categorie){
             cat.push(c.getObject());
         }
-        console.log(cat);
         return {
             langue : this.langue,
             categorie: cat

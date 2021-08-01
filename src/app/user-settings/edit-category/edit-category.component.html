@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="onDismiss()" >
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Edit Category
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="editCategoryForm" (ngSubmit)="onValidForm()">
+    <ion-item>
+      <ion-label position="floating">
+        Name :
+      </ion-label>
+      <ion-input type="text" id="name" formControlName="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        Color : 
+      </ion-label>
+      <ion-input type="color" id="color" formControlName="color"></ion-input>
+      <canvas id="color-show" width="30" height="30"></canvas>
+    </ion-item>
+    <ion-button type="submit" [disabled]="editCategoryForm.invalid">
+      Edit Category
+    </ion-button>
+  </form>
+</ion-content>

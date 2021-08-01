@@ -1,27 +1,25 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NumericValueAccessor, PickerController, ToastController } from '@ionic/angular';
+import { ModalController, NumericValueAccessor, PickerController, ToastController, ViewDidEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { UserInfo } from 'src/app/class/user-info';
 import { AuthService } from 'src/app/services/base/auth.service';
 import { UserInfoService } from 'src/app/services/data/user-info.service';
 import { TranslationService } from 'src/app/tools/translation/translation.service';
+import { AddCategoryComponent } from '../add-category/add-category.component';
+import { EditCategoryComponent } from '../edit-category/edit-category.component';
 
 @Component({
   selector: 'app-display',
   templateUrl: './display.component.html',
   styleUrls: ['./display.component.scss'],
 })
-export class DisplayComponent implements OnInit,OnDestroy {
+export class DisplayComponent implements OnInit,OnDestroy,ViewDidEnter {
   public userInf: UserInfo;
   public updatingEmail: boolean;
   public updatingPassword: boolean;
-  public updatingCategorie: boolean;
-  public addingCategory: boolean;
   public updateEmailForm: FormGroup;
   public updatePasswordForm: FormGroup;
-  public updateCategoryForm: FormGroup;
-  public addCategoryForm: FormGroup;
   public errorMessageEmail: string;
   public errorMessagePassword: string;
   public language: string[];
@@ -38,24 +36,32 @@ export class DisplayComponent implements OnInit,OnDestroy {
   constructor(
     private auth: AuthService,
     private user: UserInfoService,
+    private modalController: ModalController,
     private formBuilder: FormBuilder,
     private toastController: ToastController,
     private translation: TranslationService,
     private pickerController: PickerController
   ) { }
+  ionViewDidEnter(): void {
+    this.initCanvas();
+  }
 
   ngOnInit() {
     this.language = this.translation.languages;
     this.userInfoSub = this.user.userInfo
-    .subscribe(value =>this.userInf = value);
+    .subscribe(value =>{
+      this.userInf = value;
+      this.initCanvas();
+    });
     this.user.updateInfo(false);
     this.transSub = this.translation.translation
     .subscribe(value => this.chooseLanguage = value);
     this.translation.updateTranslation();
     this.initEmailForm();
     this.initPasswordForm();
-    this.initCategoryForm();
   }
+
+
 
   ngOnDestroy(): void {
     this.userInfoSub.unsubscribe();
@@ -119,18 +125,15 @@ export class DisplayComponent implements OnInit,OnDestroy {
     });
   }
 
-  initCategoryForm(){
-    this.addCategoryForm = this.formBuilder.group({
-      name: ['',Validators.required],
-      color: ['',Validators.required]
-    });
-  }
-
-  initCategoryUpdateForm(index: number){
-    this.updateCategoryForm = this.formBuilder.group({
-      name: [this.userInf.settings.categorie[index].name,Validators.required],
-      color: [this.userInf.settings.categorie[index].color,Validators.required]
-    });
+  initCanvas(){
+    for(const c of this.userInf.settings.categorie){
+      const canvas = document.getElementById(`${c.index}`) as HTMLCanvasElement;
+      if(canvas){
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = c.color;
+        ctx.fillRect(0, 0, 30, 30);
+      }
+    }
   }
 
   onLogOut(){
@@ -145,18 +148,21 @@ export class DisplayComponent implements OnInit,OnDestroy {
     this.updatingPassword = !this.updatingPassword;
   }
 
-  onAddCategory(){
-    this.addingCategory = !this.addingCategory;
+  public async onAddCategory(){
+    const modal = await this.modalController.create({
+      component : AddCategoryComponent
+    });
+    return await modal.present();
   }
 
-  onUpdateCategory(index: number){
-    if(this.updatingIndexCategorie && index===this.updatingIndexCategorie){
-      this.updatingCategorie=false;
-    } else {
-      this.updatingCategorie = true;
-      this.updatingIndexCategorie = index;
-      this.initCategoryUpdateForm(index);
-    }
+  public async onUpdateCategory(index: number){
+    const modal = await this.modalController.create({
+      component: EditCategoryComponent,
+      componentProps : {
+        category : this.userInf.settings.categorie[index]
+      }
+    });
+    return await modal.present();
   }
 
   onValidUpdateEmail(){
@@ -193,21 +199,6 @@ export class DisplayComponent implements OnInit,OnDestroy {
     }else{
       this.errorMessagePassword='Password should be the same';
     }
-  }
-
-  onValidAddCategory(){
-    console.log('button pressed');
-    const formValue = this.addCategoryForm.value;
-    this.user.addCategory(formValue.name,formValue.color);
-    this.addingCategory= false;
-    this.initCategoryForm();
-  }
-
-  onValidUpdateCategory(){
-    const formValue = this.updateCategoryForm.value;
-    this.user.editCategory(this.updatingIndexCategorie,formValue.name,formValue.color);
-    this.updatingCategorie = false;
-    this.updatingIndexCategorie = undefined;
   }
 
   onDeleteCategorie(index: number){

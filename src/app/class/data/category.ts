@@ -1,25 +1,21 @@
 export class Category {
     public name: string;
     public index: number;
-    public color: number[];
+    public color: string;
 
 
     constructor(
         name: string,
         index: number,
-        color: number[]
+        color: string
     ){
         this.name =name;
         this.index = index;
-        if(color && color.length===3){
+        if(color){
             this.color = color;
         }else{
-            this.color = [0,0,255];
+            this.color = '#00f';
         }
-    }
-
-    public getColorAsString(){
-        return `rgb(${this.color[0]},${this.color[1]},${this.color[2]})`;
     }
 
     public getObject(){

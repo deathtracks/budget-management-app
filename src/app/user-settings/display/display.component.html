@@ -103,32 +103,6 @@
       <ion-icon  name="add-outline"></ion-icon>
     </ion-button>
   </ion-item>
-  <ion-item *ngIf="addingCategory">
-    <form [formGroup]="addCategoryForm" (ngSubmit)="onValidAddCategory()">
-      <ion-item>
-        <ion-label position="floating">
-          <app-text id="user-settings-display-name-category"></app-text> :
-        </ion-label>
-        <ion-input type="text" id="nameC" formControlName="name"></ion-input>
-        <ion-input type="color" id="colorC" formControlName="color"></ion-input>
-        <ion-button slot="end" fill="clear" color="dark" type="submit"><ion-icon name="checkmark-outline"></ion-icon></ion-button>
-      </ion-item>
-    </form>
-  </ion-item>
-  <ion-item *ngIf="updatingCategorie">
-    <form [formGroup]="updateCategoryForm" (ngSubmit)="onValidUpdateCategory()">
-      <ion-item>
-        <ion-label position="floating">
-          <app-text id="user-settings-display-new-name-category"></app-text> :
-        </ion-label>
-        <ion-input type="text" id="nameCU" formControlName="name"></ion-input>
-        <ion-input type="color" id="colorCU" formControlName="color"></ion-input>
-        <ion-button slot="end" fill="clear" color="dark" [disabled]="updateCategoryForm.invalid" type="submit">
-          <ion-icon name="checkmark-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
-    </form>
-  </ion-item>
   <ion-list class="ion-padding-start"> <!--Liste des catégories-->
     <ion-item-sliding *ngFor="let c of userInf.settings.categorie; let index=index">
       <ion-item-options  side="start">
@@ -138,6 +112,7 @@
       </ion-item-options>
       <ion-item>
         <ion-label>{{ c.name }}</ion-label>
+        <canvas width="30" height="30" [id]="index" ></canvas>
       </ion-item>
       <ion-item-options *ngIf="index!==0" side="end">
         <ion-item-option color="danger"(click)='onDeleteCategorie(index)'>
