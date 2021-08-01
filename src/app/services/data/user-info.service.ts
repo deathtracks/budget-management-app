@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import firebase from 'firebase/app';
 import { Subject, Subscription } from 'rxjs';
+import { Category } from 'src/app/class/data/category';
 import { UserInfo } from 'src/app/class/user-info';
 import { ErrorHandlingService } from 'src/app/tools/error-handling.service';
 import { TranslationService } from 'src/app/tools/translation/translation.service';
@@ -68,9 +69,10 @@ export class UserInfoService implements OnDestroy {
     });
   }
 
-  public addCategory(name: string){
+  public addCategory(name: string,color: number[]){
     return new Promise<void>((next)=>{
-      this.loadedInfo.settings.categorie.push(name);
+      const newCat = new Category(name, this.loadedInfo.settings.categorie.length ,color);
+      this.loadedInfo.settings.categorie.push(newCat);
       this.updateInfo();
       next();
     });
@@ -84,9 +86,10 @@ export class UserInfoService implements OnDestroy {
     });
   }
 
-  public editCategory(index: number, newName: string){
+  public editCategory(index: number, newName: string,newColor: number[]){
     return new Promise<void>((next)=>{
-      this.loadedInfo.settings.categorie[index]= newName;
+      this.loadedInfo.settings.categorie[index].name= newName;
+      this.loadedInfo.settings.categorie[index].color = newColor; //TODO : secure the way color are assigned
       this.updateInfo();
       next();
     });

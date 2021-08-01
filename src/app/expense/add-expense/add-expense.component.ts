@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController, PickerController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { Category } from 'src/app/class/data/category';
 import { Month } from 'src/app/class/data/month';
 import { MonthService } from 'src/app/services/data/month.service';
 import { UserInfoService } from 'src/app/services/data/user-info.service';
@@ -15,7 +16,7 @@ export class AddExpenseComponent implements OnInit,OnDestroy {
   @Input() month: Month;
   public newExpenseForm: FormGroup;
   public selectedCategory: number;
-  public userCategories: string[];
+  public userCategories: Category[];
 
   private userSub: Subscription;
   constructor(
@@ -48,7 +49,7 @@ export class AddExpenseComponent implements OnInit,OnDestroy {
     const options = [];
     for(let i=0;i<this.userCategories.length;i++){
       options.push({
-        text: this.userCategories[i],
+        text: this.userCategories[i].name,
         value: i
       });
     }

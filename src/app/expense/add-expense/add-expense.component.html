@@ -33,7 +33,7 @@
       <p>
         <app-text id="expense-add-expense-category"></app-text>
       </p>
-      <p class="ion-float-right"> {{ this.userCategories[this.selectedCategory] }}</p>
+      <p class="ion-float-right"> {{ this.userCategories[this.selectedCategory].name }}</p>
     </ion-item>
     <ion-button expand="full" type="submit" [disabled]="newExpenseForm.invalid">
       <app-text id="expense-add-expense-add"></app-text>

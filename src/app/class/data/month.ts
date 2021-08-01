@@ -85,6 +85,44 @@ export class Month {
         return middleDate;
     }
 
+    public getExpensesOfDay(day: number,month: number,year: number): Expense[]{
+        const res = [];
+        for(const e of this.expenses){
+            if(e.date.getFullYear()===year && e.date.getMonth()===month && e.date.getDate()===day){
+                res.push(e);
+            }
+        }
+        return res;
+    }
+
+    public getExpensesByCategory(category: number): Expense[]{
+        const res = [];
+        for(const e of this.expenses){
+            if(e.category===category){
+                res.push(e);
+            }
+        }
+        return res;
+    }
+
+    public getAmountOfDay(day: number,month: number,year: number): number{
+        const expenseOfDay = this.getExpensesOfDay(day,month,year);
+        let res = 0;
+        for(const e of expenseOfDay){
+            res+=e.amount;
+        }
+        return res;
+    }
+
+    public getAmountByCategory(category: number): number{
+        let res = 0;
+        const expenseOfCategory = this.getExpensesByCategory(category);
+        for(const e of expenseOfCategory){
+            res+=e.amount;
+        }
+        return res;
+    }
+
     public setId(newId: string){
         this.id = newId;
     }

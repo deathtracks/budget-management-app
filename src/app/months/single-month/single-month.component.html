@@ -59,7 +59,7 @@
       <ion-item>
         <ion-label>
           <h2>{{ e.name }}</h2>
-          <h3>{{ userCategory[e.category] }}</h3>
+          <h3>{{ userCategory[e.category].name }}</h3>
           <p>{{ e.date | dateToString:'short-str' }}</p>
         </ion-label>
         <ion-note slot="end" color="tertiary">{{ e.amount }} €</ion-note>

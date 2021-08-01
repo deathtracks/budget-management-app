@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController, PickerController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { Category } from 'src/app/class/data/category';
 import { Expense } from 'src/app/class/data/expense';
 import { ExpenseService } from 'src/app/services/data/expense.service';
 import { UserInfoService } from 'src/app/services/data/user-info.service';
@@ -15,7 +16,7 @@ import { DateToStringService } from 'src/app/services/tools/date-to-string.servi
 export class EditExpenseComponent implements OnInit,OnDestroy {
   @Input() editedExpense: Expense;
   public selectedCategory: number;
-  public userCategory: string[];
+  public userCategory: Category[];
 
   public editExpenseForm: FormGroup;
 
@@ -65,7 +66,7 @@ export class EditExpenseComponent implements OnInit,OnDestroy {
     const options = [];
     for(let i=0;i<this.userCategory.length;i++){
       options.push({
-        text: this.userCategory[i],
+        text: this.userCategory[i].name,
         value: i
       });
     }

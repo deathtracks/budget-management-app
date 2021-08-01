@@ -121,13 +121,15 @@ export class DisplayComponent implements OnInit,OnDestroy {
 
   initCategoryForm(){
     this.addCategoryForm = this.formBuilder.group({
-      name: ['',Validators.required]
+      name: ['',Validators.required],
+      color: ['',Validators.required]
     });
   }
 
   initCategoryUpdateForm(index: number){
     this.updateCategoryForm = this.formBuilder.group({
-      name: [this.userInf.settings.categorie[index],Validators.required]
+      name: [this.userInf.settings.categorie[index].name,Validators.required],
+      color: [this.userInf.settings.categorie[index].color,Validators.required]
     });
   }
 
@@ -196,14 +198,14 @@ export class DisplayComponent implements OnInit,OnDestroy {
   onValidAddCategory(){
     console.log('button pressed');
     const formValue = this.addCategoryForm.value;
-    this.user.addCategory(formValue.name);
+    this.user.addCategory(formValue.name,formValue.color);
     this.addingCategory= false;
     this.initCategoryForm();
   }
 
   onValidUpdateCategory(){
     const formValue = this.updateCategoryForm.value;
-    this.user.editCategory(this.updatingIndexCategorie,formValue.name);
+    this.user.editCategory(this.updatingIndexCategorie,formValue.name,formValue.color);
     this.updatingCategorie = false;
     this.updatingIndexCategorie = undefined;
   }

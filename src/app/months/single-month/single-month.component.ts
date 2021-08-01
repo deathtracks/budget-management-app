@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { Line } from 'progressbar.js';
 import { Subscription } from 'rxjs';
+import { Category } from 'src/app/class/data/category';
 import { Expense } from 'src/app/class/data/expense';
 import { Month } from 'src/app/class/data/month';
 import { AddExpenseComponent } from 'src/app/expense/add-expense/add-expense.component';
@@ -17,7 +18,7 @@ import { SingleMonthDetailComponent } from '../single-month-detail/single-month-
 })
 export class SingleMonthComponent implements OnInit,OnDestroy {
   @Input() singleMonth: Month;
-  public userCategory;
+  public userCategory: Category[];
 
   bars: any;
   private userSub: Subscription;
