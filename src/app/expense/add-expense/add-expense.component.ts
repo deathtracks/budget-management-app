@@ -15,7 +15,7 @@ import { UserInfoService } from 'src/app/services/data/user-info.service';
 export class AddExpenseComponent implements OnInit,OnDestroy {
   @Input() month: Month;
   public newExpenseForm: FormGroup;
-  public selectedCategory: number;
+  public selectedCategory = 0;
   public userCategories: Category[];
 
   private userSub: Subscription;

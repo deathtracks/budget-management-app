@@ -84,6 +84,7 @@ export class AuthService {
   }
 
   public logInUser(email: string, password: string){
+    console.log('trying to log the user');
     return firebase.auth().signInWithEmailAndPassword(email,password)
     .then(userCred => userCred.credential)
     .catch(err =>{

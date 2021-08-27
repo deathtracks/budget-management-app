@@ -16,8 +16,20 @@ export class TranslationService {
   constructor(
     private http: HttpClient
   ) {
-    this.readFile();
    }
+
+  public loadFile() {
+    return new Promise<void | Error>(async (next)=>{
+      const data = await this.http.get(`../../../assets/translation/${this.language}.json`).toPromise();
+      console.log('Loaded language data');
+      if(data){
+        this.data = data;
+        next();
+      }else {
+        next(new Error('no language data was found'));
+      }
+    });
+  }
 
   public switchTo(newLanguage: number){
       this.language = this.knownLanguage[newLanguage];

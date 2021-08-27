@@ -11,12 +11,18 @@ import { TranslationService } from './tools/translation/translation.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(
     private menuController: MenuController,
-    private translation: TranslationService  ) {
+    private route: Router) {
     firebase.initializeApp(environment.firebaseConfig);
   }
+
+  ngOnInit(): void {
+    this.route.navigate(['loading']);
+  }
+
+
 
   onLink(){
     this.menuController.close();
