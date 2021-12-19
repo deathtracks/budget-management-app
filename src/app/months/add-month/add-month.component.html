@@ -15,13 +15,13 @@
       <ion-label position="floating">
         <app-text id="month-add-month-start-date"></app-text>
       </ion-label>
-      <ion-datetime id="start" formControlName="start"></ion-datetime>
+      <ion-datetime id="start" formControlName="start" [min]="minStartDate" [max]="maxStartDate" (ngModelChange)="onUpdateDateMin()"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label position="floating">
         <app-text id="month-add-month-end-date"></app-text>
       </ion-label>
-      <ion-datetime id="end" formControlName="end"></ion-datetime>
+      <ion-datetime id="end" formControlName="end" [min]="minEndDate" [max]="maxEndDate"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label position="floating">

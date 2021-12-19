@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Chart, ChartConfiguration, ChartItem, registerables } from 'chart.js';
+import { Chart, ChartConfiguration, ChartItem, ChartType, registerables } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { Category } from 'src/app/class/data/category';
 import { Month } from 'src/app/class/data/month';
@@ -16,6 +16,10 @@ export class SingleMonthDetailComponent implements OnInit {
   public userCatgories: Category[];
 
   private userInfoSub: Subscription;
+  private amountPerDayChart: Chart;
+  private amountPerCategoryChart: Chart;
+  private amountPerDayCanva: HTMLElement;
+  private amountPerCategoryCanva: HTMLElement;
   constructor(
     private modalController: ModalController,
     private user: UserInfoService
@@ -24,6 +28,8 @@ export class SingleMonthDetailComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.resetCanvas();
+    this.getCanvas();
     this.generateExpenseByDayChart();
     this.userInfoSub = this.user.userInfo
     .subscribe(value =>{
@@ -34,7 +40,22 @@ export class SingleMonthDetailComponent implements OnInit {
   }
 
   public onDismiss(){
+    this.amountPerCategoryChart.destroy();
+    this.amountPerDayChart.destroy();
+    console.log('test');
     this.modalController.dismiss();
+  }
+
+  private resetCanvas(){
+    if(this.amountPerDayChart){
+      this.amountPerDayChart.destroy();
+      this.amountPerCategoryChart.destroy();
+    }
+  }
+
+  private getCanvas(){
+    this.amountPerDayCanva = document.getElementById('amount-by-day');
+    this.amountPerCategoryCanva = document.getElementById('amount-by-category');
   }
 
 
@@ -61,29 +82,33 @@ export class SingleMonthDetailComponent implements OnInit {
       type : 'line',
       data
     };
-    const canvas = document.getElementById('amount-by-day');
-    const amountPerDay = new Chart(canvas as ChartItem,config);
+    this.amountPerDayChart = new Chart(this.amountPerDayCanva as ChartItem,config);
   }
 
   private generateExpenseByCategory(){
     const expenseList = [];
+    const userCat = [];
+    const colorCat = [];
     for(let i=0;i<this.userCatgories.length;i++){
-      expenseList.push(this.singleMonth.getExpensesByCategory(i));
+      expenseList.push(this.singleMonth.getAmountByCategory(i));
+      userCat.push(this.userCatgories[i].name);
+      colorCat.push(this.userCatgories[i].color);
     }
     const data = {
-      labels: this.userCatgories,
+      labels: userCat,
       datasets:[{
         label: 'Amount per category',
+        backgroundColor: colorCat,
+        borderColor: 'rgba(0,0,0,0)',
         data : expenseList,
         hoverOffset:4
       }]
     };
     const config: ChartConfiguration = {
-      type: 'pie',
+      type: 'doughnut',
       data
     };
-    const canvas = document.getElementById('amount-by-category');
-    const amountPerCategory = new Chart(canvas as ChartItem,config);
+    this.amountPerCategoryChart = new Chart(this.amountPerCategoryCanva as ChartItem,config);
   }
 
   private dayToShortString(date: Date){

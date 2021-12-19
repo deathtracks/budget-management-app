@@ -10,12 +10,20 @@ import { MonthService } from 'src/app/services/data/month.service';
 })
 export class AddMonthComponent implements OnInit {
   public newMonthForm: FormGroup;
+  public minStartDate: string;
+  public maxStartDate: string;
+  public minEndDate: string;
+  public maxEndDate: string;
 
   constructor(
     private modalController: ModalController,
     private formBuilder: FormBuilder,
     private month: MonthService
-  ) { }
+  ) {
+    this.minStartDate = String((new Date()).getFullYear()-1);
+    this.maxStartDate = String((new Date()).getFullYear()+1);
+    this.maxEndDate = String((new Date()).getFullYear()+1);
+  }
 
   ngOnInit() {
     this.newMonthForm = this.formBuilder.group({
@@ -29,8 +37,8 @@ export class AddMonthComponent implements OnInit {
     this.modalController.dismiss();
   }
 
-  onUpdate(){
-    console.log(this.newMonthForm);
+  onUpdateDateMin(){
+    this.minEndDate = (new Date(this.newMonthForm.value.start)).toISOString().slice(0,10);
   }
 
   onCreateMonth(){
