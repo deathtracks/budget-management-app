@@ -1,4 +1,6 @@
-export class Objectif {
+import { ObjectBasePrototype } from '../object-base-prototype';
+
+export class Objectif extends ObjectBasePrototype{
     public name: string;
     public start: Date;
     public amount: number;
@@ -18,6 +20,7 @@ export class Objectif {
         if(save && save.length>0 && (!date || date.length!==save.length)){
             throw Error('Missing data in save or date');
         }
+        super(name);
         this.amount = amount;
         this.name = name;
         this.start = start;
@@ -32,5 +35,16 @@ export class Objectif {
 
     public get dates(): Date[]{
         return [...this.date];
+    }
+
+    public getObject() {
+        return {
+            name : this.name,
+            start: this.start,
+            amount: this.amount,
+            saves: this.saves,
+            dates: this.dates,
+            completed: this.completed
+        };
     }
 }

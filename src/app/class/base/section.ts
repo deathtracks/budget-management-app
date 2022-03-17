@@ -1,8 +1,13 @@
-export class Section {
-    private part: number;
+import { ObjectBasePrototype } from '../object-base-prototype';
 
+export class Section extends ObjectBasePrototype {
+    public name: string;
+
+    private part: number;
     constructor(p: number,name: string){
+        super(name);
         this.part = p;
+        this.name = name;
     }
 
     public set partion(p: number){
@@ -15,5 +20,12 @@ export class Section {
 
     public get partion(): number{
         return this.part;
+    }
+
+    public getObject() {
+        return {
+            part: this.part,
+            name: this.name
+        };
     }
 }
