@@ -62,8 +62,16 @@ export abstract class ObjectBaseService<T extends ObjectBasePrototype> {
    * @returns the entry as a T object corresponding to the id, if it exist
    */
   public getOne(id: string): Promise<T> {
-    const docRef = doc(this.db,this.collection,id);
     return new Promise<T>((resolve,reject)=>{
+      if(this.objList && this.objList.length>0){
+        const singleObj = this.objList.find((o,i,list)=>o.getId()===id);
+        if(singleObj){
+          this.obj = singleObj;
+          this.publish();
+          resolve(singleObj);
+        }
+      }
+      const docRef = doc(this.db,this.collection,id);
       getDoc(docRef)
       .then((docSnap: DocumentSnapshot)=>{
         const o = this.convertToObj(docSnap.id,docSnap.data());
