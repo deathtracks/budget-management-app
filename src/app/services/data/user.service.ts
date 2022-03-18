@@ -17,6 +17,10 @@ export class UserService extends ObjectBaseService<User> {
     this.objSub = new Subject();
   }
 
+  public getAll(): Promise<User[]> {
+    throw Error('This methode is prohibited');
+  }
+
   public addObjectif(o: Objectif): Promise<boolean>{
     return new Promise<boolean>((resolve,rejects)=>{
       this.obj.objectifs.push(o);
