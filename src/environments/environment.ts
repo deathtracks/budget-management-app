@@ -10,6 +10,7 @@ export const environment = {
     measurementId: 'G-JT1VX7G6M0'
   },
   collection : {
-    month: 'months'
+    month: 'months',
+    user: 'users'
   }
 };

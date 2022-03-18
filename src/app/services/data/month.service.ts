@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { rejects } from 'assert';
-import { resolve } from 'dns';
 import { Subject } from 'rxjs';
 import { Expense } from 'src/app/class/base/expense';
 import { Month } from 'src/app/class/base/month';
@@ -22,33 +20,50 @@ export class MonthService extends ObjectBaseService<Month> {
 
   public addExpense(e: Expense): Promise<boolean | Error>{
     return new Promise<boolean | Error>((resolve,rejects)=>{
-      this.obj.expenseList.push(e);
-      this.editOne(this.obj)
-      .then(()=>resolve(true))
-      .catch((err)=>rejects(err));
+      if(!this.obj.close){
+        this.obj.expenseList.push(e);
+        this.editOne(this.obj)
+        .then(()=>resolve(true))
+        .catch((err)=>rejects(err));
+      } else {
+        resolve(false);
+      }
     });
   }
 
   public removeExpense(index: number): Promise<boolean | Error>{
     return new Promise<boolean | Error>((resolve,rejects)=>{
-      this.obj.expenseList.slice(index,1);
-      this.editOne(this.obj)
-      .then(()=>resolve(true))
-      .catch((err)=>rejects(err));
+      if(!this.obj.close){
+        this.obj.expenseList.slice(index,1);
+        this.editOne(this.obj)
+        .then(()=>resolve(true))
+        .catch((err)=>rejects(err));
+      } else {
+        resolve(false);
+      }
     });
   }
 
   public editExpense(e: Expense, index: number): Promise<boolean | Error>{
     return new Promise<boolean | Error>((resolve,rejects)=>{
-      this.obj.expenseList[index] = e;
-      this.editOne(this.obj)
-      .then(()=>resolve(true))
-      .catch((err)=>rejects(err));
+      if(!this.obj.close){
+        this.obj.expenseList[index] = e;
+        this.editOne(this.obj)
+        .then(()=>resolve(true))
+        .catch((err)=>rejects(err));
+      } else {
+        resolve(false);
+      }
     });
   }
 
   public endMonth(): Promise<boolean | Error>{
-
+    return new Promise<boolean | Error>((resolve,rejects)=>{
+      this.obj.close = true;
+      this.editOne(this.obj)
+      .then(()=>resolve(true))
+      .catch((err)=>rejects(err));
+    });
   }
 
   protected convertToObj(id: string, data: any): Month {
