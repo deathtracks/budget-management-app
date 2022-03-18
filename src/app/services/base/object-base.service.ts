@@ -57,6 +57,7 @@ export abstract class ObjectBaseService<T extends ObjectBasePrototype> {
 
   /**
    * Get the entry corresponding to the id
+   * TODO : handle no id matching
    *
    * @param id - unique key found in the firestore database
    * @returns the entry as a T object corresponding to the id, if it exist

@@ -1,123 +1,121 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import firebase from 'firebase/app';
-import { Router } from '@angular/router';
-import { ErrorHandlingService } from 'src/app/tools/error-handling.service';
-
+import { getAuth, createUserWithEmailAndPassword, Auth, UserCredential, signInWithRedirect, getRedirectResult} from 'firebase/auth';
+import { signInWithEmailAndPassword, signOut, GoogleAuthProvider } from 'firebase/auth';
+import { User } from 'src/app/class/base/user';
+import { UserService } from '../data/user.service';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  public user: Subject<firebase.User> = new Subject<firebase.User>();
+  public isAuth: Subject<boolean>;
 
-  private currentUser: firebase.User;
-  private db: firebase.firestore.Firestore;
+  private isUserAuth: boolean;
+  private auth: Auth;
+  private provider: GoogleAuthProvider;
+
   constructor(
-    private router: Router,
-    private error: ErrorHandlingService
+    private userService: UserService
   ) {
-    this.db = firebase.firestore();
-    firebase.auth().onAuthStateChanged(
-      (user) =>{
-        if(user){
-          this.currentUser = user;
-          this.updateUser();
-        }else{
-          this.currentUser = null;
-          this.updateUser();
-        }
+    this.auth = getAuth();
+    this.provider = new GoogleAuthProvider();
+  }
+
+  public signIn(u: User, password: string, repeat: string): Promise<boolean> {
+    return new Promise<boolean>((resolve,rejects)=>{
+      if(password===repeat){
+        createUserWithEmailAndPassword(this.auth, u.email,password)
+        .then((userCred: UserCredential)=>{
+          const user = userCred.user;
+          this.userService.createOne(u)
+          .then(()=>{
+            this.isUserAuth = true;
+            this.publish();
+            resolve(true);
+          })
+          .catch((err)=>rejects(err));
+        })
+        .catch((err)=>{
+          const errorCode = err.code;
+          const errorMessage = err.message;
+          //TODO : handle misIdentification.
+          rejects(err);
+        });
+      } else {
+        rejects(new Error('Passwords don\'t match'));
       }
-    );
-  }
-
-  public isUserLogedIn(): boolean{
-    if(this.currentUser){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public getUserUID(): string{
-    if(this.currentUser){
-      return this.currentUser.uid;
-    } else {
-      return null;
-    }
-  }
-
-  public updateUser(){
-    this.user.next(this.currentUser);
-  }
-
-  public createUser(email: string, password: string){
-    return firebase.auth().
-    createUserWithEmailAndPassword(email,password)
-    .then(
-      result =>{
-        const userUid = result.user.uid;
-        this.createUserData(userUid,result.user.email);
-      }
-    )
-    .catch(err =>{
-      console.log(err);
-      this.error.showError('createUser','auth.service',err.message);
     });
   }
 
-  public updateEmail(email: string,password: string){
-    return this.logInUser(this.currentUser.email,password)
-    .then(authCred =>this.currentUser.updateEmail(email))
-    .catch(err =>{
-      console.log(err);
-      this.error.showError('updateEmail','auth.service',err.message);
+  public signInWithGoogle(): Promise<boolean>{
+    return new Promise<boolean>(async (resolve,rejects)=>{
+      await signInWithRedirect(this.auth,this.provider);
+      getRedirectResult(this.auth)
+      .then((result: UserCredential)=>{
+        const cred = GoogleAuthProvider.credentialFromResult(result);
+        const email = result.user.email;
+        this.userService.getOne(email)
+        .then((u)=>{
+          if(u){
+            this.isUserAuth = true;
+            this.publish();
+            resolve(true);
+          } else {
+            u = new User(email,result.user.displayName,'');
+            this.userService.createOne(u)
+            .then(()=>{
+              this.isUserAuth = true;
+              this.publish();
+              resolve(true);
+            })
+            .catch((err)=>{
+              rejects(err);
+            });
+          }
+        });
+      })
+      .catch();
     });
   }
 
-  public updatePassword(oldpassword: string,password: string){
-    return this.logInUser(this.currentUser.email,oldpassword)
-    .then(authCred=>this.currentUser.updatePassword(password))
-    .catch(err =>{
-      console.log(err);
-      this.error.showError('updatePassword','auth.service',err.message);
+  public logIn(email: string, password: string): Promise<boolean>{
+    return new Promise<boolean>((resolve,rejects)=>{
+      signInWithEmailAndPassword(this.auth,email,password)
+      .then((userCred: UserCredential)=>{
+        const user = userCred.user;
+        this.userService.getOne(email)
+        .then(()=>{
+          this.isUserAuth = true;
+          this.publish();
+          resolve(true);
+        })
+        .catch(err=>rejects(err));
+      })
+      .catch(err=>rejects(err));
+      //TODO : handle misIdentification.
     });
   }
 
-  public logInUser(email: string, password: string){
-    console.log('trying to log the user');
-    return firebase.auth().signInWithEmailAndPassword(email,password)
-    .then(userCred => userCred.credential)
-    .catch(err =>{
-      console.log(err);
-      this.error.showError('logInUser','auth.service',err.message);
+  public logOut(): Promise<boolean>{
+    return new Promise<boolean>((resolve,rejects)=>{
+      signOut(this.auth)
+      .then(()=>{
+        this.isUserAuth = false;
+        this.publish();
+        resolve(true);
+      })
+      .catch((err)=>rejects(err));
     });
   }
 
-  public logOutUser() {
-    firebase.auth().signOut()
-    .then(() =>{
-      this.router.navigate(['connexion']);
-    })
-    .catch(err =>{
-      console.log(err);
-      this.error.showError('logOutUser','auth.service',err.message);
-    });
+  public isLogIn(): boolean{
+    this.publish();
+    return this.isUserAuth===true;
   }
 
-  private createUserData(uid: string,email: string){
-    this.db.collection('users').doc(uid).set({
-      email,
-      months: []
-    })
-    .then(
-      result => console.log(result)
-    )
-    .catch(err =>{
-      console.log(err);
-      this.error.showError('createUserDate','auth.service',err.message);
-    });
+  private publish(): void{
+    this.isAuth.next(this.isUserAuth);
   }
-
 }
 
 
