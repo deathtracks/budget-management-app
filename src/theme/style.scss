@@ -8,5 +8,5 @@
 html {
     background-color: map-get($map: $custom-colors, $key: dark);
     color : map-get($map: $custom-colors, $key: primary);
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif !important;
 }

@@ -1,6 +1,29 @@
+@import "./../Base/colors";
+
 .hr{
     height: 5px;
     width: 100%;
-    background-color: map-get($map: $custom-colors, $key: lighter-dark);
+    background-color: map-get($map: $custom-colors, $key: shadow);
     border-radius: 5px;
+}
+
+.hr.small{
+    height: 2px;
+}
+
+.icon{
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+}
+
+.progress-bar{
+    width: 100%;
+    height: 10px;
+    background-color: map-get($map: $custom-colors, $key: shadow);
+    border-radius: 5px;
+}
+
+.full-width{
+    width: 100%;
 }

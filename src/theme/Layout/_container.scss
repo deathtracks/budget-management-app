@@ -1,3 +1,8 @@
+.content{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 .block{
     width: 100%;
     padding: 0px 10px 0px 10px;
@@ -17,14 +22,30 @@
     flex-direction: row;
 }
 
+.space-between{
+    justify-content: space-between;
+}
+
 .horizontal-spacing {
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
+.rounded {
+    border-radius: 10px;
+}
+
 
 .align-center{
     align-items: center;
+}
+
+.align-start{
+    align-items: flex-start;
+}
+
+.align-end{
+    align-items: flex-end;
 }
 
 .justify-center{
@@ -34,3 +55,21 @@
 .gap{
     gap: 5px 5px;
 }
+
+.margin-top{
+    margin-top: 10px;
+}
+
+.margin-bottom{
+    margin-bottom: 10px;
+}
+
+.padding-top{
+    padding-top: 10px;
+}
+
+.padding-bottom{
+    padding-bottom: 10px;
+}
+
+
