@@ -1,0 +1,6 @@
+.hr{
+    height: 5px;
+    width: 100%;
+    background-color: map-get($map: $custom-colors, $key: lighter-dark);
+    border-radius: 5px;
+}

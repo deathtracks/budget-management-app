@@ -1,0 +1,21 @@
+$custom-colors: (
+    primary : #F2EDED,
+    secondary: #0F71B3,
+    danger: #AE1919,
+    dark: #151414,
+    lighter-dark : #333333
+);
+
+$colors-name : primary,secondary,dark,danger,lighter-dark;
+
+@each $color in $colors-name {
+    .bg-#{$color}{
+        background-color: map-get($map: $custom-colors, $key: $color);
+    }
+}
+
+@each $color in $colors-name {
+    .text-#{$color}{
+        color: map-get($map: $custom-colors, $key: $color);
+    }
+}

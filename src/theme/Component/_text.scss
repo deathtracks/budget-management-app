@@ -1,0 +1,14 @@
+@import "../Base/colors";
+
+a {
+    color : map-get($map: $custom-colors, $key: secondary);
+    text-decoration: underline;
+}
+
+a:visited{
+    color: darken($color: map-get($custom-colors,secondary), $amount: 15%);
+}
+
+a:active{
+    color: lighten($color: map-get($custom-colors,secondary), $amount: 15%);
+}
