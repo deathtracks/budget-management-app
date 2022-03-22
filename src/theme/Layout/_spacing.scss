@@ -1,0 +1,48 @@
+$spacing-size : (
+    's' : 5px,
+    'm' : 10px,
+    'l' : 15px
+);
+
+$spacing-direction : ('t','b','r','l');
+
+
+@each $name,$value in $spacing-size {
+    .p-#{$name}{
+        padding: $value;
+    }
+    .m-#{$name}{
+        margin: $value;
+    }
+
+    @each $direction in $spacing-direction{
+        .p#{$direction}-#{$name}{
+            @if $direction=='t' {
+                padding-top: $value;
+            }
+            @if $direction=='b' {
+                padding-bottom: $value;
+            }
+            @if $direction=='r' {
+                padding-right: $value;
+            }
+            @if $direction=='l' {
+                padding-left: $value;
+            }
+        }
+        .m#{$direction}-#{$name}{
+            @if $direction=='t' {
+                margin-top: $value;
+            }
+            @if $direction=='b' {
+                margin-bottom: $value;
+            }
+            @if $direction=='r' {
+                margin-right: $value;
+            }
+            @if $direction=='l' {
+                margin-left: $value;
+            }
+        }
+    }
+}
