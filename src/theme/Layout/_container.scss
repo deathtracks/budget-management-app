@@ -8,10 +8,12 @@
 }
 
 .stack {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow: visible;
 }
 
 .horizontal-stack{
@@ -52,3 +54,21 @@
 .gap{
     gap: 5px 5px;
 }
+
+.margin-top{
+    margin-top: 10px;
+}
+
+.margin-bottom{
+    margin-bottom: 10px;
+}
+
+.padding-top{
+    padding-top: 10px;
+}
+
+.padding-bottom{
+    padding-bottom: 10px;
+}
+
+

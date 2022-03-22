@@ -37,6 +37,10 @@ input {
     padding: 0px 10px 0px 10px;
 }
 
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
 .btn{
     border-radius: 10px;
     font-size: 16px;
@@ -46,23 +50,34 @@ input {
 
 .floating-btn{
     position: absolute;
-    height: 30px;
-    width: 30px;
-    border-radius: 15px;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
     margin: 0px;
     padding: 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    transition: all ease-in-out 200ms;
+}
+
+.floating-btn.rotate{
+    transform: rotate(90deg);
 }
 
 .floating-btn.bottom{
-    bottom: 5%;
+    bottom: 40px;
+}
+.floating-btn.bottom.raise-1{
+    bottom: 90px;
+}
+.floating-btn.bottom.raise-2{
+    bottom: 140px;
 }
 
 .floating-btn.rigth{
-    right: 5%;
+    right: 20px;
 }
 
 .floating-btn > .icon{

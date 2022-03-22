@@ -38,14 +38,20 @@
 <div class="block  title-3 m-s ml-m">
   Mois précédents :
 </div>
-<div class="stack gap content"> <!--scroll-->
+<div class="stack gap pl-m pr-m"> <!--scroll-->
   <div class="horizontal-stack space-between block rounded bg-primary text-lighter-dark p-s">
     <div class="title-2 text-center">Déccembre 2021</div>
     <ion-icon size="large" name="checkmark-outline"></ion-icon>
     <ion-icon class="text-secondary" size="large" name="arrow-forward-outline"></ion-icon>
   </div>
 </div>
-<button class="floating-btn bottom rigth btn-secondary" (click)="presentModal()">
+<button id="main-btn" class="floating-btn bottom rigth btn-secondary" (click)="showBtn()">
+  <ion-icon class="icon" size="large" name="chevron-back-outline"></ion-icon>
+</button>
+<button id="float-btn-1" class="floating-btn bottom rigth btn-secondary p-s" (click)="presentModal()">
+  <ion-icon class="icon" size="large" name="options-outline"></ion-icon>
+</button>
+<button id="float-btn-2" class="floating-btn bottom rigth btn-secondary" (click)="presentModal()">
   <ion-icon class="icon" size="large" name="add-outline"></ion-icon>
 </button>
 </ion-content>
