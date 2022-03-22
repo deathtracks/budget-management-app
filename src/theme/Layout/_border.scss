@@ -1,0 +1,36 @@
+@import "../Base/colors";
+
+$border-direction : ('t','b','r','l');
+$border-value : (
+    's':2px,
+    'm':4px,
+    'l':6px
+);
+
+@each $name,$value in $border-value {
+    .b-#{$name}{
+        border: $value solid;
+    }
+    @each $dir in $border-direction {
+        .b#{$dir}-#{$name}{
+            @if $dir=='t'{
+                border-top: $value solid;
+            }
+            @if $dir=='b'{
+                border-bottom: $value solid;
+            }
+            @if $dir=='r'{
+                border-right: $value solid;
+            }
+            @if $dir=='l'{
+                border-left: $value solid;
+            }
+        }
+    }
+}
+
+@each $name,$value in $custom-colors{
+    .b-#{$name}{
+        border-color: $value;
+    }
+}

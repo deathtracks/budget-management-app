@@ -15,6 +15,17 @@ input {
     padding: 5px 5px 5px 5px;
 }
 
+.modal-input {
+    width: 100%;
+    border: none;
+    border-radius: 0px;
+}
+
+.modal-input:focus{
+    border: none;
+    border-radius: 0px;
+}
+
 
 .input-field{
     height: auto;
@@ -31,6 +42,32 @@ input {
     font-size: 16px;
     font-weight: 600;
     height : 40px;
+}
+
+.floating-btn{
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.floating-btn.bottom{
+    bottom: 5%;
+}
+
+.floating-btn.rigth{
+    right: 5%;
+}
+
+.floating-btn > .icon{
+    height: 95%;
+    width: 95%;
 }
 
 @each $color in $colors-name {

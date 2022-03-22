@@ -27,3 +27,9 @@
 .full-width{
     width: 100%;
 }
+
+.modal{
+    width: 100%;
+    height: 100%;
+    background-color: map-get($map: $custom-colors, $key: primary);
+}
