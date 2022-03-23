@@ -1,6 +1,6 @@
 @import "../Base/colors";
+@import "../Base/variables";
 
-$border-direction : ('t','b','r','l');
 $border-value : (
     's':2px,
     'm':4px,
@@ -11,7 +11,7 @@ $border-value : (
     .b-#{$name}{
         border: $value solid;
     }
-    @each $dir in $border-direction {
+    @each $dir in $direction {
         .b#{$dir}-#{$name}{
             @if $dir=='t'{
                 border-top: $value solid;

@@ -27,8 +27,8 @@ export class HomePage implements OnInit {
   async presentModal() {
     const modal = await this.modalControler.create({
       component: AddMonthComponent,
-      breakpoints: [0, 0.35],
-      initialBreakpoint: 0.35
+      breakpoints: [0, 0.40],
+      initialBreakpoint: 0.40
     });
     return await modal.present();
   }

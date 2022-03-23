@@ -1,11 +1,10 @@
+@import "../Base/variables";
+
 $spacing-size : (
     's' : 5px,
     'm' : 10px,
     'l' : 15px
 );
-
-$spacing-direction : ('t','b','r','l');
-
 
 @each $name,$value in $spacing-size {
     .p-#{$name}{
@@ -15,32 +14,32 @@ $spacing-direction : ('t','b','r','l');
         margin: $value;
     }
 
-    @each $direction in $spacing-direction{
-        .p#{$direction}-#{$name}{
-            @if $direction=='t' {
+    @each $dir in $direction{
+        .p#{$dir}-#{$name}{
+            @if $dir=='t' {
                 padding-top: $value;
             }
-            @if $direction=='b' {
+            @if $dir=='b' {
                 padding-bottom: $value;
             }
-            @if $direction=='r' {
+            @if $dir=='r' {
                 padding-right: $value;
             }
-            @if $direction=='l' {
+            @if $dir=='l' {
                 padding-left: $value;
             }
         }
-        .m#{$direction}-#{$name}{
-            @if $direction=='t' {
+        .m#{$dir}-#{$name}{
+            @if $dir=='t' {
                 margin-top: $value;
             }
-            @if $direction=='b' {
+            @if $dir=='b' {
                 margin-bottom: $value;
             }
-            @if $direction=='r' {
+            @if $dir=='r' {
                 margin-right: $value;
             }
-            @if $direction=='l' {
+            @if $dir=='l' {
                 margin-left: $value;
             }
         }

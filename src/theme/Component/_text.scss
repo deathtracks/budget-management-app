@@ -13,51 +13,37 @@ a:active{
     color: lighten($color: map-get($custom-colors,secondary), $amount: 15%);
 }
 
-h1{
-    font-family: 'Open Sans', sans-serif !important;
-    font-weight: 700;
+.title{
     font-size: 42px;
-    letter-spacing: -1px;
-    line-height: 1.2;
-    text-align: left;
-}
-
-.title {
-    font-family: 'Open Sans', sans-serif !important;
-
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.title-2{
-    height: 32px;
-
-    font-family: 'Open Sans', sans-serif !important;
     font-weight: bold;
-    font-size: 16px;
-    line-height: 32px;
-    letter-spacing: -1px;
+    width: 100%;
+    height: 68px;
+    line-height: 68px;
 }
 
-.title-3{
-    font-weight: 700;
-    font-style: normal;
+.section-title{
     font-size: 24px;
-    letter-spacing: 0px;
-    line-height: 1.2; 
+    font-weight: bold;
+}
+
+.div-title{
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .sub-title{
-    font-family: 'Open Sans', sans-serif !important;
-    width: 100%;
-    height: 20px;
     font-size: 12px;
-    font-weight: 500;
-    font-style: normal;
-    letter-spacing: -1px;
-    line-height: 1.2;
+    font-weight: 600;
 }
 
 .text-center{
     text-align: center;
+}
+
+.text-start{
+    text-align: start;
+}
+
+.text-end{
+    text-align: end;
 }

@@ -1,19 +1,14 @@
-.content{
-    margin-left: 10px;
-    margin-right: 10px;
+.full-width{
+    width: 100%;
 }
 
-.block{
-    width: 100%;
+.full-height{
+    height: 100%;
 }
 
 .stack {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: visible;
 }
 
 .horizontal-stack{
@@ -21,19 +16,25 @@
     flex-direction: row;
 }
 
-.space-between{
+.justify-center{
+    justify-content: center;
+}
+
+.justify-start{
+    justify-content: start;
+}
+
+.justify-end{
+    justify-content: end;
+}
+
+.justify-between{
     justify-content: space-between;
 }
 
-.horizontal-spacing {
-    margin-top: 5px;
-    margin-bottom: 5px;
+.justify-around{
+    justify-content: space-around;
 }
-
-.rounded {
-    border-radius: 10px;
-}
-
 
 .align-center{
     align-items: center;
@@ -47,28 +48,13 @@
     align-items: flex-end;
 }
 
-.justify-center{
-    justify-content: center;
+.rounded {
+    border-radius: 10px;
 }
 
 .gap{
     gap: 5px 5px;
 }
 
-.margin-top{
-    margin-top: 10px;
-}
-
-.margin-bottom{
-    margin-bottom: 10px;
-}
-
-.padding-top{
-    padding-top: 10px;
-}
-
-.padding-bottom{
-    padding-bottom: 10px;
-}
 
 
