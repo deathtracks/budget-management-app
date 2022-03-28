@@ -4,10 +4,11 @@ $custom-colors: (
     danger: #AE1919,
     dark: #151414,
     lighter-dark : #333333,
-    shadow : rgba(145, 145, 145, 0.5)
+    shadow : rgba(145, 145, 145, 0.5),
+    translucent : rgba(0,0,0,0)
 );
 
-$colors-name : primary,secondary,dark,danger,lighter-dark;
+$colors-name : primary,secondary,dark,danger,lighter-dark,shadow,translucent;
 
 @each $color in $colors-name {
     .bg-#{$color}{

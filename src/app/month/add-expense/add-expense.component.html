@@ -1,0 +1,37 @@
+<ion-content>
+  <div class="modal">
+    <div class="class div-title text-dark pl-s pt-m">Ajouter une dépense</div>
+    <div class="hr small mt-s mb-s"></div>
+    <form>
+      <div class="bb-s b-shadow">
+        <label for="" class="text-dark pl-s">Nom</label>
+        <input class="modal-input" type="text">
+      </div>
+      <div class="bb-s b-shadow">
+        <label for="" class="text-dark pl-s">Montant</label>
+        <input class="modal-input" type="number">
+      </div>
+      <div class="bb-s b-shadow">
+        <label class="text-dark pl-s">Date</label>
+        <app-date-input></app-date-input>
+      </div>
+      <div class="bb-s b-shadow">
+        <label for="" class="text-dark pl-s">Section</label>
+        <ion-select>
+          <option>Choissisez une section</option>
+        </ion-select>
+      </div>
+      <div class="full-width pl-m pr-m mt-s">
+        <button class="btn btn-secondary full-width">Ajouter</button>
+      </div>
+    </form>
+  </div>
+</ion-content>
+
+<ion-modal trigger="open-modal">
+  <ng-template>
+    <ion-content>
+      <ion-datetime></ion-datetime>
+    </ion-content>
+  </ng-template>
+</ion-modal>
