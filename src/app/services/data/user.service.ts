@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Objectif } from 'src/app/class/base/objectif';
 import { Section } from 'src/app/class/base/section';
-import { User } from 'src/app/class/base/user';
+import { UserObject } from 'src/app/class/base/user-object';
 import { environment } from 'src/environments/environment';
 import { ObjectBaseService } from '../base/object-base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends ObjectBaseService<User> {
+export class UserService extends ObjectBaseService<UserObject> {
 
   constructor() {
     super();
@@ -17,7 +17,7 @@ export class UserService extends ObjectBaseService<User> {
     this.objSub = new Subject();
   }
 
-  public getAll(): Promise<User[]> {
+  public getAll(): Promise<UserObject[]> {
     throw Error('This methode is prohibited');
   }
 
@@ -98,8 +98,9 @@ export class UserService extends ObjectBaseService<User> {
     });
   }
 
-  protected convertToObj(id: string, data: any): User {
+  protected convertToObj(id: string, data: any): UserObject {
     const sectionList = [];
+    console.log(data);
     if(data.section && data.section.length>0){
       data.section.forEach(s=>sectionList.push(new Section(s.part,s.name)));
     }
@@ -114,16 +115,15 @@ export class UserService extends ObjectBaseService<User> {
         o.date
       )));
     }
-    return new User(
+    return new UserObject(
       data.email,
-      data.firstName,
-      data.lastName,
+      data.name,
       sectionList,
       objectifList,
       data.month
     );
   }
   protected publish(): void {
-    throw new Error('Method not implemented.');
+    this.objSub.next(this.obj);
   }
 }
