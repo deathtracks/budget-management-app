@@ -15,6 +15,54 @@ input {
     padding: 5px 5px 5px 5px;
 }
 
+input[type="checkbox"] {
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    /* Remove most all native input styles */
+    appearance: none;
+    /* Not removed via appearance */
+    margin: 0;
+
+    font: inherit;
+    color:map-get($custom-colors,secondary);
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 0.15em;
+
+    display: grid;
+    place-content: center;
+}
+
+input[type="checkbox"]::before {
+    content: "";
+    width: 1em;
+    height: 1em;
+    background-color: map-get($custom-colors,secondary) !important;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    transform: scale(0);
+    transform-origin: bottom left;
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em map-get($map: $custom-colors, $key: shadow);
+    /* Windows High Contrast Mode */
+    background-color: CanvasText;
+}
+
+input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
+
+input[type="checkbox"]:focus {
+    outline: max(2px, 0.15em) solid currentColor;
+    outline-offset: max(2px, 0.15em);
+}
+
+input[type="checkbox"]:disabled {
+    --form-control-color: var(--form-control-disabled);
+
+    color: map-get($map: $custom-colors, $key: shadow);
+    cursor: not-allowed;
+}
+
 .modal-input {
     width: 100%;
     border: none;
@@ -35,6 +83,14 @@ input {
     justify-content: center;
     align-items: flex-start;
     padding: 0px 10px 0px 10px;
+}
+
+.input-field.checkbox{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    height: 25px;
 }
 
 ::-webkit-calendar-picker-indicator {
