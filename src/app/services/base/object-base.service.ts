@@ -72,11 +72,9 @@ export abstract class ObjectBaseService<T extends ObjectBasePrototype> {
           resolve(singleObj);
         }
       }
-      console.log('Reaching database');
       const docRef = doc(this.db,this.collection,id);
       getDoc(docRef)
       .then((docSnap: DocumentSnapshot)=>{
-        console.log(docSnap);
         const o = this.convertToObj(docSnap.id,docSnap.data());
         this.obj = o;
         this.publish();

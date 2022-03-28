@@ -135,11 +135,13 @@ export class AuthService {
   private handleError(err: FirebaseError): FirebaseError | Error{
     let r;
     switch(err.code) {
-      case "auth/user-not-found":{
+      case 'auth/user-not-found':{
         r = new Error('Invalid email or password');
+        break;
       }
       default:{
         r = err;
+        break;
       }
     }
     return r;

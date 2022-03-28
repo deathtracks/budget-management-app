@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { addDoc, doc, DocumentReference, setDoc} from 'firebase/firestore';
 import { Objectif } from 'src/app/class/base/objectif';
 import { Section } from 'src/app/class/base/section';
 import { UserObject } from 'src/app/class/base/user-object';
@@ -19,6 +20,17 @@ export class UserService extends ObjectBaseService<UserObject> {
 
   public getAll(): Promise<UserObject[]> {
     throw Error('This methode is prohibited');
+  }
+
+  public createOne(obj: UserObject): Promise<UserObject> {
+    return new Promise<UserObject>((resolve,reject)=>{
+      setDoc(doc(this.db,this.collection,obj.email),this.convertData(obj))
+      .then(()=>{
+        this.publish();
+        resolve(this.obj);
+      })
+      .catch(err => reject(err));
+    })
   }
 
   public addObjectif(o: Objectif): Promise<boolean>{
@@ -100,7 +112,6 @@ export class UserService extends ObjectBaseService<UserObject> {
 
   protected convertToObj(id: string, data: any): UserObject {
     const sectionList = [];
-    console.log(data);
     if(data.section && data.section.length>0){
       data.section.forEach(s=>sectionList.push(new Section(s.part,s.name)));
     }

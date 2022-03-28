@@ -19,8 +19,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.router.navigate(['home']);
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    console.log(prefersDark);
-    console.log(document.body.classList);
     document.body.classList.remove('dark');
   }
 }
