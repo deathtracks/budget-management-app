@@ -13,15 +13,17 @@ export class Month extends ObjectBasePrototype{
         start: Date,
         end: Date,
         budget: number,
-        expenseList: Expense[],
-        close: boolean
+        expenseList?: Expense[],
+        close?: boolean
     ) {
         super(id);
         this.start = start;
         this.end = end;
         this.budget = budget;
         this.expenseList = expenseList;
+        if(!this.expenseList) this.expenseList = [];
         this.close = close;
+        if(!this.close) this.close = false;
     }
 
     public get startDate(): Date{
@@ -48,6 +50,12 @@ export class Month extends ObjectBasePrototype{
             }
         });
         this.end = newDate;
+    }
+
+    public getDate(){
+        const timeStart = this.start.getTime();
+        const timeEnd = this.end.getTime();
+        return new Date((timeStart+timeEnd)/2);
     }
 
     public getObject() {

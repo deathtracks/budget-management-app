@@ -134,7 +134,7 @@ export class UserService extends ObjectBaseService<UserObject> {
       data.month
     );
   }
-  protected publish(): void {
+  public publish(): void {
     this.objSub.next(this.obj);
   }
 }

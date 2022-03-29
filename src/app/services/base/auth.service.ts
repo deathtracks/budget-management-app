@@ -161,6 +161,10 @@ export class AuthService {
         r = new Error('Invalid email or password');
         break;
       }
+      case 'auth/wrong-password':{
+        r = new Error('Invalid email or password');
+        break;
+      }
       default:{
         r = err;
         break;

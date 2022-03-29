@@ -2,21 +2,21 @@
   <div class="modal">
     <div class="div-title text-dark pl-s pt-m">Ajouter un mois</div>
     <div class="hr small mt-s mb-s"></div>
-    <form>
+    <form [formGroup]="addMonthForm" (ngSubmit)="onAddMonth()">
       <div class="bb-s b-shadow">
         <label class="text-dark pl-s">Date de début :</label>
-        <input class="modal-input" type="date">
+        <app-date-input (onDateChoosen)="onStartDateChange($event)" ></app-date-input>
       </div>
       <div class="bb-s b-shadow">
         <label class="text-dark pl-s" for="">Date de fin</label>
-        <input type="date">
+        <app-date-input [minDate]="startDate" (onDateChoosen)="onEndDataChange($event)" ></app-date-input>
       </div>
       <div class="bb-s b-shadow">
         <label class="text-dark pl-s">Budget</label>
-        <input type="number">
+        <input type="number" placeholder="300€" formControlName="budget">
       </div>
       <div class="full-width pl-m pr-m mt-s">
-        <button class="btn btn-secondary full-width">Ajouter</button>
+        <button type="submit" class="btn btn-secondary full-width" [disabled]="addMonthForm.invalid">Ajouter</button>
       </div>
     </form>
   </div>

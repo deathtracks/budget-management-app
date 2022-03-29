@@ -39,12 +39,11 @@
     <div class="mb-s section-title">
       Mois précédents :
     </div>
-    <div class="stack gap"> <!--scroll-->
-      <div class="horizontal-stack justify-between align-center rounded bg-primary text-lighter-dark p-s">
-        <div class="div-title text-center">Déccembre 2021</div>
-        <ion-icon size="large" name="checkmark-outline"></ion-icon>
-        <ion-icon class="text-secondary" size="large" name="arrow-forward-outline"></ion-icon>
-      </div>
+    <div *ngIf="monthList && monthList.length>0"  class="stack gap"> <!--scroll-->
+      <app-month-list-el *ngFor="let m of monthList" [month]="m"></app-month-list-el>
+    </div>
+    <div *ngIf="!monthList || monthList.length<1" class="stack gap">
+      <p>There is no month for now. Create one !</p>
     </div>
   </div>
   <button id="main-btn" class="floating-btn bottom rigth btn-secondary" (click)="showBtn()">

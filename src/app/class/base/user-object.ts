@@ -21,6 +21,7 @@ export class UserObject extends ObjectBasePrototype{
         this.objectifs = objectif;
         if(!this.objectifs) this.objectifs = [];
         this.months = month;
+        if(!this.months) this.months = [];
     }
 
     public get email(): string {
