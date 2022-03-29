@@ -167,14 +167,14 @@ export abstract class ObjectBaseService<T extends ObjectBasePrototype> {
     const data = obj.getObject();
     //Checks if the data from the object contains any data and convert them to the Firebase standard
     //See firebase documentation for more info
-    if(Object.keys(data).includes('date')){
-      data.date = Timestamp.fromDate(data.date);
-    }
     //Checks for data not defined by the object and convert them to null to match Firebase standard
     //See firebase documentation for more info
     for(const k of Object.keys(data)){
       if(data[k]===undefined){
         data[k]=null;
+      }
+      if(data[k] instanceof Date){
+        data[k] = Timestamp.fromDate(data[k]);
       }
     }
     return data;

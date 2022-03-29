@@ -7,9 +7,11 @@ export class Month extends ObjectBasePrototype{
     public expenseList: Expense[];
     private start: Date;
     private end: Date;
+    private user: string;
 
     constructor(
         id: string,
+        user: string,
         start: Date,
         end: Date,
         budget: number,
@@ -17,6 +19,7 @@ export class Month extends ObjectBasePrototype{
         close?: boolean
     ) {
         super(id);
+        this.user = user;
         this.start = start;
         this.end = end;
         this.budget = budget;
@@ -62,6 +65,7 @@ export class Month extends ObjectBasePrototype{
         const expenses = [];
         this.expenseList.forEach(e=>expenses.push(e.getObject()));
         return {
+            user: this.user,
             start: this.start,
             end: this.end,
             budget: this.budget,

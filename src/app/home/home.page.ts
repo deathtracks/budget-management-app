@@ -21,7 +21,6 @@ export class HomePage implements OnInit,OnDestroy {
   private userSub: Subscription;
   constructor(
     public modalControler: ModalController,
-    private animationCtrl: AnimationController,
     private User: UserService,
     private Months: MonthService
   ) { }
@@ -32,17 +31,11 @@ export class HomePage implements OnInit,OnDestroy {
   ngOnInit() {
     this.userSub = this.User.objSub.subscribe((v)=>{
       if(v && v.months){
-        v.months.forEach(monthId=>{
-          this.Months.getOne(monthId)
-          .then((m)=>{
-            if(m) this.monthList.push(m);
-          })
-          .catch(err=>{throw err});
-        })
-        this.monthList.sort((a,b)=>{
-          if(a.getDate()>b.getDate()) return 1;
-          if(a.getDate()<b.getDate()) return -1;
-          else 0;
+        this.Months.getAllFromUser(v.email)
+        .then((m)=>{
+          if(m && m.length>0){
+            this.monthList = m;
+          }
         })
       }
     })
