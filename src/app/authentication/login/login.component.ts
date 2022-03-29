@@ -22,7 +22,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       email: [null,[Validators.required,Validators.email]],
-      password : [null,[Validators.required]]
+      password : [null,[Validators.required]],
+      remeber : [null]
     })
   }
 
@@ -39,7 +40,7 @@ export class LoginComponent implements OnInit {
     this.error = false;
     this.errorMessage = "";
     const value = this.loginForm.value;
-    this.auth.logIn(value.email,value.password)
+    this.auth.logIn(value.email,value.password,value.remeber)
     .then(v=>{
       if(v instanceof Error){
         this.error = true;

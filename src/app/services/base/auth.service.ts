@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { getAuth, createUserWithEmailAndPassword, Auth, UserCredential, signInWithRedirect, getRedirectResult, User} from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, Auth, UserCredential, signInWithRedirect, getRedirectResult, User, onAuthStateChanged, setPersistence, browserSessionPersistence, browserLocalPersistence} from 'firebase/auth';
 import { signInWithEmailAndPassword, signOut, GoogleAuthProvider } from 'firebase/auth';
 import { UserService } from '../data/user.service';
 import { UserObject } from 'src/app/class/base/user-object';
@@ -21,8 +21,22 @@ export class AuthService {
     private userService: UserService
   ) {
     this.auth = getAuth();
+    setPersistence(this.auth,browserSessionPersistence)
+    .catch(err=>{throw err});
     this.isAuth = new Subject();
     this.provider = new GoogleAuthProvider();
+    
+    onAuthStateChanged(this.auth, (user)=>{
+      if(user){
+        this.isUserAuth = true;
+        this.fireBaseUser = user;
+      } else {
+        this.isUserAuth = false;
+        this.fireBaseUser = null;
+        
+      }
+      this.publish();
+    })
   }
 
   public signIn(u: UserObject, password: string, repeat: string): Promise<boolean | Error> {
@@ -84,30 +98,38 @@ export class AuthService {
     });
   }
 
-  public logIn(email: string, password: string): Promise<boolean | Error>{
+  public logIn(email: string, password: string, persitence: boolean): Promise<boolean | Error>{
     return new Promise<boolean | Error>((resolve,rejects)=>{
-      signInWithEmailAndPassword(this.auth,email,password)
-      .then((userCred: UserCredential)=>{
-        const user = userCred.user;
-        this.userService.getOne(email)
-        .then(()=>{
-          this.isUserAuth = true;
-          this.publish();
-          resolve(true);
+      let p = browserSessionPersistence;
+      if(persitence){
+        p = browserLocalPersistence;
+      }
+      setPersistence(this.auth,p)
+      .then(()=>{
+        signInWithEmailAndPassword(this.auth,email,password)
+        .then((userCred: UserCredential)=>{
+          const user = userCred.user;
+          this.userService.getOne(email)
+          .then(()=>{
+            this.isUserAuth = true;
+            this.publish();
+            resolve(true);
+          })
+          .catch(err=>{
+            console.log(err);
+            rejects(err);
+          });
         })
-        .catch(err=>{
-          console.log(err);
-          rejects(err);
+        .catch((err:FirebaseError)=>{
+          const error = this.handleError(err);
+          if(error instanceof FirebaseError){
+            rejects(error);
+          } else {
+            resolve(error);
+          }
         });
       })
-      .catch((err:FirebaseError)=>{
-        const error = this.handleError(err);
-        if(error instanceof FirebaseError){
-          rejects(error);
-        } else {
-          resolve(error);
-        }
-      });
+      .catch(err=>rejects(err));
     });
   }
 
