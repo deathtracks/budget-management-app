@@ -13,6 +13,7 @@ import { AddMonthComponent } from './add-month/add-month.component';
 })
 export class HomePage implements OnInit,OnDestroy {
   public monthList: Month[];
+  public currentMonth: Month;
 
   private main: HTMLDivElement;
   private btn1: HTMLDivElement;
@@ -34,7 +35,10 @@ export class HomePage implements OnInit,OnDestroy {
         this.Months.getAllFromUser(v.email)
         .then((m)=>{
           if(m && m.length>0){
-            this.monthList = m;
+            this.currentMonth = m[0];
+            if(m.length>1){
+              this.monthList = m.slice(1);
+            }
           }
         })
       }

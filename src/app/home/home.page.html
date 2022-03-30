@@ -5,25 +5,35 @@
         Hello username !
       </h1>
     </div>
-    <div class="horizontal-stack justify-between rounded bg-primary text-lighter-dark p-s mb-m"> <!-- Current month -->
+    <div *ngIf="currentMonth" class="horizontal-stack justify-between rounded bg-primary text-lighter-dark p-s mb-m"> <!-- Current month -->
       <div class="full-width"> <!-- Content -->
         <div class="sub-title">Mois en cours</div>
         <div class="hr small"></div>
         <div class="stack justify-between gap mt-s">
-          <div class="div-title">Janvier 2022</div>
-          <div class="sub-title">De 12/01 à 12/02</div>
+          <div class="div-title">{{ currentMonth.getDate() | date:'mmmm yyyy' }}</div>
+          <div class="sub-title">De {{ currentMonth.startDate | date:'dd/mm' }} à {{ currentMonth.endDate | date:'dd/mm' }}</div>
           <div class="horizontal-stack align-center gap full-width"> 
-            <div class="progress-bar">
-              <div></div>
-            </div>
+            <app-progress-bar class="progress-bar-secondary" [value]="currentMonth.getTotal()*100/currentMonth.budget"></app-progress-bar>
             <div class="text-center">
-              26%
+              {{ currentMonth.getTotal()*100/currentMonth.budget }}%
             </div>
           </div>
         </div>
       </div>
-      <div class="horizontal-stack align-center" routerLink="/month/123">
+      <div class="horizontal-stack align-center" [routerLink]="'/month/'+currentMonth.getId()">
         <ion-icon class="text-secondary" size="large" name="arrow-forward-outline"></ion-icon>
+      </div>
+    </div>
+    <div *ngIf="!currentMonth" class="horizontal-stack justify-between rounded bg-primary text-lighter-dark p-s mb-m">
+      <div class="full-width"> <!-- Content -->
+        <div class="sub-title">Mois en cours</div>
+        <div class="hr small"></div>
+        <div class="stack justify-between gap mt-s">
+          <div class="div-title">You don't have a current month for now. Create one !</div>
+        </div>
+      </div>
+      <div class="horizontal-stack align-center">
+        <ion-icon class="text-shadow" size="large" name="arrow-forward-outline"></ion-icon>
       </div>
     </div>
     <div class="horizontal-stack content rounded bg-primary text-lighter-dark p-s mb-s"> <!-- Objectifs -->

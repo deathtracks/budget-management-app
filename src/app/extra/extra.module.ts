@@ -4,13 +4,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { DateInputComponent } from './date-input/date-input.component';
 import { DateModalComponent } from './date-modal/date-modal.component';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 
 
 
 @NgModule({
   declarations: [
     DateInputComponent,
-    DateModalComponent
+    DateModalComponent,
+    ProgressBarComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { DateModalComponent } from './date-modal/date-modal.component';
   ],
   exports: [
     DateInputComponent,
-    DateModalComponent
+    DateModalComponent,
+    ProgressBarComponent
   ]
 })
 export class ExtraModule { }

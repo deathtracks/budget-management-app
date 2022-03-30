@@ -55,10 +55,16 @@ export class Month extends ObjectBasePrototype{
         this.end = newDate;
     }
 
-    public getDate(){
+    public getDate(): Date{
         const timeStart = this.start.getTime();
         const timeEnd = this.end.getTime();
         return new Date((timeStart+timeEnd)/2);
+    }
+
+    public getTotal(): number{
+        let sum = 0;
+        this.expenseList.forEach((e)=>sum=sum+e.amount);
+        return sum;
     }
 
     public getObject() {
