@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MonthService } from 'src/app/services/data/month.service';
 
 @Component({
   selector: 'app-add-expense',
@@ -6,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-expense.component.scss'],
 })
 export class AddExpenseComponent implements OnInit {
+  public addExpenseForm: FormGroup;
 
-  constructor() { }
+  constructor(
+    private monthService: MonthService,
+    private formBuilder: FormBuilder,
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.addExpenseForm = this.formBuilder.group({
+      amount : [null,[Validators.required]],
+      date: [null,[Validators.required]],
+      section: [null,[Validators.required]],
+      name: [null,[Validators.required]]
+    })
+  }
+
+  onAddExpense(){
+
+  }
 
 }
