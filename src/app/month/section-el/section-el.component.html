@@ -1,0 +1,10 @@
+<div class="block bg-primary rounded text-lighter-dark p-m mb-s">
+  <div class="horizontal-stack justify-between div-title">
+    <div>{{ s.name }}</div>
+    <div>{{ budgetSection }} €</div>
+  </div>
+  <div class="horizontal-stack justify-between align-center gap">
+    <app-progress-bar [value]="totalSection*100/budgetSection"></app-progress-bar>
+    <div>{{ totalSection*100/budgetSection }}%</div>
+  </div>
+</div>

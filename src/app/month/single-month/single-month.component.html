@@ -3,56 +3,40 @@
     <div class="full-height horizontal-stack align-center">
       <ion-icon size="large" name="arrow-back-outline"></ion-icon>
     </div>
-    <div class="title text-end">Janvier 2022</div>
+    <div class="title text-end">{{ month.getDate() | date:'MMMM yyyy' }}</div>
   </div>
   <div>
     <div class="horizontal-stack justify-between pl-m pr-m div-title">
       <div>De</div>
-      <div>24/12/2021</div>
+      <div>{{ month.startDate | date:'dd/MM/yyyy' }}</div>
       <div>à</div>
-      <div>24/12/2022</div>
+      <div>{{ month.endDate | date:'dd/MM/yyyy' }}</div>
     </div>
     <div class="horizontal-stack justify-between pl-m pr-m div-title">
       <div>Buget</div>
-      <div>500 €</div>
+      <div>{{ month.budget }} €</div>
       <div>Restant</div>
-      <div>500 €</div>
+      <div>{{ month.budget-month.getTotal() }} €</div>
     </div>
     <div class="horizontal-stack align-center gap space-between pl-m pr-m">
-      <div class="progress-bar"></div>
-      <div>26%</div>
+      <app-progress-bar class="progress-bar-secondary" [value]="month.getTotal()*100/month.budget" ></app-progress-bar>
+      <div>{{ month.getTotal()*100/month.budget }}%</div>
     </div>
   </div>
   <div class="div-title pl-m mb-s">
     Sections :
   </div>
   <div class="pl-m pr-m">
-    <div class="block bg-primary rounded text-lighter-dark p-m mb-s">
-      <div class="horizontal-stack justify-between div-title">
-        <div>Envies</div>
-        <div>500 €</div>
-      </div>
-      <div class="horizontal-stack justify-between align-center gap">
-        <div class="progress-bar"></div>
-        <div>26%</div>
-      </div>
-    </div>
+    <app-section-el *ngFor="let s of sectionList; let i=index" [s]="s" [budgetSection]="month.budget*s.partion" [totalSection]="month.getTotalForSection(i)"></app-section-el>
   </div>
   <div class="div-title pl-m mb-s">
     Dépenses :
   </div>
-  <div class="pl-m pr-m">
-    <div class="bg-primary text-lighter-dark rounded p-m">
-      <div class="horizontal-stack justify-between div-title mb-s">
-        <div>Course</div>
-        <div>50%</div>
-      </div>
-      <div class="horizontal-stack justify-between sub-title">
-        <div>Envie</div>
-        <div>Le 13/01</div>
-      </div>
-    </div>
+  <div class="pl-m pr-m gap">
+    <app-expense-el *ngFor="let e of month.expenseList" [e]="e" [sectionName]="sectionList[e.section].name" ></app-expense-el>
   </div>
+
+
   <button id="main-btn" class="floating-btn bottom rigth btn-secondary" (click)="showBtn()">
     <ion-icon class="icon" size="large" name="chevron-back-outline"></ion-icon>
   </button>

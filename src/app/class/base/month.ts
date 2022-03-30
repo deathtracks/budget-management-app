@@ -67,6 +67,14 @@ export class Month extends ObjectBasePrototype{
         return sum;
     }
 
+    public getTotalForSection(index: number){
+        let sum = 0;
+        this.expenseList.forEach((v)=>{
+            if(v.section===index) sum = sum + v.amount;
+        })
+        return sum;
+    }
+
     public getObject() {
         const expenses = [];
         this.expenseList.forEach(e=>expenses.push(e.getObject()));
