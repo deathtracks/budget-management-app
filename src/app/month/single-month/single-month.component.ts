@@ -56,7 +56,12 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
     const modal = await this.modalControler.create({
       component: AddExpenseComponent,
       breakpoints: [0, 0.5],
-      initialBreakpoint: 0.5
+      initialBreakpoint: 0.5,
+      componentProps : {
+        'minDate': this.month.startDate,
+        'maxDate': this.month.endDate,
+        'sectionList': this.sectionList
+      }
     });
     return await modal.present();
   }
