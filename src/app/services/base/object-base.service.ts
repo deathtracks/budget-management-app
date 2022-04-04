@@ -188,6 +188,6 @@ export abstract class ObjectBaseService<T extends ObjectBasePrototype> {
    */
   protected abstract convertToObj(id: string, data: any): T;
 
-  protected abstract publish(): void;
+  public abstract publish(): void;
 
 }

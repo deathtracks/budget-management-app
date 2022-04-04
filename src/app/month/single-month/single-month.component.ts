@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { Expense } from 'src/app/class/base/expense';
 import { Month } from 'src/app/class/base/month';
 import { Section } from 'src/app/class/base/section';
 import { MonthService } from 'src/app/services/data/month.service';
@@ -25,6 +26,7 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
   private userSub: Subscription;
   constructor(
     public modalControler: ModalController,
+    public alertControler: AlertController,
     private monthService: MonthService,
     private userService: UserService,
     private route: ActivatedRoute
@@ -52,7 +54,7 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
     })
   }
 
-  async presentModal() {
+  async presentModal(e?: Expense, i?:number) {
     const modal = await this.modalControler.create({
       component: AddExpenseComponent,
       breakpoints: [0, 0.5],
@@ -60,7 +62,9 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
       componentProps : {
         'minDate': this.month.startDate,
         'maxDate': this.month.endDate,
-        'sectionList': this.sectionList
+        'sectionList': this.sectionList,
+        'editedExpense': e,
+        'editedExpenseIndex':i
       }
     });
     return await modal.present();
@@ -78,6 +82,34 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
       this.btn2.classList.remove('raise-2');
     }
     
+  }
+
+  public async onDelete(index:number) {
+    const confiAlert = await this.alertControler.create({
+      header: 'Confirmation',
+      message : `Est-vous sur de vouloir supprimer la dépense ${this.month.expenseList[index].name} ?`,
+      buttons : [
+        {
+          text: 'Oui',
+          role: 'confirm',
+          cssClass : 'btn-dark',
+          handler: () =>{
+            this.monthService.removeExpense(index)
+            .then((v)=>this.monthService.publish())
+          }
+        },
+        {
+          text: 'Non',
+          role: 'Cancel',
+          cssClass : 'btn-secondary'
+        }
+      ]
+    })
+    await confiAlert.present();
+  }
+
+  public onEdit(index: number): void{
+    this.presentModal(this.month.expenseList[index],index);
   }
 
 }

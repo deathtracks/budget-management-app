@@ -53,7 +53,7 @@ export class MonthService extends ObjectBaseService<Month> {
   public removeExpense(index: number): Promise<boolean | Error>{
     return new Promise<boolean | Error>((resolve,rejects)=>{
       if(!this.obj.close){
-        this.obj.expenseList.slice(index,1);
+        this.obj.expenseList.splice(index,1);
         this.editOne(this.obj)
         .then(()=>resolve(true))
         .catch((err)=>rejects(err));
@@ -90,7 +90,6 @@ export class MonthService extends ObjectBaseService<Month> {
     if(data.expenseList && data.expenseList.length>0){
       data.expenseList.forEach(e => expenses.push(new Expense(e.name,e.date.toDate(), e.amount, e.section)));
     }
-    console.log(data.start.toDate());
     return new Month(
       id,
       data.user,
@@ -101,7 +100,7 @@ export class MonthService extends ObjectBaseService<Month> {
       data.close
       );
   }
-  protected publish(): void {
+  public publish(): void {
     this.objSub.next(this.obj);
     this.objListSub.next(this.objList);
   }

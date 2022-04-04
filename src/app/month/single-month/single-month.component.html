@@ -33,7 +33,12 @@
     Dépenses :
   </div>
   <div class="pl-m pr-m gap">
-    <app-expense-el *ngFor="let e of month.expenseList" [e]="e" [sectionName]="sectionList[e.section].name" ></app-expense-el>
+    <app-expense-el *ngFor="let e of month.expenseList; let i=index" 
+    [e]="e" 
+    [sectionName]="sectionList[e.section].name"
+    (onDelete)="onDelete(i)"
+    (onEdit)="onEdit(i)"
+    ></app-expense-el>
   </div>
 
 

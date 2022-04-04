@@ -1,6 +1,6 @@
 <div class="full-width full-height bg-translucent stack align-center">
   <div>
-    <ion-datetime presentation="date" [min]="minD" [max]="maxD" (ionChange)="onChange($event)"></ion-datetime>
+    <ion-datetime presentation="date" [min]="minD" [max]="maxD" [value]="dateValue" (ionChange)="onChange($event)"></ion-datetime>
   </div>
   <div class="full-width horizontal-stack justify-around gap pl-s pr-s mt-m">
     <button class="btn full-width btn-primary text-dark" (click)="onReset()">Cancel</button>

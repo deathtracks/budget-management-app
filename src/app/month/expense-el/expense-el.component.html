@@ -1,8 +1,8 @@
 <div class="page">
-  <button class="start bg-dark text-secondary">
-    <ion-icon name="create-outline"></ion-icon>
+  <button class="start bg-dark text-secondary" (click)="editBtn()" >
+    <ion-icon size="large" name="create-outline"></ion-icon>
   </button>
-  <div id="page-content" class="page-content bg-primary text-lighter-dark rounded p-m">
+  <div id="page-content" (onmousedown)="onDragStart($event)" (onmousemove)="onDragMove($event)" class="page-content bg-primary text-lighter-dark rounded p-m">
     <div class="horizontal-stack justify-between div-title mb-s">
       <div>{{ e.name }}</div>
       <div>{{ e.amount }}€</div>
@@ -12,7 +12,7 @@
       <div>Le {{ e.date | date:'MM/dd' }}</div>
     </div>
   </div>
-  <button class="end bg-dark text-danger">
-    <ion-icon name="trash-outline"></ion-icon>
+  <button class="end bg-dark text-danger" (click)="deleteBtn()" >
+    <ion-icon size="large" name="trash-outline"></ion-icon>
   </button>
 </div>

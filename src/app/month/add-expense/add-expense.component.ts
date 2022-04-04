@@ -14,8 +14,10 @@ export class AddExpenseComponent implements OnInit {
   @Input() minDate: Date;
   @Input() maxDate: Date;
   @Input() sectionList: Section[];
+  @Input() editedExpense: Expense;
+  @Input() editedExpenseIndex: number;
   public addExpenseForm: FormGroup;
-  private date: Date;
+  public defaultDate : Date = new Date();
 
   constructor(
     private monthService: MonthService,
@@ -24,13 +26,22 @@ export class AddExpenseComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.addExpenseForm = this.formBuilder.group({
-      amount : [null,[Validators.required]],
-      date: [null,[Validators.required]],
-      section: [null,[Validators.required]],
-      name: [null,[Validators.required]]
-    })
-    
+    if(this.editedExpense){
+      this.addExpenseForm = this.formBuilder.group({
+        amount : [this.editedExpense.amount,[Validators.required]],
+        date: [this.editedExpense.date,[Validators.required]],
+        section: [this.editedExpense.section,[Validators.required]],
+        name: [this.editedExpense.name,[Validators.required]]
+      })
+      this.defaultDate = this.editedExpense.date;
+    } else {
+      this.addExpenseForm = this.formBuilder.group({
+        amount : [null,[Validators.required]],
+        date: [null,[Validators.required]],
+        section: [null,[Validators.required]],
+        name: [null,[Validators.required]]
+      })
+    }
   }
 
   onDatePick(d: Date){
@@ -39,13 +50,27 @@ export class AddExpenseComponent implements OnInit {
   }
 
   onAddExpense(){
-    const value = this.addExpenseForm.value;
-    const e = new Expense(value.name,value.date,value.amount,value.section);
-    this.monthService.addExpense(e)
-    .then((v)=>{
-      if(v) this.modalControler.dismiss();
-    })
-    .catch(err=>{throw err})
+    if(this.editedExpense){
+      const value = this.addExpenseForm.value;
+      this.editedExpense.amount = value.amount;
+      this.editedExpense.date = value.date;
+      this.editedExpense.name = value.name;
+      this.editedExpense.section = value.section;
+      this.monthService.editExpense(this.editedExpense,this.editedExpenseIndex)
+      .then((v)=>{
+        if(v) this.modalControler.dismiss();
+      })
+      .catch(err=>{throw err});
+    } else {
+      const value = this.addExpenseForm.value;
+      const e = new Expense(value.name,value.date,value.amount,value.section);
+      this.monthService.addExpense(e)
+      .then((v)=>{
+        if(v) this.modalControler.dismiss();
+      })
+      .catch(err=>{throw err});
+    }
+    
   }
 
 }
