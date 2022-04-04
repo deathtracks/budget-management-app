@@ -1,8 +1,8 @@
 <div class="page">
-  <div class="start-button text-secondary">
+  <button class="start bg-dark text-secondary">
     <ion-icon name="create-outline"></ion-icon>
-  </div>
-  <div class="bg-primary text-lighter-dark rounded p-m">
+  </button>
+  <div id="page-content" class="page-content bg-primary text-lighter-dark rounded p-m">
     <div class="horizontal-stack justify-between div-title mb-s">
       <div>{{ e.name }}</div>
       <div>{{ e.amount }}€</div>
@@ -12,7 +12,7 @@
       <div>Le {{ e.date | date:'MM/dd' }}</div>
     </div>
   </div>
-  <div class="end-button text-danger">
+  <button class="end bg-dark text-danger">
     <ion-icon name="trash-outline"></ion-icon>
-  </div>
+  </button>
 </div>
