@@ -1,0 +1,17 @@
+<ion-content>
+  <div class="horizontal-stack align-center text-primary pl-m pr-m"> <!--Header-->
+    <div class="full-height horizontal-stack align-center" routerLink="/home">
+      <ion-icon size="large" name="arrow-back-outline"></ion-icon>
+    </div>
+    <div class="title text-center">Objectifs</div>
+  </div>
+  <div *ngIf="objList && objList.length>0" class="pl-m pr-m gap">
+    <app-obj-single-el *ngFor="let o of objList; let i=index" [index]="i" [o]="o"></app-obj-single-el>
+  </div>
+  <div *ngIf="!objList || objList.length<1">
+    <div class="stack justify-between gap mt-s">
+      <div class="div-title">You don't have an objectif for now. Create one !</div>
+    </div>
+  </div>
+  <app-floating-btn [buttons]="floatingBtn" (btnTrigger)="onAction($event)"></app-floating-btn>
+</ion-content>

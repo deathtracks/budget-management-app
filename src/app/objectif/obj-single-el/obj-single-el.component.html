@@ -2,14 +2,16 @@
   <button class="start bg-dark text-secondary" (click)="editBtn()" >
     <ion-icon size="large" name="create-outline"></ion-icon>
   </button>
-  <div [id]="'page-content-'+e.name" #content class="page-content bg-primary text-lighter-dark rounded p-m">
+  <div [id]="'page-content-'+o.name" #content 
+  class="page-content bg-primary text-lighter-dark rounded p-m"
+  [routerLink]="'/obj/'+index">
     <div class="horizontal-stack justify-between div-title mb-s">
-      <div>{{ e.name }}</div>
-      <div>{{ e.amount }}€</div>
+      <div>{{ o.name }}</div>
+      <div>{{ o.amount }}€</div>
     </div>
     <div class="horizontal-stack justify-between sub-title">
-      <div>{{ sectionName }}</div>
-      <div>Le {{ e.date | date:'dd/MM' }}</div>
+      <div>Début le {{ o.start | date:'dd/MM/yyyy' }}</div>
+      <div>{{ o.total*100/o.amount }}%</div>
     </div>
   </div>
   <button class="end bg-dark text-danger" (click)="deleteBtn()" >

@@ -26,7 +26,9 @@ export class Objectif extends ObjectBasePrototype{
         this.start = start;
         this.completed = complted;
         this.save = save;
+        if(!this.save) this.save = [];
         this.date = date;
+        if(!this.date) this.date = [];
     }
 
     public get saves(): number[]{
@@ -35,6 +37,12 @@ export class Objectif extends ObjectBasePrototype{
 
     public get dates(): Date[]{
         return [...this.date];
+    }
+
+    public get total(): number{
+        let sum = 0;
+        this.saves.forEach((v)=>sum = sum+v);
+        return sum;
     }
 
     public getObject() {

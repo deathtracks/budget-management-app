@@ -1,0 +1,19 @@
+<ion-content>
+  <div class="modal">
+    <div class="div-title text-dark pl-s pt-m">Ajouter un objectif</div>
+    <div class="hr small mt-s mb-s"></div>
+    <form [formGroup]="objForm" (ngSubmit)="onAddObj()">
+      <div>
+        <label class="text-dark pl-s" for="name">Nom</label>
+        <input type="text" id="name" formControlName="name">
+      </div>
+      <div>
+        <label class="text-dark pl-s" for="amount">Montant</label>
+        <input type="number" formControlName="amount" id="amount">
+      </div>
+      <div class="full-width pl-m pr-m mt-s">
+        <button type="submit" class="btn btn-secondary full-width" [disabled]="objForm.invalid">Ajouter</button>
+      </div>
+    </form>
+  </div>
+</ion-content>

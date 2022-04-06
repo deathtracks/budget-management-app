@@ -16,6 +16,11 @@ const routes: Routes = [
     path: 'month',
     canActivate: [IsConnectedGuard],
     loadChildren: () => import('./month/month.module').then(m => m.MonthModule)
+  },
+  {
+    path: 'obj',
+    canActivate: [IsConnectedGuard],
+    loadChildren: () => import('./objectif/objectif.module').then(m => m.ObjectifModule)
   }
 
 ];

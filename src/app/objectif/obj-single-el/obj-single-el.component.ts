@@ -1,29 +1,23 @@
-import { AfterViewChecked, AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
-import { GestureController, ViewDidEnter, ViewWillEnter } from '@ionic/angular';
-import { Expense } from 'src/app/class/base/expense';
+import { AfterViewChecked, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { GestureController } from '@ionic/angular';
+import { Objectif } from 'src/app/class/base/objectif';
 
 @Component({
-  selector: 'app-expense-el',
-  templateUrl: './expense-el.component.html',
-  styleUrls: ['./expense-el.component.scss'],
+  selector: 'app-obj-single-el',
+  templateUrl: './obj-single-el.component.html',
+  styleUrls: ['./obj-single-el.component.scss'],
 })
-export class ExpenseElComponent implements AfterViewChecked {
-  @Input() e: Expense;
-  @Input() sectionName: string;
+export class ObjSingleElComponent implements AfterViewChecked {
+  @Input() o: Objectif;
+  @Input() index: number;
   @Output() onEdit: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() onDelete: EventEmitter<boolean> = new EventEmitter<boolean>();
-  // @ViewChild('content', { static: true, read: ElementRef }) contentElement;
-
   constructor(
     private gestureCtrl: GestureController
-  ) {
-    // console.log('construct');
-  }
-  
+  ) { }
 
   ngAfterViewChecked(): void {
-    // console.log('ionViewDidEnter');
-    const element = document.getElementById(`page-content-${this.e.name}`);
+    const element = document.getElementById(`page-content-${this.o.name}`);
     const elementWidth = element.clientWidth;
     // console.log(element);
     const g = this.gestureCtrl.create({
@@ -47,7 +41,6 @@ export class ExpenseElComponent implements AfterViewChecked {
     g.enable();
   }
 
-  
   public editBtn(){
     this.onEdit.emit(true);
   }
@@ -55,4 +48,5 @@ export class ExpenseElComponent implements AfterViewChecked {
   public deleteBtn(){
     this.onDelete.emit(true);
   }
+
 }

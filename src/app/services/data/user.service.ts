@@ -119,7 +119,7 @@ export class UserService extends ObjectBaseService<UserObject> {
     if(data.objectifs && data.objectifs.length>0){
       data.objectifs.forEach(o=>objectifList.push(new Objectif(
         o.name,
-        o.start,
+        o.start.toDate(),
         o.amount,
         o.completed,
         o.save,

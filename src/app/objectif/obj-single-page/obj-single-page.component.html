@@ -1,0 +1,24 @@
+<ion-content>
+  <div class="horizontal-stack align-center text-primary pl-m pr-m"> <!--Header-->
+    <div class="full-height horizontal-stack align-center" routerLink="/home">
+      <ion-icon size="large" name="arrow-back-outline"></ion-icon>
+    </div>
+    <div class="title text-center">{{ singleObj.name }}</div>
+  </div>
+  <div>
+    <div>Début le {{ singleObj.start | date:'dd/MM/yyyy' }}</div>
+  </div>
+  <div> <!-- Graphique-->
+    <div>
+      <app-progress-bar></app-progress-bar>
+      <div>26%</div>
+    </div>
+    <div class="hr small"></div>
+    <div>
+      <canvas id="area-graph"></canvas>
+    </div>
+  </div>
+  <div> <!-- Liste des ajouts -->
+
+  </div>
+</ion-content>
