@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Expense } from 'src/app/class/base/expense';
 import { Month } from 'src/app/class/base/month';
 import { Section } from 'src/app/class/base/section';
+import { Description } from 'src/app/extra/floating-btn/floating-btn.component';
 import { MonthService } from 'src/app/services/data/month.service';
 import { UserService } from 'src/app/services/data/user.service';
 import { AddExpenseComponent } from '../add-expense/add-expense.component';
@@ -17,11 +18,17 @@ import { AddExpenseComponent } from '../add-expense/add-expense.component';
 export class SingleMonthComponent implements OnInit,OnDestroy {
   public month: Month;
   public sectionList: Section[];
+  public floatingBtn : Description[] = [
+    {
+      name: 'close',
+      icon: 'checkmark-done-outline'
+    },
+    {
+      name: 'add',
+      icon: 'add-outline'
+    }
+  ]
 
-  private main: HTMLDivElement;
-  private btn1: HTMLDivElement;
-  private btn2: HTMLDivElement;
-  private menuDisplay: boolean;
   private monthSub: Subscription;
   private userSub: Subscription;
   constructor(
@@ -38,9 +45,6 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
-    this.main = document.getElementById('main-btn') as HTMLDivElement;
-    this.btn1 = document.getElementById('float-btn-1') as HTMLDivElement;
-    this.btn2 = document.getElementById('float-btn-2') as HTMLDivElement;
     this.monthSub = this.monthService.objSub.subscribe(v=>{
       if(v) this.month = v;
     });
@@ -54,7 +58,7 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
     })
   }
 
-  async presentModal(e?: Expense, i?:number) {
+  async showExpenseModal(e?: Expense, i?:number) {
     const modal = await this.modalControler.create({
       component: AddExpenseComponent,
       breakpoints: [0, 0.5],
@@ -68,20 +72,6 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
       }
     });
     return await modal.present();
-  }
-
-  showBtn(){
-    this.menuDisplay = !this.menuDisplay;
-    if(this.menuDisplay){
-      this.main.classList.add('rotate');
-      this.btn1.classList.add('raise-1');
-      this.btn2.classList.add('raise-2');
-    } else {
-      this.main.classList.remove('rotate');
-      this.btn1.classList.remove('raise-1');
-      this.btn2.classList.remove('raise-2');
-    }
-    
   }
 
   public async onDelete(index:number) {
@@ -109,7 +99,15 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
   }
 
   public onEdit(index: number): void{
-    this.presentModal(this.month.expenseList[index],index);
+    this.showExpenseModal(this.month.expenseList[index],index);
+  }
+
+  public onAction(name: string){
+    if(name==='add'){
+      this.showExpenseModal();
+    } else if(name==='close'){
+      console.log('closing month');
+    }
   }
 
 }

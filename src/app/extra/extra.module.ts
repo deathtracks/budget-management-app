@@ -5,6 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { DateInputComponent } from './date-input/date-input.component';
 import { DateModalComponent } from './date-modal/date-modal.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+import { FloatingBtnComponent } from './floating-btn/floating-btn.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 
@@ -12,7 +14,8 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
   declarations: [
     DateInputComponent,
     DateModalComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    FloatingBtnComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +26,8 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
   exports: [
     DateInputComponent,
     DateModalComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    FloatingBtnComponent
   ]
 })
 export class ExtraModule { }

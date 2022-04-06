@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AnimationController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Month } from '../class/base/month';
+import { Description } from '../extra/floating-btn/floating-btn.component';
 import { MonthService } from '../services/data/month.service';
 import { UserService } from '../services/data/user.service';
 import { AddMonthComponent } from './add-month/add-month.component';
@@ -14,17 +15,24 @@ import { AddMonthComponent } from './add-month/add-month.component';
 export class HomePage implements OnInit,OnDestroy {
   public monthList: Month[];
   public currentMonth: Month;
+  public Btn: Description[] = [
+    {
+      name: 'add',
+      icon: 'add-outline'
+    },
+    {
+      name: 'param',
+      icon: 'options-outline'
+    }
+  ];
 
-  private main: HTMLDivElement;
-  private btn1: HTMLDivElement;
-  private btn2: HTMLDivElement;
-  private menuDisplay: boolean;
   private userSub: Subscription;
   constructor(
     public modalControler: ModalController,
     private User: UserService,
     private Months: MonthService
   ) { }
+
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
   }
@@ -44,9 +52,6 @@ export class HomePage implements OnInit,OnDestroy {
       }
     })
     this.User.publish();
-    this.main = document.getElementById('main-btn') as HTMLDivElement;
-    this.btn1 = document.getElementById('float-btn-1') as HTMLDivElement;
-    this.btn2 = document.getElementById('float-btn-2') as HTMLDivElement;
   }
 
   async presentModal() {
@@ -58,18 +63,11 @@ export class HomePage implements OnInit,OnDestroy {
     return await modal.present();
   }
 
-  showBtn(){
-    this.menuDisplay = !this.menuDisplay;
-    if(this.menuDisplay){
-      this.main.classList.add('rotate');
-      this.btn1.classList.add('raise-1');
-      this.btn2.classList.add('raise-2');
-    } else {
-      this.main.classList.remove('rotate');
-      this.btn1.classList.remove('raise-1');
-      this.btn2.classList.remove('raise-2');
+  onAction(name: string){
+    if(name==='add'){
+      this.presentModal();
+    } else if (name==='param'){
+      console.log('option page');
     }
-    
   }
-
 }

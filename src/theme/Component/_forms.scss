@@ -118,18 +118,25 @@ input[type="checkbox"]:disabled {
     transition: all ease-in-out 200ms;
 }
 
+.floating-btn.main{
+    z-index: 1;
+}
+
 .floating-btn.rotate{
     transform: rotate(90deg);
 }
 
+$raise-value : (40px,90px,140px,190px,240px);
+
 .floating-btn.bottom{
     bottom: 40px;
 }
-.floating-btn.bottom.raise-1{
-    bottom: 90px;
-}
-.floating-btn.bottom.raise-2{
-    bottom: 140px;
+
+@for $i from 1 through length($raise-value) {
+    $v: nth($raise-value, $i);
+    .floating-btn.bottom.raise:nth-of-type(#{$i}){
+        bottom: $v;
+    }
 }
 
 .floating-btn.rigth{

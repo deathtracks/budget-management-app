@@ -1,0 +1,6 @@
+<button id="main-btn" #main class="floating-btn main bottom rigth btn-secondary" (click)="showBtn()">
+  <ion-icon class="icon" size="large" name="chevron-back-outline"></ion-icon>
+</button>
+<button *ngFor="let b of buttons;let i=index" [id]="b.name" class="floating-btn second bottom rigth btn-secondary p-s" (click)="onAction(i)">
+  <ion-icon class="icon" size="large" [name]="b.icon"></ion-icon>
+</button>
