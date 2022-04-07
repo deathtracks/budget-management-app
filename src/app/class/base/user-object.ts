@@ -1,7 +1,14 @@
 import { ObjectBasePrototype } from '../object-base-prototype';
-import { Objectif } from './objectif';
-import { Section } from './section';
+import { Objectif, ObjectifInterface } from './objectif';
+import { Section, SectionInterface } from './section';
 
+export interface UserInterface{
+    name: string;
+    section: SectionInterface[],
+    objectifs: ObjectifInterface[],
+    month: string[],
+    email: string,
+}
 export class UserObject extends ObjectBasePrototype{
     public name: string;
     public sections: Section[];

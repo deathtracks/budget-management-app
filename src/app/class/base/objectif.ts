@@ -1,4 +1,14 @@
+import { Timestamp } from 'firebase/firestore';
 import { ObjectBasePrototype } from '../object-base-prototype';
+
+export interface ObjectifInterface{
+    name: string,
+    start: Timestamp,
+    amount: number,
+    completed: boolean,
+    save: number[],
+    date: Timestamp[]
+}
 
 export class Objectif extends ObjectBasePrototype{
     public name: string;

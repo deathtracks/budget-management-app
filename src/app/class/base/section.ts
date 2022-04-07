@@ -1,5 +1,9 @@
 import { ObjectBasePrototype } from '../object-base-prototype';
 
+export interface SectionInterface{
+    name: string,
+    part: number
+}
 export class Section extends ObjectBasePrototype {
     public name: string;
 

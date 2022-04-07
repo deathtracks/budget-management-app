@@ -1,6 +1,16 @@
+import { Interaction } from 'chart.js';
+import { Timestamp } from 'firebase/firestore';
 import { ObjectBasePrototype } from '../object-base-prototype';
-import { Expense } from './expense';
+import { Expense, ExpenseInterface } from './expense';
 
+export interface MonthInterface{
+    close: boolean,
+    budget: number,
+    expenseList: ExpenseInterface[],
+    start: Timestamp,
+    end: Timestamp,
+    user: string
+}
 export class Month extends ObjectBasePrototype{
     public close: boolean;
     public budget: number;
