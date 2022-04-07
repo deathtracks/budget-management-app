@@ -1,24 +1,30 @@
 <ion-content>
   <div class="horizontal-stack align-center text-primary pl-m pr-m"> <!--Header-->
-    <div class="full-height horizontal-stack align-center" routerLink="/home">
+    <div class="full-height horizontal-stack align-center" routerLink="/obj">
       <ion-icon size="large" name="arrow-back-outline"></ion-icon>
     </div>
     <div class="title text-center">{{ singleObj.name }}</div>
   </div>
-  <div>
-    <div>Début le {{ singleObj.start | date:'dd/MM/yyyy' }}</div>
-  </div>
-  <div> <!-- Graphique-->
-    <div>
-      <app-progress-bar></app-progress-bar>
-      <div>26%</div>
+  <div class="p-m">
+    <div class="stack align-center text div-title">
+      <div>Début le {{ singleObj.start | date:'dd/MM/yyyy' }}</div>
+      <div>Montant Economisé : {{ singleObj.total }}€</div>
     </div>
-    <div class="hr small"></div>
-    <div>
-      <canvas id="area-graph"></canvas>
+    <div class="stack align-center rounded bg-primary text-dark pl-m pr-m"> <!-- Graphique-->
+      <div class="horizontal-stack full-width align-center">
+        <app-progress-bar class="progress-bar-secondary" [value]="singleObj.total*100/singleObj.amount" ></app-progress-bar>
+        <div>{{ singleObj.total*100/singleObj.amount  }}%</div>
+      </div>
+      <div class="hr small mt-s"></div>
+      <div>
+        <canvas height="300" width="300" id="area-graph"></canvas>
+      </div>
     </div>
-  </div>
-  <div> <!-- Liste des ajouts -->
-
+    <div class="stack gap justify-start align-center full-width mt-m"> <!-- Liste des ajouts -->
+      <div *ngFor="let s of singleObj.saves;let i=index" class=" horizontal-stack justify-between full-width bg-primary rounded div-title text-dark p-m">
+      <div>{{ s }}€</div>
+      <div>le {{ singleObj.dates[i] | date:'dd/MM/yyyy' }}</div>
+      </div>
+    </div>
   </div>
 </ion-content>

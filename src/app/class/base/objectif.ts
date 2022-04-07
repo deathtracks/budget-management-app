@@ -6,8 +6,8 @@ export interface ObjectifInterface{
     start: Timestamp,
     amount: number,
     completed: boolean,
-    save: number[],
-    date: Timestamp[]
+    saves: number[],
+    dates: Timestamp[]
 }
 
 export class Objectif extends ObjectBasePrototype{

@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { addDoc, doc, DocumentReference, setDoc} from 'firebase/firestore';
 import { Objectif } from 'src/app/class/base/objectif';
 import { Section } from 'src/app/class/base/section';
-import { UserObject } from 'src/app/class/base/user-object';
+import { UserInterface, UserObject } from 'src/app/class/base/user-object';
 import { environment } from 'src/environments/environment';
 import { ObjectBaseService } from '../base/object-base.service';
 
@@ -110,21 +110,27 @@ export class UserService extends ObjectBaseService<UserObject> {
     });
   }
 
-  protected convertToObj(id: string, data: any): UserObject {
+  protected convertToObj(id: string, data: UserInterface): UserObject {
     const sectionList = [];
     if(data.section && data.section.length>0){
       data.section.forEach(s=>sectionList.push(new Section(s.part,s.name)));
     }
     const objectifList = [];
     if(data.objectifs && data.objectifs.length>0){
-      data.objectifs.forEach(o=>objectifList.push(new Objectif(
-        o.name,
-        o.start.toDate(),
-        o.amount,
-        o.completed,
-        o.save,
-        o.date
-      )));
+      data.objectifs.forEach(o=>{
+        const s = [];
+        o.dates.forEach(d=>s.push(d.toDate()))
+        objectifList.push(
+          new Objectif(
+            o.name,
+            o.start.toDate(),
+            o.amount,
+            o.completed,
+            o.saves,
+            s
+          )
+        )
+      });
     }
     return new UserObject(
       data.email,
