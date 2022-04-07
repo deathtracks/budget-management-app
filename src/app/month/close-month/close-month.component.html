@@ -1,0 +1,24 @@
+<ion-content>
+  <div class="modal">
+    <div class="div-title text-dark pl-s pt-m">Cloturer ce mois</div>
+    <div class="hr small mt-s mb-s"></div>
+    <div class="pl-s pr-s text-justify text-dark">
+      Vous ne pourrez plus ajouter ou modifier les dépenses de ce mois.
+      Si vous êtes sur de votre décision, vous pouvez choisir un objectif
+      épargne dans lequel transferer les {{ singleMonth.budget - singleMonth.getTotal() }}€
+      économisés.
+    </div>
+    <form [formGroup]="objForm" (ngSubmit)="onSubmit()">
+      <div class="bb-s b-shadow text-dark mt-s">
+        <ion-select formControlName="selectedObj">
+          <ion-select-option value="none">Aucun</ion-select-option>
+          <ion-select-option *ngFor="let obj of objList;let i=index" [value]="i">{{ obj.name }}</ion-select-option>
+        </ion-select>
+      </div>
+      <div class="horizontal-stack justify-around full-width mt-m gap">
+        <button class="btn btn-lighter-dark full-width">Annuler</button>
+        <button class="btn btn-secondary full-width" [disabled]="objForm.invalid">Ok</button>
+      </div>
+    </form>
+  </div>
+</ion-content>

@@ -55,6 +55,10 @@ export class Objectif extends ObjectBasePrototype{
         return sum;
     }
 
+    public addSave(a: number, d: Date){
+        this.save.push(a);
+        this.date.push(d);
+    }
     public getObject() {
         return {
             name : this.name,

@@ -1,14 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Expense } from 'src/app/class/base/expense';
 import { Month } from 'src/app/class/base/month';
+import { Objectif } from 'src/app/class/base/objectif';
 import { Section } from 'src/app/class/base/section';
 import { Description } from 'src/app/extra/floating-btn/floating-btn.component';
 import { MonthService } from 'src/app/services/data/month.service';
 import { UserService } from 'src/app/services/data/user.service';
 import { AddExpenseComponent } from '../add-expense/add-expense.component';
+import { CloseMonthComponent } from '../close-month/close-month.component';
 
 @Component({
   selector: 'app-single-month',
@@ -31,12 +33,14 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
 
   private monthSub: Subscription;
   private userSub: Subscription;
+  private objList: Objectif[];
   constructor(
     public modalControler: ModalController,
     public alertControler: AlertController,
     private monthService: MonthService,
     private userService: UserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
   ngOnDestroy(): void {
     this.monthSub.unsubscribe();
@@ -49,7 +53,10 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
       if(v) this.month = v;
     });
     this.userSub = this.userService.objSub.subscribe(u=>{
-      if(u) this.sectionList = u.sections;
+      if(u) {
+        this.sectionList = u.sections;
+        this.objList = u.objectifs;
+      }
     })
     this.userService.publish();
     this.monthService.getOne(id)
@@ -71,6 +78,38 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
         'editedExpenseIndex':i
       }
     });
+    return await modal.present();
+  }
+
+  async showCloseModal(){
+    const modal = await this.modalControler.create({
+      component: CloseMonthComponent,
+      breakpoints: [0,0.3],
+      initialBreakpoint: 0.3,
+      componentProps:{
+        'singleMonth':this.month
+      }
+    })
+    modal.onDidDismiss()
+    .then((d)=>{
+      console.log(d);
+      if(d.data){
+        console.log(d.data.selectedObj);
+        const save = this.month.budget - this.month.getTotal();
+        this.objList[d.data.selectedObj].addSave(save,new Date());
+        console.log(this.objList);
+        this.userService.editObjectif(this.objList[d.data.selectedObj],d.data.selectedObj)
+        .then((v)=>{
+          console.log('done');
+          this.monthService.endMonth()
+          .then((v)=>{
+            this.router.navigate(['home']);
+          })
+          .catch(err=>{throw err})
+        })
+        .catch((err)=>{throw err});
+      }
+    })
     return await modal.present();
   }
 
@@ -106,7 +145,7 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
     if(name==='add'){
       this.showExpenseModal();
     } else if(name==='close'){
-      console.log('closing month');
+      this.showCloseModal();
     }
   }
 
