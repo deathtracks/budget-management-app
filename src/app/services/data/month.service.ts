@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { collection, DocumentData, getDocs, orderBy, query, QuerySnapshot, Timestamp, where } from 'firebase/firestore';
 import { Subject } from 'rxjs';
 import { Expense } from 'src/app/class/base/expense';
-import { Month } from 'src/app/class/base/month';
+import { Month, MonthInterface } from 'src/app/class/base/month';
 import { environment } from 'src/environments/environment';
 import { ObjectBaseService } from '../base/object-base.service';
 
@@ -21,7 +21,7 @@ export class MonthService extends ObjectBaseService<Month> {
 
   public getAllFromUser(user: string): Promise<Month[]>{
     return new Promise<Month[]>((resolve,rejects)=>{
-      const q = query(collection(this.db,this.collection),where("user","==",user),orderBy("start"));
+      const q = query(collection(this.db,this.collection),where("user","==",user),orderBy("start","desc"));
       getDocs(q)
       .then((snap: QuerySnapshot<DocumentData>)=>{
         const r: Month[] = [];
@@ -85,7 +85,10 @@ export class MonthService extends ObjectBaseService<Month> {
     });
   }
 
-  protected convertToObj(id: string, data: any): Month {
+  protected convertToObj(id: string, data: MonthInterface | Month): Month {
+    if(data instanceof Month){
+      return data;
+    }
     const expenses = [];
     if(data.expenseList && data.expenseList.length>0){
       data.expenseList.forEach(e => expenses.push(new Expense(e.name,e.date.toDate(), e.amount, e.section)));

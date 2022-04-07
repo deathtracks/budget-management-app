@@ -11,6 +11,7 @@ import { MonthService } from 'src/app/services/data/month.service';
 import { UserService } from 'src/app/services/data/user.service';
 import { AddExpenseComponent } from '../add-expense/add-expense.component';
 import { CloseMonthComponent } from '../close-month/close-month.component';
+import { EditMonthComponent } from '../edit-month/edit-month.component';
 
 @Component({
   selector: 'app-single-month',
@@ -28,6 +29,10 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
     {
       name: 'add',
       icon: 'add-outline'
+    },
+    {
+      name: 'edit',
+      icon: 'create-outline'
     }
   ]
 
@@ -65,7 +70,7 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
     })
   }
 
-  async showExpenseModal(e?: Expense, i?:number) {
+  private async showExpenseModal(e?: Expense, i?:number) {
     if(!this.month.close){
       const modal = await this.modalControler.create({
         component: AddExpenseComponent,
@@ -83,7 +88,7 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
     }
   }
 
-  async showCloseModal(){
+  private async showCloseModal(){
     if(!this.month.close){
       const modal = await this.modalControler.create({
         component: CloseMonthComponent,
@@ -95,7 +100,7 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
       })
       modal.onDidDismiss()
       .then((d)=>{
-        console.log(d);
+        // console.log(d);
         if(d.data){
           console.log(d.data.selectedObj);
           const save = this.month.budget - this.month.getTotal();
@@ -111,6 +116,20 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
             .catch(err=>{throw err})
           })
           .catch((err)=>{throw err});
+        }
+      })
+      return await modal.present();
+    }
+  }
+
+  private async showEditModal(){
+    if(!this.month.close){
+      const modal = await this.modalControler.create({
+        component: EditMonthComponent,
+        breakpoints: [0,0.4],
+        initialBreakpoint: 0.4,
+        componentProps: {
+          m : this.month,
         }
       })
       return await modal.present();
@@ -152,6 +171,8 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
       this.showExpenseModal();
     } else if(name==='close'){
       this.showCloseModal();
+    } else if(name==='edit'){
+      this.showEditModal();
     }
   }
 

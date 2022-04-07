@@ -1,0 +1,23 @@
+<ion-content>
+  <div class="modal">
+    <div class="div-title text-dark pl-s pt-m">Ajouter un mois</div>
+    <div class="hr small mt-s mb-s"></div>
+    <form [formGroup]="editMonthForm" (ngSubmit)="onSubmit()">
+      <div class="bb-s b-shadow">
+        <label class="text-dark pl-s">Date de début :</label>
+        <app-date-input [default]="m.startDate" (onDateChoosen)="onStartDateChange($event)" ></app-date-input>
+      </div>
+      <div class="bb-s b-shadow">
+        <label class="text-dark pl-s" for="">Date de fin</label>
+        <app-date-input [default]="m.endDate" [minDate]="startDate" (onDateChoosen)="onEndDataChange($event)" ></app-date-input>
+      </div>
+      <div class="bb-s b-shadow">
+        <label class="text-dark pl-s">Budget</label>
+        <input type="number" placeholder="300€" formControlName="budget">
+      </div>
+      <div class="full-width pl-m pr-m mt-s">
+        <button type="submit" class="btn btn-secondary full-width" [disabled]="editMonthForm.invalid">Modifier</button>
+      </div>
+    </form>
+  </div>
+</ion-content>

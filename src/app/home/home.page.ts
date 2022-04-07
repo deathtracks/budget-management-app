@@ -44,7 +44,7 @@ export class HomePage implements OnInit,OnDestroy {
         .then((m)=>{
           if(m && m.length>0){
             if(!m[0].close){
-              this.currentMonth = m.slice(0)[0];
+              this.currentMonth = m.splice(0,1)[0];
             }
             this.monthList = m;
           }

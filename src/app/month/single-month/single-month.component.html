@@ -1,11 +1,11 @@
-<ion-content>
-  <div class="horizontal-stack align-center text-primary pl-m pr-m"> <!--Header-->
+<ion-content *ngIf="month">
+  <div *ngIf="month" class="horizontal-stack align-center text-primary pl-m pr-m"> <!--Header-->
     <div class="full-height horizontal-stack align-center" routerLink="/home">
       <ion-icon size="large" name="arrow-back-outline"></ion-icon>
     </div>
     <div class="title text-end">{{ month.getDate() | date:'MMMM yyyy' }}</div>
   </div>
-  <div>
+  <div *ngIf="month">
     <div class="horizontal-stack justify-between pl-m pr-m div-title">
       <div>De</div>
       <div>{{ month.startDate | date:'dd/MM/yyyy' }}</div>
@@ -42,7 +42,7 @@
     ></app-expense-el>
   </div>
 
-  <app-floating-btn *ngIf="!month.close" [buttons]="floatingBtn" (btnTrigger)="onAction($event)"></app-floating-btn>
+  <app-floating-btn *ngIf="month && !month.close" [buttons]="floatingBtn" (btnTrigger)="onAction($event)"></app-floating-btn>
 </ion-content>
   
 

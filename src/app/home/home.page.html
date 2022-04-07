@@ -10,8 +10,8 @@
         <div class="sub-title">Mois en cours</div>
         <div class="hr small"></div>
         <div class="stack justify-between gap mt-s">
-          <div class="div-title">{{ currentMonth.getDate() | date:'mmmm yyyy' }}</div>
-          <div class="sub-title">De {{ currentMonth.startDate | date:'dd/mm' }} à {{ currentMonth.endDate | date:'dd/mm' }}</div>
+          <div class="div-title">{{ currentMonth.getDate() | date:'MMMM yyyy' }}</div>
+          <div class="sub-title">De {{ currentMonth.startDate | date:'dd/MM' }} à {{ currentMonth.endDate | date:'dd/MM' }}</div>
           <div class="horizontal-stack align-center gap full-width"> 
             <app-progress-bar class="progress-bar-secondary" [value]="currentMonth.getTotal()*100/currentMonth.budget"></app-progress-bar>
             <div class="text-center">

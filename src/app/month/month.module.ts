@@ -9,6 +9,7 @@ import { ExtraModule } from '../extra/extra.module';
 import { SectionElComponent } from './section-el/section-el.component';
 import { ExpenseElComponent } from './expense-el/expense-el.component';
 import { CloseMonthComponent } from './close-month/close-month.component';
+import { EditMonthComponent } from './edit-month/edit-month.component';
 
 
 
@@ -18,7 +19,8 @@ import { CloseMonthComponent } from './close-month/close-month.component';
     AddExpenseComponent,
     SectionElComponent,
     ExpenseElComponent,
-    CloseMonthComponent
+    CloseMonthComponent,
+    EditMonthComponent
   ],
   imports: [
     CommonModule,
