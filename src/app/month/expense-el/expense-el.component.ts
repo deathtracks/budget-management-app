@@ -7,7 +7,8 @@ import { Expense } from 'src/app/class/base/expense';
   templateUrl: './expense-el.component.html',
   styleUrls: ['./expense-el.component.scss'],
 })
-export class ExpenseElComponent implements AfterViewChecked {
+export class ExpenseElComponent implements OnInit,AfterViewChecked {
+  @Input() close: boolean;
   @Input() e: Expense;
   @Input() sectionName: string;
   @Output() onEdit: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -16,8 +17,11 @@ export class ExpenseElComponent implements AfterViewChecked {
 
   constructor(
     private gestureCtrl: GestureController
-  ) {
-    // console.log('construct');
+  ) { }
+  ngOnInit(): void {
+    if(!this.close) throw Error('Missing close variable');
+    if(!this.e) throw Error('Missing expense variable');
+    if(!this.sectionName) throw Error('Missing Section name variable');
   }
   
 
@@ -44,7 +48,7 @@ export class ExpenseElComponent implements AfterViewChecked {
         }
       },
     },true)
-    g.enable();
+    if(!this.close) g.enable();
   }
 
   

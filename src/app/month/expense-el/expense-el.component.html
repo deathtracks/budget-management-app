@@ -1,5 +1,5 @@
 <div class="page mt-s">
-  <button class="start bg-dark text-secondary" (click)="editBtn()" >
+  <button class="start bg-dark text-secondary" (click)="editBtn()" [disabled]="close" >
     <ion-icon size="large" name="create-outline"></ion-icon>
   </button>
   <div [id]="'page-content-'+e.name" #content class="page-content bg-primary text-lighter-dark rounded p-m">
@@ -12,7 +12,7 @@
       <div>Le {{ e.date | date:'dd/MM' }}</div>
     </div>
   </div>
-  <button class="end bg-dark text-danger" (click)="deleteBtn()" >
+  <button class="end bg-dark text-danger" (click)="deleteBtn()" [disabled]="close" >
     <ion-icon size="large" name="trash-outline"></ion-icon>
   </button>
 </div>

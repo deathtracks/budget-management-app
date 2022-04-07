@@ -1,5 +1,6 @@
 <div class="horizontal-stack justify-between align-center rounded bg-primary text-lighter-dark p-s" [routerLink]="'/month/'+month.getId()">
   <div class="div-title text-center">{{ month.getDate() | date }}</div>
-  <ion-icon size="large" name="checkmark-outline"></ion-icon>
+  <ion-icon *ngIf="!month.close" size="large" name="checkmark-outline"></ion-icon>
+  <ion-icon *ngIf="month.close" class="text-secondary" size="large" name="checkmark-outline"></ion-icon>
   <ion-icon class="text-secondary" size="large" name="arrow-forward-outline"></ion-icon>
 </div>

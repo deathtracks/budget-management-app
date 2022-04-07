@@ -66,75 +66,81 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
   }
 
   async showExpenseModal(e?: Expense, i?:number) {
-    const modal = await this.modalControler.create({
-      component: AddExpenseComponent,
-      breakpoints: [0, 0.5],
-      initialBreakpoint: 0.5,
-      componentProps : {
-        'minDate': this.month.startDate,
-        'maxDate': this.month.endDate,
-        'sectionList': this.sectionList,
-        'editedExpense': e,
-        'editedExpenseIndex':i
-      }
-    });
-    return await modal.present();
+    if(!this.month.close){
+      const modal = await this.modalControler.create({
+        component: AddExpenseComponent,
+        breakpoints: [0, 0.5],
+        initialBreakpoint: 0.5,
+        componentProps : {
+          'minDate': this.month.startDate,
+          'maxDate': this.month.endDate,
+          'sectionList': this.sectionList,
+          'editedExpense': e,
+          'editedExpenseIndex':i
+        }
+      });
+      return await modal.present();
+    }
   }
 
   async showCloseModal(){
-    const modal = await this.modalControler.create({
-      component: CloseMonthComponent,
-      breakpoints: [0,0.3],
-      initialBreakpoint: 0.3,
-      componentProps:{
-        'singleMonth':this.month
-      }
-    })
-    modal.onDidDismiss()
-    .then((d)=>{
-      console.log(d);
-      if(d.data){
-        console.log(d.data.selectedObj);
-        const save = this.month.budget - this.month.getTotal();
-        this.objList[d.data.selectedObj].addSave(save,new Date());
-        console.log(this.objList);
-        this.userService.editObjectif(this.objList[d.data.selectedObj],d.data.selectedObj)
-        .then((v)=>{
-          console.log('done');
-          this.monthService.endMonth()
+    if(!this.month.close){
+      const modal = await this.modalControler.create({
+        component: CloseMonthComponent,
+        breakpoints: [0,0.3],
+        initialBreakpoint: 0.3,
+        componentProps:{
+          'singleMonth':this.month
+        }
+      })
+      modal.onDidDismiss()
+      .then((d)=>{
+        console.log(d);
+        if(d.data){
+          console.log(d.data.selectedObj);
+          const save = this.month.budget - this.month.getTotal();
+          this.objList[d.data.selectedObj].addSave(save,new Date());
+          console.log(this.objList);
+          this.userService.editObjectif(this.objList[d.data.selectedObj],d.data.selectedObj)
           .then((v)=>{
-            this.router.navigate(['home']);
+            console.log('done');
+            this.monthService.endMonth()
+            .then((v)=>{
+              this.router.navigate(['home']);
+            })
+            .catch(err=>{throw err})
           })
-          .catch(err=>{throw err})
-        })
-        .catch((err)=>{throw err});
-      }
-    })
-    return await modal.present();
+          .catch((err)=>{throw err});
+        }
+      })
+      return await modal.present();
+    }
   }
 
   public async onDelete(index:number) {
-    const confiAlert = await this.alertControler.create({
-      header: 'Confirmation',
-      message : `Est-vous sur de vouloir supprimer la dépense ${this.month.expenseList[index].name} ?`,
-      buttons : [
-        {
-          text: 'Oui',
-          role: 'confirm',
-          cssClass : 'btn-dark',
-          handler: () =>{
-            this.monthService.removeExpense(index)
-            .then((v)=>this.monthService.publish())
+    if(!this.month.close){
+      const confiAlert = await this.alertControler.create({
+        header: 'Confirmation',
+        message : `Est-vous sur de vouloir supprimer la dépense ${this.month.expenseList[index].name} ?`,
+        buttons : [
+          {
+            text: 'Oui',
+            role: 'confirm',
+            cssClass : 'btn-dark',
+            handler: () =>{
+              this.monthService.removeExpense(index)
+              .then((v)=>this.monthService.publish())
+            }
+          },
+          {
+            text: 'Non',
+            role: 'Cancel',
+            cssClass : 'btn-secondary'
           }
-        },
-        {
-          text: 'Non',
-          role: 'Cancel',
-          cssClass : 'btn-secondary'
-        }
-      ]
-    })
-    await confiAlert.present();
+        ]
+      })
+      await confiAlert.present();
+    }
   }
 
   public onEdit(index: number): void{

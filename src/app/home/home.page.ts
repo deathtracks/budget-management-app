@@ -43,10 +43,10 @@ export class HomePage implements OnInit,OnDestroy {
         this.Months.getAllFromUser(v.email)
         .then((m)=>{
           if(m && m.length>0){
-            this.currentMonth = m[0];
-            if(m.length>1){
-              this.monthList = m.slice(1);
+            if(!m[0].close){
+              this.currentMonth = m.slice(0)[0];
             }
+            this.monthList = m;
           }
         })
       }
