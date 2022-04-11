@@ -1,5 +1,5 @@
-<div id="content">
-  <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="stack gap">
+<div class="center-page">
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="stack full-width gap">
     <div class="input-field">
       <label>Email</label>
       <input type="text" placeholder="Type your email..." formControlName="email">
@@ -13,7 +13,7 @@
       <label for="remember">Remember me ?</label>
     </div>
     <div class="pr-m pl-m">
-      Forgot your password ? <a>Here</a>
+      Forgot your password ? <a routerLink="/auth/missing-password">Here</a>
     </div>
     <div *ngIf="error" class="pr-m pl-m text-danger horizontal-stack justify-center">
       {{ errorMessage }}

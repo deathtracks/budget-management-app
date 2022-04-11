@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { getAuth, createUserWithEmailAndPassword, Auth, UserCredential, signInWithRedirect, getRedirectResult, User, onAuthStateChanged, setPersistence, browserSessionPersistence, browserLocalPersistence} from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, Auth, UserCredential, signInWithRedirect, getRedirectResult, User, onAuthStateChanged, setPersistence, browserSessionPersistence, browserLocalPersistence, sendPasswordResetEmail, AuthError} from 'firebase/auth';
 import { signInWithEmailAndPassword, signOut, GoogleAuthProvider } from 'firebase/auth';
 import { UserService } from '../data/user.service';
 import { UserObject } from 'src/app/class/base/user-object';
@@ -131,6 +131,20 @@ export class AuthService {
       })
       .catch(err=>rejects(err));
     });
+  }
+
+  public retrievePassword(email: string): Promise<boolean>{
+    return new Promise<boolean>((resolve,reject)=>{
+      sendPasswordResetEmail(this.auth,email)
+      .then(()=>resolve(true))
+      .catch((err: AuthError)=>{
+        if(err.code==='auth/user-not-found'){
+          resolve(true);
+        } else {
+          reject(err);
+        }
+      });
+    })
   }
 
   public logOut(): Promise<boolean>{
