@@ -1,3 +1,17 @@
-<p>
-  update-email works!
-</p>
+<ion-content>
+  <div class="modal">
+    <div class="class div-title text-dark pl-s pt-m">Ajouter une dépense</div>
+    <div class="hr small mt-s mb-s"></div>
+    <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
+      <div class="bb-s b-shadow">
+        <label for="" class="text-dark pl-s">Nouveau mail</label>
+        <input class="modal-input" type="text" formControlName="email">
+      </div>
+      <div class="horizontal-stack justify-between full-width pl-m pr-m mt-s">
+        <button type="reset" class="btn btn-ligther-dark full-width">Annuler</button>
+        <button type="submit" class="btn btn-secondary full-width" [disabled]="emailForm.invalid" >Modifier</button>
+        
+      </div>
+    </form>
+  </div>
+</ion-content>

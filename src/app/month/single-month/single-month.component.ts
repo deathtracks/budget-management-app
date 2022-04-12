@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -36,7 +36,6 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
     }
   ]
 
-  private monthSub: Subscription;
   private userSub: Subscription;
   private objList: Objectif[];
   constructor(
@@ -47,16 +46,13 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
     private route: ActivatedRoute,
     private router: Router
   ) { }
+
   ngOnDestroy(): void {
-    this.monthSub.unsubscribe();
     this.userSub.unsubscribe();
   }
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
-    this.monthSub = this.monthService.objSub.subscribe(v=>{
-      if(v) this.month = v;
-    });
     this.userSub = this.userService.objSub.subscribe(u=>{
       if(u) {
         this.sectionList = u.sections;

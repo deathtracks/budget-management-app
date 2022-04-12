@@ -159,31 +159,41 @@ export class AuthService {
   public updateUserEmail(e: string): Promise<boolean>{
     return new Promise<boolean>((resolve,rejects)=>{
       const prevEmail = this.auth.currentUser.email;
-      updateEmail(this.auth.currentUser,e)
-      .then((v)=>{
-        this.userService.getOne(prevEmail)
-        .then((u)=>{
-          if(u){
-            this.userService.changeEmail(u,e)
-            .then((v)=>{
-              this.monthService.getAllFromUser(prevEmail)
-              .then((months)=>{
-                if(months && months.length>0){
-                  months.forEach(async (m)=>{
-                    m.setUser(e);
-                    await this.monthService.editOne(m);
-                  })
-                  resolve(true);
-                }
+      if(e===prevEmail){
+        resolve(true);
+      } else {
+        updateEmail(this.auth.currentUser,e)
+        .then((v)=>{
+          this.userService.getOne(prevEmail)
+          .then((u)=>{
+            if(u){
+              this.userService.changeEmail(u,e)
+              .then((v)=>{
+                this.monthService.getAllFromUser(prevEmail)
+                .then((months)=>{
+                  if(months && months.length>0){
+                    months.forEach(async (m) => {
+                      m.setUser(e);
+                      await this.monthService.editOne(m);
+                    })
+                    this.userService.deleteOne(prevEmail)
+                    .then((v)=>{
+                      this.userService.getOne(e)
+                      .then((u)=>{if(u) resolve(true)})
+                      .catch(err=>rejects(err));
+                    })
+                    .catch(err=>rejects(err));
+                  }
+                })
+                .catch(err=>rejects(err));
               })
               .catch(err=>rejects(err));
-            })
-            .catch(err=>rejects(err));
-          }
+            }
+          })
+          .catch(err=>rejects(err));
         })
         .catch(err=>rejects(err));
-      })
-      .catch(err=>rejects(err));
+      }
     })
   }
 

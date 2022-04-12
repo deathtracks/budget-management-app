@@ -87,7 +87,15 @@ export class MonthService extends ObjectBaseService<Month> {
 
   protected convertToObj(id: string, data: MonthInterface | Month): Month {
     if(data instanceof Month){
-      return data;
+      return new Month(
+        id,
+        data.userEmail,
+        data.startDate,
+        data.endDate,
+        data.budget,
+        data.expenseList,
+        data.close
+      )
     }
     const expenses = [];
     if(data.expenseList && data.expenseList.length>0){

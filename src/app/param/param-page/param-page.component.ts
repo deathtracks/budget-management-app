@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { UserObject } from 'src/app/class/base/user-object';
 import { AuthService } from 'src/app/services/base/auth.service';
 import { UserService } from 'src/app/services/data/user.service';
+import { UpdateEmailComponent } from '../update-email/update-email.component';
 
 @Component({
   selector: 'app-param-page',
@@ -16,7 +18,8 @@ export class ParamPageComponent implements OnInit,OnDestroy {
   private authSub: Subscription;
   constructor(
     private user: UserService,
-    private auth: AuthService
+    private auth: AuthService,
+    private modalCtrl: ModalController
   ) { }
 
   
@@ -30,5 +33,24 @@ export class ParamPageComponent implements OnInit,OnDestroy {
 
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
+  }
+
+  public async onEditEmail(){
+    const modal = await this.modalCtrl.create({
+      component: UpdateEmailComponent,
+      breakpoints: [0,0.3],
+      initialBreakpoint: 0.3,
+      componentProps: {
+        prevEmail: this.singleU.email
+      }
+    })
+    modal.onDidDismiss()
+    .then((v)=>{
+      if(v.data){
+        this.auth.updateUserEmail(v.data.newEmail)
+        .then((v)=>this.user.publish())
+      }
+    })
+    return await modal.present();
   }
 }

@@ -131,6 +131,7 @@ export abstract class ObjectBaseService<T extends ObjectBasePrototype> {
    */
   public editOne(obj: T): Promise<T> {
     return new Promise<T>((resolve,reject)=>{
+      const o = this.convertData(obj);
       updateDoc(doc(this.db,this.collection,obj.getId()),this.convertData(obj)) //update data corresponding to the id
       .then(()=>{
         this.obj = obj;

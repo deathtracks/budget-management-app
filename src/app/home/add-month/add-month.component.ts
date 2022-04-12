@@ -59,6 +59,7 @@ export class AddMonthComponent implements OnInit,OnDestroy {
       this.month.createOne(m)
       .then(m=>{
         if(m){
+          console.log(m);
           this.user.addMonth(m.getId())
           .then(v=>this.modalControler.dismiss())
           .catch(err=>{throw err});

@@ -65,6 +65,10 @@ export class Month extends ObjectBasePrototype{
         this.end = newDate;
     }
 
+    public get userEmail(): string{
+        return this.user;
+    }
+
     public getDate(): Date{
         const timeStart = this.start.getTime();
         const timeEnd = this.end.getTime();

@@ -22,10 +22,15 @@ export class UserService extends ObjectBaseService<UserObject> {
     throw Error('This methode is prohibited');
   }
 
+  public getCurrent(): UserObject{
+    return this.obj;
+  }
+
   public createOne(obj: UserObject): Promise<UserObject> {
     return new Promise<UserObject>((resolve,reject)=>{
       setDoc(doc(this.db,this.collection,obj.email),this.convertData(obj))
       .then(()=>{
+        this.obj = obj;
         this.publish();
         resolve(this.obj);
       })
@@ -116,6 +121,8 @@ export class UserService extends ObjectBaseService<UserObject> {
       u.setEmail(e);
       this.createOne(u)
       .then((v)=>{
+        this.obj = v;
+        this.publish();
         resolve(true);
       })
       .catch(err=>rejects(err));
@@ -153,6 +160,9 @@ export class UserService extends ObjectBaseService<UserObject> {
     );
   }
   public publish(): void {
+    if(this.obj===null){
+      console.log('voided the user');
+    }
     this.objSub.next(this.obj);
   }
 }
