@@ -5,6 +5,7 @@ import { UserObject } from 'src/app/class/base/user-object';
 import { AuthService } from 'src/app/services/base/auth.service';
 import { UserService } from 'src/app/services/data/user.service';
 import { UpdateEmailComponent } from '../update-email/update-email.component';
+import { UpdatePasswordComponent } from '../update-password/update-password.component';
 
 @Component({
   selector: 'app-param-page',
@@ -49,6 +50,23 @@ export class ParamPageComponent implements OnInit,OnDestroy {
       if(v.data){
         this.auth.updateUserEmail(v.data.newEmail)
         .then((v)=>this.user.publish())
+      }
+    })
+    return await modal.present();
+  }
+
+  public async onEditPassword(){
+    const modal = await this.modalCtrl.create({
+      component: UpdatePasswordComponent,
+      breakpoints: [0,0.3],
+      initialBreakpoint: 0.3
+    })
+    modal.onDidDismiss()
+    .then((v)=>{
+      if(v.data){
+        this.auth.updateUserPassword(v.data.old,v.data.new)
+        .then((v)=>console.log('done'))
+        .catch((err)=>{throw err});
       }
     })
     return await modal.present();

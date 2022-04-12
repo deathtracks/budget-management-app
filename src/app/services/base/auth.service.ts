@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { getAuth, createUserWithEmailAndPassword, Auth, UserCredential, signInWithRedirect, getRedirectResult, User, onAuthStateChanged, setPersistence, browserSessionPersistence, browserLocalPersistence, sendPasswordResetEmail, AuthError, updatePassword, updateEmail} from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, Auth, UserCredential, signInWithRedirect, getRedirectResult, User, onAuthStateChanged, setPersistence, browserSessionPersistence, browserLocalPersistence, sendPasswordResetEmail, AuthError, updatePassword, updateEmail, EmailAuthCredential} from 'firebase/auth';
 import { signInWithEmailAndPassword, signOut, GoogleAuthProvider } from 'firebase/auth';
 import { UserService } from '../data/user.service';
 import { UserObject } from 'src/app/class/base/user-object';
@@ -148,11 +148,15 @@ export class AuthService {
     })
   }
 
-  public updateUserPassword(n: string): Promise<boolean>{
+  public updateUserPassword(old:string, n: string): Promise<boolean>{
     return new Promise<boolean>((resolve,rejects)=>{
-      updatePassword(this.auth.currentUser,n)
-      .then((v)=>resolve(true))
-      .catch(err=>rejects(err));
+      signInWithEmailAndPassword(this.auth,this.auth.currentUser.email,old)
+      .then((u: UserCredential)=>{
+        updatePassword(this.auth.currentUser,n)
+        .then((v)=>resolve(true))
+        .catch(err =>rejects(err));
+      })
+      .catch(err =>rejects(err));
     })
   }
 
