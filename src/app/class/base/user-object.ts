@@ -35,6 +35,10 @@ export class UserObject extends ObjectBasePrototype{
         return this.adresse;
     }
 
+    public setEmail(e: string) {
+        this.adresse = e;
+    }
+
     public getObject() {
         const sectionList = [];
         this.sections.forEach(s=>sectionList.push(s.getObject()));

@@ -1,0 +1,12 @@
+<div class="page mt-s">
+  <button class="start bg-dark text-secondary" (click)="editBtn()">
+    <ion-icon size="large" name="create-outline"></ion-icon>
+  </button>
+  <div [id]="'page-content-'+s.name" #content class="page-content horizontal-stack justify-between align-center bg-primary text-lighter-dark rounded p-m">
+    <div class="div-title">{{ s.name }}</div>
+    <div class="div-title">{{ s.partion*100 }}%</div>
+  </div>
+  <button class="end bg-dark text-danger" (click)="deleteBtn()">
+    <ion-icon size="large" name="trash-outline"></ion-icon>
+  </button>
+</div>

@@ -1,0 +1,30 @@
+<ion-content>
+  <div class="horizontal-stack align-center text-primary pl-m pr-m"> <!--Header-->
+    <div class="full-height horizontal-stack align-center" routerLink="/home">
+      <ion-icon size="large" name="arrow-back-outline"></ion-icon>
+    </div>
+    <div class="title text-center">Paramètres</div>
+  </div>
+  <div class="p-m">
+    <div class="mt-s">
+      <label>Email</label>
+      <input type="email" readonly [value]="singleU.email">
+    </div>
+    <div class="mt-s">
+      <label>Password</label>
+      <input type="password" readonly value="**********">
+    </div>
+    <div class="mt-s">
+      <label>Username</label>
+      <input type="text" readonly [value]="singleU.name">
+    </div>
+    <div class="mt-s section-title">
+      Sections
+    </div>
+    <div>
+      <div *ngFor="let s of singleU.sections" class="page">
+        <app-section-el [s]="s"></app-section-el>
+      </div>
+    </div>
+  </div>
+</ion-content>

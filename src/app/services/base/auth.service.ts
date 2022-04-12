@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { getAuth, createUserWithEmailAndPassword, Auth, UserCredential, signInWithRedirect, getRedirectResult, User, onAuthStateChanged, setPersistence, browserSessionPersistence, browserLocalPersistence, sendPasswordResetEmail, AuthError} from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, Auth, UserCredential, signInWithRedirect, getRedirectResult, User, onAuthStateChanged, setPersistence, browserSessionPersistence, browserLocalPersistence, sendPasswordResetEmail, AuthError, updatePassword, updateEmail} from 'firebase/auth';
 import { signInWithEmailAndPassword, signOut, GoogleAuthProvider } from 'firebase/auth';
 import { UserService } from '../data/user.service';
 import { UserObject } from 'src/app/class/base/user-object';
 import { FirebaseError } from 'firebase/app';
-import * as firebaseui from 'firebaseui';
+import { MonthService } from '../data/month.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +18,8 @@ export class AuthService {
   private fireBaseUser: User;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private monthService: MonthService
   ) {
     this.auth = getAuth();
     setPersistence(this.auth,browserSessionPersistence)
@@ -144,6 +145,45 @@ export class AuthService {
           reject(err);
         }
       });
+    })
+  }
+
+  public updateUserPassword(n: string): Promise<boolean>{
+    return new Promise<boolean>((resolve,rejects)=>{
+      updatePassword(this.auth.currentUser,n)
+      .then((v)=>resolve(true))
+      .catch(err=>rejects(err));
+    })
+  }
+
+  public updateUserEmail(e: string): Promise<boolean>{
+    return new Promise<boolean>((resolve,rejects)=>{
+      const prevEmail = this.auth.currentUser.email;
+      updateEmail(this.auth.currentUser,e)
+      .then((v)=>{
+        this.userService.getOne(prevEmail)
+        .then((u)=>{
+          if(u){
+            this.userService.changeEmail(u,e)
+            .then((v)=>{
+              this.monthService.getAllFromUser(prevEmail)
+              .then((months)=>{
+                if(months && months.length>0){
+                  months.forEach(async (m)=>{
+                    m.setUser(e);
+                    await this.monthService.editOne(m);
+                  })
+                  resolve(true);
+                }
+              })
+              .catch(err=>rejects(err));
+            })
+            .catch(err=>rejects(err));
+          }
+        })
+        .catch(err=>rejects(err));
+      })
+      .catch(err=>rejects(err));
     })
   }
 

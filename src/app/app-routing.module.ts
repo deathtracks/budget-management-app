@@ -21,8 +21,12 @@ const routes: Routes = [
     path: 'obj',
     canActivate: [IsConnectedGuard],
     loadChildren: () => import('./objectif/objectif.module').then(m => m.ObjectifModule)
+  },
+  {
+    path: 'param',
+    canActivate: [IsConnectedGuard],
+    loadChildren: () => import('./param/param.module').then(m => m.ParamModule)
   }
-
 ];
 
 @NgModule({

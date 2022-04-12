@@ -110,6 +110,18 @@ export class UserService extends ObjectBaseService<UserObject> {
     });
   }
 
+  public changeEmail(u: UserObject, e: string): Promise<boolean>{
+    return new Promise<boolean>((resolve,rejects)=>{
+      const prevEmail = u.email;
+      u.setEmail(e);
+      this.createOne(u)
+      .then((v)=>{
+        resolve(true);
+      })
+      .catch(err=>rejects(err));
+    })
+  }
+
   protected convertToObj(id: string, data: UserInterface): UserObject {
     const sectionList = [];
     if(data.section && data.section.length>0){

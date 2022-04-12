@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AnimationController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Month } from '../class/base/month';
@@ -30,7 +31,8 @@ export class HomePage implements OnInit,OnDestroy {
   constructor(
     public modalControler: ModalController,
     private User: UserService,
-    private Months: MonthService
+    private Months: MonthService,
+    private router: Router
   ) { }
 
   ngOnDestroy(): void {
@@ -67,7 +69,7 @@ export class HomePage implements OnInit,OnDestroy {
     if(name==='add'){
       this.presentModal();
     } else if (name==='param'){
-      console.log('option page');
+      this.router.navigate(['param']);
     }
   }
 }

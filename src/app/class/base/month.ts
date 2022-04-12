@@ -85,6 +85,10 @@ export class Month extends ObjectBasePrototype{
         return sum;
     }
 
+    public setUser(e: string){
+        this.user = e;
+    }
+
     public getObject() {
         const expenses = [];
         this.expenseList.forEach(e=>expenses.push(e.getObject()));
