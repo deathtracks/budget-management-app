@@ -14,6 +14,7 @@ import { AddMonthComponent } from './add-month/add-month.component';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit,OnDestroy {
+  public name: string;
   public monthList: Month[];
   public currentMonth: Month;
   public Btn: Description[] = [
@@ -42,6 +43,7 @@ export class HomePage implements OnInit,OnDestroy {
   ngOnInit() {
     this.userSub = this.User.objSub.subscribe((v)=>{
       if(v && v.months){
+        this.name = v.name.substring(0,v.name.indexOf(' '));
         this.Months.getAllFromUser(v.email)
         .then((m)=>{
           if(m && m.length>0){
