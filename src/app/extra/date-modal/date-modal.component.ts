@@ -47,6 +47,7 @@ export class DateModalComponent implements OnInit {
   }
 
   onConfirm(){
+    if(!this.selectedDate) this.selectedDate = this.default;
     this.modalControler.dismiss({selectedDate: this.selectedDate});
   }
 
