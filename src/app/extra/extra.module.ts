@@ -7,6 +7,7 @@ import { DateModalComponent } from './date-modal/date-modal.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { FloatingBtnComponent } from './floating-btn/floating-btn.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { SingleElComponent } from './single-el/single-el.component';
 
 
 
@@ -15,7 +16,8 @@ import { BrowserModule } from '@angular/platform-browser';
     DateInputComponent,
     DateModalComponent,
     ProgressBarComponent,
-    FloatingBtnComponent
+    FloatingBtnComponent,
+    SingleElComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { BrowserModule } from '@angular/platform-browser';
     DateInputComponent,
     DateModalComponent,
     ProgressBarComponent,
-    FloatingBtnComponent
+    FloatingBtnComponent,
+    SingleElComponent
   ]
 })
 export class ExtraModule { }
