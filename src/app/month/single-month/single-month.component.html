@@ -36,7 +36,7 @@
     <app-expense-el *ngFor="let e of month.expenseList; let i=index" 
     [e]="e"
     [close]="month.close"
-    [sectionName]="sectionList[e.section].name"
+    [sectionList]="sectionList"
     (onDelete)="onDelete(i)"
     (onEdit)="onEdit(i)"
     ></app-expense-el>

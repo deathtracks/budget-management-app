@@ -1,0 +1,20 @@
+<ion-content>
+  <div class="modal">
+    <div class="class div-title text-dark pl-s pt-m">Ajouter une dépense</div>
+    <div class="hr small mt-s mb-s"></div>
+    <form [formGroup]="sectionForm" (ngSubmit)="onSubmit()">
+      <div class="bb-s b-shadow">
+        <label for="" class="text-dark pl-s">Nom</label>
+        <input class="modal-input" type="text" formControlName="name">
+      </div>
+      <div class="bb-s b-shadow">
+        <label for="" class="text-dark pl-s">Part</label>
+        <input class="modal-input" type="number" formControlName="part" min="0" max="100" step="1">
+      </div>
+      <div class="full-width pl-m pr-m mt-s">
+        <button *ngIf="!editedSectionIndex" class="btn btn-secondary full-width" [disabled]="sectionForm.invalid" >Ajouter</button>
+        <button *ngIf="editedSectionIndex" class="btn btn-secondary full-width" [disabled]="sectionForm.invalid">Modifier</button>
+      </div>
+    </form>
+  </div>
+</ion-content>

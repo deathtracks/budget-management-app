@@ -8,6 +8,7 @@ import { ParamPageComponent } from './param-page/param-page.component';
 import { UpdateEmailComponent } from './update-email/update-email.component';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
 import { SectionElComponent } from './section-el/section-el.component';
+import { AddSectionComponent } from './add-section/add-section.component';
 
 
 
@@ -16,7 +17,8 @@ import { SectionElComponent } from './section-el/section-el.component';
     ParamPageComponent,
     UpdateEmailComponent,
     UpdatePasswordComponent,
-    SectionElComponent
+    SectionElComponent,
+    AddSectionComponent
   ],
   imports: [
     CommonModule,

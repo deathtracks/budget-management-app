@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AnimationController, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Month } from '../class/base/month';
 import { Description } from '../extra/floating-btn/floating-btn.component';
@@ -33,7 +33,7 @@ export class HomePage implements OnInit,OnDestroy {
     private User: UserService,
     private Months: MonthService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnDestroy(): void {
     this.userSub.unsubscribe();

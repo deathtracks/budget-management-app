@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { Month } from 'src/app/class/base/month';
+import { LoadingScreen } from 'src/app/extra/loading-screen';
 import { MonthService } from 'src/app/services/data/month.service';
 
 @Component({
@@ -17,8 +18,9 @@ export class EditMonthComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private modalControler: ModalController,
+    private loadingCtrl: LoadingController,
     private month: MonthService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.editMonthForm = this.formBuilder.group({
@@ -45,7 +47,9 @@ export class EditMonthComponent implements OnInit {
     this.m.endDate = value.end;
     this.m.budget = value.budget;
     this.month.editOne(this.m)
-    .then((v)=>this.modalControler.dismiss())
+    .then((v)=>{
+      this.modalControler.dismiss();
+    })
     .catch(err=>{throw err});
   }
 

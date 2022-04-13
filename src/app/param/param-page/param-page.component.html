@@ -18,13 +18,18 @@
       <label>Username</label>
       <input type="text" readonly [value]="singleU.name">
     </div>
-    <div class="mt-s section-title">
-      Sections
+    <div class="horizontal-stack justify-between full-width mt-m">
+      <div class="section-title">Sections</div>
+      <div (click)="onAddSection()">
+        <ion-icon size="large" name="add-outline" ></ion-icon>
+      </div>
     </div>
     <div>
-      <div *ngFor="let s of singleU.sections" class="page">
-        <app-section-el [s]="s"></app-section-el>
-      </div>
+        <app-section-el *ngFor="let s of singleU.sections; let i=index"
+        [s]="s"
+        (onEdit)="onEditSection(i)"
+        (onDelete)="onDeleteSection(i)"
+        ></app-section-el>
     </div>
   </div>
 </ion-content>

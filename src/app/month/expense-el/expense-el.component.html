@@ -8,7 +8,7 @@
       <div>{{ e.amount }}€</div>
     </div>
     <div class="horizontal-stack justify-between sub-title">
-      <div>{{ sectionName }}</div>
+      <div *ngIf="sectionList && sectionList[e.section]" >{{ sectionList[e.section].name }}</div>
       <div>Le {{ e.date | date:'dd/MM' }}</div>
     </div>
   </div>

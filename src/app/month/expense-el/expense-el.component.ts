@@ -1,6 +1,7 @@
 import { AfterViewChecked, AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { GestureController, ViewDidEnter, ViewWillEnter } from '@ionic/angular';
 import { Expense } from 'src/app/class/base/expense';
+import { Section } from 'src/app/class/base/section';
 
 @Component({
   selector: 'app-expense-el',
@@ -10,7 +11,7 @@ import { Expense } from 'src/app/class/base/expense';
 export class ExpenseElComponent implements OnInit,AfterViewChecked {
   @Input() close: boolean;
   @Input() e: Expense;
-  @Input() sectionName: string;
+  @Input() sectionList: Section[];
   @Output() onEdit: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() onDelete: EventEmitter<boolean> = new EventEmitter<boolean>();
   // @ViewChild('content', { static: true, read: ElementRef }) contentElement;
@@ -21,7 +22,6 @@ export class ExpenseElComponent implements OnInit,AfterViewChecked {
   ngOnInit(): void {
     if(!this.close) throw Error('Missing close variable');
     if(!this.e) throw Error('Missing expense variable');
-    if(!this.sectionName) throw Error('Missing Section name variable');
   }
   
 

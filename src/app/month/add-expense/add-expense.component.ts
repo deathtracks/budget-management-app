@@ -22,8 +22,9 @@ export class AddExpenseComponent implements OnInit {
   constructor(
     private monthService: MonthService,
     private formBuilder: FormBuilder,
-    public modalControler: ModalController
-  ) {}
+    public modalControler: ModalController,
+  ) {
+  }
 
   ngOnInit() {
     if(this.editedExpense){
@@ -49,7 +50,7 @@ export class AddExpenseComponent implements OnInit {
     this.addExpenseForm.updateValueAndValidity();
   }
 
-  onAddExpense(){
+  public onAddExpense(){
     if(this.editedExpense){
       const value = this.addExpenseForm.value;
       this.editedExpense.amount = value.amount;

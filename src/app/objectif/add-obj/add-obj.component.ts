@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { Objectif } from 'src/app/class/base/objectif';
+import { LoadingScreen } from 'src/app/extra/loading-screen';
 import { UserService } from 'src/app/services/data/user.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { UserService } from 'src/app/services/data/user.service';
 export class AddObjComponent implements OnInit {
   public objForm: FormGroup;
 
+  private loading: LoadingScreen;
   constructor(
     private modalControler: ModalController,
     private formBuilder: FormBuilder,

@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GestureController } from '@ionic/angular';
 import { Section } from 'src/app/class/base/section';
 
@@ -8,7 +8,9 @@ import { Section } from 'src/app/class/base/section';
   styleUrls: ['./section-el.component.scss'],
 })
 export class SectionElComponent implements OnInit,AfterViewChecked {
-  @Input() s: Section
+  @Input() s: Section;
+  @Output() onEdit: EventEmitter<boolean> = new EventEmitter();
+  @Output() onDelete: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     private gestureCtrl : GestureController
@@ -43,11 +45,11 @@ export class SectionElComponent implements OnInit,AfterViewChecked {
   ngOnInit() {}
 
   public editBtn(){
-
+    this.onEdit.emit(true);
   }
 
   public deleteBtn(){
-
+    this.onDelete.emit(true);
   }
 
 }

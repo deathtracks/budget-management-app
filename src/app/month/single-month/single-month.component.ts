@@ -1,4 +1,4 @@
-import { AfterContentChecked, Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -45,7 +45,7 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {  }
 
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
@@ -53,7 +53,7 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
-    this.userSub = this.userService.objSub.subscribe(u=>{
+    this.userSub = this.userService.objSub.subscribe(async u=>{
       if(u) {
         this.sectionList = u.sections;
         this.objList = u.objectifs;
@@ -96,15 +96,11 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
       })
       modal.onDidDismiss()
       .then((d)=>{
-        // console.log(d);
         if(d.data){
-          console.log(d.data.selectedObj);
           const save = this.month.budget - this.month.getTotal();
           this.objList[d.data.selectedObj].addSave(save,new Date());
-          console.log(this.objList);
           this.userService.editObjectif(this.objList[d.data.selectedObj],d.data.selectedObj)
           .then((v)=>{
-            console.log('done');
             this.monthService.endMonth()
             .then((v)=>{
               this.router.navigate(['home']);
@@ -144,7 +140,9 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
             cssClass : 'btn-dark',
             handler: () =>{
               this.monthService.removeExpense(index)
-              .then((v)=>this.monthService.publish())
+              .then((v)=>{
+                this.monthService.publish()
+              })
             }
           },
           {
