@@ -1,28 +1,28 @@
 <div class="center-page">
   <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="stack full-width gap">
     <div class="input-field">
-      <label>Email</label>
+      <label>Adresse mail</label>
       <input type="text" placeholder="Type your email..." formControlName="email">
     </div>
     <div class="input-field">
-      <label>Password</label>
+      <label>Mot de passe</label>
       <input type="password" placeholder="Password" formControlName="password">
     </div>
     <div class="input-field checkbox gap">
       <input type="checkbox" id="remember" formControlName="remeber">
-      <label for="remember">Remember me ?</label>
+      <label for="remember">Se souvenir de moi ?</label>
     </div>
     <div class="pr-m pl-m">
-      Forgot your password ? <a routerLink="/auth/missing-password">Here</a>
+      Vous avez oubliez votre mot de passe ? <a routerLink="/auth/missing-password">Ici</a>
     </div>
     <div *ngIf="error" class="pr-m pl-m text-danger horizontal-stack justify-center">
       {{ errorMessage }}
     </div>
     <div class="stack justify-center pr-m pl-m">
-      <button class="btn btn-secondary text-primary" [disabled]="loginForm.invalid">Login</button>
+      <button class="btn btn-secondary text-primary" [disabled]="loginForm.invalid">Connection</button>
     </div>
   </form>
 </div>
-<div id="footer" class="horizontal-stack justify-center">
-  Does not have an account ? <a routerLink="/auth/sign">Here</a>
+<div class="footer horizontal-stack justify-center">
+  Vous n'avez pas de compte ? <a routerLink="/auth/sign">Ici</a>
 </div>
