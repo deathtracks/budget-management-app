@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Expense } from 'src/app/class/base/expense';
 import { Month } from 'src/app/class/base/month';
 import { Objectif } from 'src/app/class/base/objectif';
 import { Section } from 'src/app/class/base/section';
 import { Description } from 'src/app/extra/floating-btn/floating-btn.component';
+import { LoadingScreen } from 'src/app/extra/loading-screen';
 import { MonthService } from 'src/app/services/data/month.service';
 import { UserService } from 'src/app/services/data/user.service';
 import { AddExpenseComponent } from '../add-expense/add-expense.component';
@@ -38,31 +39,39 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
 
   private userSub: Subscription;
   private objList: Objectif[];
+  private loading: LoadingScreen;
   constructor(
     public modalControler: ModalController,
     public alertControler: AlertController,
+    private loadingCtrl: LoadingController,
     private monthService: MonthService,
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router
-  ) {  }
+  ) {
+    this.loading = new LoadingScreen(this.loadingCtrl);
+  }
 
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.loading.generateLoading();
+    await this.loading.loadingStart();
     const id = this.route.snapshot.params['id'];
     this.userSub = this.userService.objSub.subscribe(async u=>{
       if(u) {
         this.sectionList = u.sections;
         this.objList = u.objectifs;
       }
+      
     })
     this.userService.publish();
     this.monthService.getOne(id)
-    .then((v)=>{
+    .then(async (v)=>{
       if(v) this.month = v;
+      await this.loading.loadingStop();
     })
   }
 
@@ -80,6 +89,22 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
           'editedExpenseIndex':i
         }
       });
+      modal.onDidDismiss()
+      .then(async r =>{
+        if(r.data){
+          await this.loading.loadingStart();
+          if(e){
+            this.monthService.editExpense(r.data.expense,i)
+            .then(async(m)=>this.loading.loadingStop());
+          } else {
+            this.monthService.addExpense(r.data.expense)
+            .then(async(m)=>{
+              this.loading.loadingStop();
+            })
+          }
+          
+        }
+      })
       return await modal.present();
     }
   }
@@ -95,12 +120,14 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
         }
       })
       modal.onDidDismiss()
-      .then((d)=>{
+      .then(async (d)=>{
         if(d.data){
+          await this.loading.loadingStart();
           const save = this.month.budget - this.month.getTotal();
           this.objList[d.data.selectedObj].addSave(save,new Date());
           this.userService.editObjectif(this.objList[d.data.selectedObj],d.data.selectedObj)
-          .then((v)=>{
+          .then(async (v)=>{
+            await this.loading.loadingStop();
             this.monthService.endMonth()
             .then((v)=>{
               this.router.navigate(['home']);
@@ -122,6 +149,18 @@ export class SingleMonthComponent implements OnInit,OnDestroy {
         initialBreakpoint: 0.4,
         componentProps: {
           m : this.month,
+        }
+      })
+      modal.onDidDismiss()
+      .then(async r =>{
+        if(r.data){
+          await this.loading.loadingStart();
+          this.monthService.editOne(r.data.month)
+          .then(async (m)=>{
+            this.month = m;
+            await this.loading.loadingStop();
+          })
+          .catch(err=>{throw err});
         }
       })
       return await modal.present();

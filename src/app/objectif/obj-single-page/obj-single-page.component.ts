@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 import { Chart, ChartItem, registerables } from 'chart.js';
 import { format } from 'date-fns';
 import { Subscription } from 'rxjs';
 import { Objectif } from 'src/app/class/base/objectif';
+import { LoadingScreen } from 'src/app/extra/loading-screen';
 import { UserService } from 'src/app/services/data/user.service';
 
 @Component({
@@ -16,24 +18,30 @@ export class ObjSinglePageComponent implements OnInit,OnDestroy {
   
   private objIndex : number;
   private userSub : Subscription;
+  private loading: LoadingScreen;
   constructor(
+    private loadingCtrl: LoadingController,
     private route: ActivatedRoute,
     private user: UserService
   ) {
     Chart.register(...registerables);
+    this.loading = new LoadingScreen(loadingCtrl);
   }
 
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
   }
 
-  ngOnInit() {
+  public async ngOnInit() {
+    await this.loading.generateLoading();
+    await this.loading.loadingStart();
     this.objIndex = this.route.snapshot.params['id'];
     this.userSub = this.user.objSub.subscribe((u)=>{
       if(u){
         this.singleObj = u.objectifs[this.objIndex];
         this.initChart();
       }
+      this.loading.loadingStop();
     })
     this.user.publish();
   }

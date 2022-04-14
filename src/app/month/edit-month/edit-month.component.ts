@@ -46,11 +46,7 @@ export class EditMonthComponent implements OnInit {
     this.m.startDate = value.start;
     this.m.endDate = value.end;
     this.m.budget = value.budget;
-    this.month.editOne(this.m)
-    .then((v)=>{
-      this.modalControler.dismiss();
-    })
-    .catch(err=>{throw err});
+    this.modalControler.dismiss({month: this.m});
   }
 
 }

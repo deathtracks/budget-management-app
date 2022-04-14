@@ -22,7 +22,6 @@ export class AddMonthComponent implements OnInit,OnDestroy {
   constructor(
     private modalControler: ModalController,
     private formBuilder: FormBuilder,
-    private month: MonthService,
     private user: UserService
   ) { }
   ngOnDestroy(): void {
@@ -53,19 +52,9 @@ export class AddMonthComponent implements OnInit,OnDestroy {
 
   onAddMonth(){
     if(this.startDate<this.endDate){
-      console.log('top');
       const b = this.addMonthForm.value.budget;
       const m = new Month(undefined,this.userEmail,this.startDate,this.endDate,b);
-      this.month.createOne(m)
-      .then(m=>{
-        if(m){
-          console.log(m);
-          this.user.addMonth(m.getId())
-          .then(v=>this.modalControler.dismiss())
-          .catch(err=>{throw err});
-        }
-      })
-      .catch(err=>{throw err});
+      this.modalControler.dismiss({ month : m});
     }
   }
 

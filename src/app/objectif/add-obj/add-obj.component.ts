@@ -30,13 +30,7 @@ export class AddObjComponent implements OnInit {
   onAddObj(){
     const value = this.objForm.value;
     const n = new Objectif(value.name,new Date(),value.amount,false);
-    this.user.addObjectif(n)
-    .then((v)=>{
-      if(v){
-        this.modalControler.dismiss();
-      }
-    })
-    .catch(err=>{throw err})
+    this.modalControler.dismiss({objectif: n});
   }
 
 

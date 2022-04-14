@@ -37,19 +37,7 @@ export class AddSectionComponent implements OnInit {
   onSubmit(){
     const value = this.sectionForm.value;
     const newSection = new Section(value.part/100,value.name);
-    if(this.editedSection){
-      this.user.editSection(newSection,this.editedSectionIndex)
-      .then((v)=>{
-        if(v) this.modalCtrl.dismiss();
-      })
-      .catch(err=>{throw err});
-    } else {
-      this.user.addSection(newSection)
-      .then((v)=>{
-        if(v) this.modalCtrl.dismiss();
-      })
-      .catch(err=>{throw err});
-    }
+    this.modalCtrl.dismiss({section: newSection});
   }
 
 }
