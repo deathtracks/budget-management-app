@@ -1,0 +1,11 @@
+<div class="page mt-s">
+  <button class="start bg-dark text-secondary" (click)="editBtn()" [disabled]="!editable" >
+    <ion-icon size="large" name="create-outline"></ion-icon>
+  </button>
+  <div [id]="'page-content-'+index" #content class="page-content bg-primary text-lighter-dark rounded p-m">
+    <ng-content></ng-content>
+  </div>
+  <button class="end bg-dark text-danger" (click)="deleteBtn()" [disabled]="!editable" >
+    <ion-icon size="large" name="trash-outline"></ion-icon>
+  </button>
+</div>

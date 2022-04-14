@@ -1,21 +1,26 @@
-<form [formGroup]="signInForm" (ngSubmit)="onSignIn()">
-  <div class="input-field">
-    <label>Email</label>
-    <input type="text" placeholder="Type your email..." formControlName="email" >
-  </div>
-  <div  class="input-field">
-    <label>Full name</label>
-    <input type="text" placeholder="first & Last name" formControlName="name">
-  </div>
-  <div  class="input-field">
-    <label>Password</label>
-    <input type="password" placeholder="password" formControlName="password">
-  </div>
-  <div  class="input-field">
-    <label for="">Confirm your password</label>
-    <input type="password" placeholder="confirm password..." formControlName="confirmPassword">
-  </div>
-  <div class="stack justify-center pr-m pl-m mt-m">
-    <button type="submit" class="btn btn-secondary text-primary" [disabled]="signInForm.invalid">Sign In</button>
-  </div>
-</form>
+<div class="center-page">
+  <form [formGroup]="signInForm" (ngSubmit)="onSignIn()"  class="stack full-width gap">
+    <div class="input-field">
+      <label>Adresse mail</label>
+      <input type="text" placeholder="Type your email..." formControlName="email" >
+    </div>
+    <div  class="input-field">
+      <label>Nom & Prénom</label>
+      <input type="text" placeholder="first & Last name" formControlName="name">
+    </div>
+    <div  class="input-field">
+      <label>Mot de passe</label>
+      <input type="password" placeholder="password" formControlName="password">
+    </div>
+    <div  class="input-field">
+      <label for="">Confirmez</label>
+      <input type="password" placeholder="confirm password..." formControlName="confirmPassword">
+    </div>
+    <div class="stack justify-center pr-m pl-m mt-m">
+      <button type="submit" class="btn btn-secondary text-primary" [disabled]="signInForm.invalid">Sign In</button>
+    </div>
+  </form>
+</div>
+<div class="footer horizontal-stack justify-center">
+  Vous avez un compte ? <a routerLink="/auth/login">Connectez vous</a>
+</div>

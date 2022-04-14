@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { MissingPasswordComponent } from './missing-password/missing-password.component';
+import { IonicModule } from '@ionic/angular';
 
 
 
@@ -16,6 +17,7 @@ import { MissingPasswordComponent } from './missing-password/missing-password.co
   ],
   imports: [
     CommonModule,
+    IonicModule,
     FormsModule,
     ReactiveFormsModule,
     AuthenticationRoutingModule

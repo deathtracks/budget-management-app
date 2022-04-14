@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Section } from 'src/app/class/base/section';
 import { UserObject } from 'src/app/class/base/user-object';
+import { LoadingScreen } from 'src/app/extra/loading-screen';
 import { AuthService } from 'src/app/services/base/auth.service';
 import { UserService } from 'src/app/services/data/user.service';
 import { AddSectionComponent } from '../add-section/add-section.component';
@@ -18,19 +19,23 @@ export class ParamPageComponent implements OnInit,OnDestroy {
   public singleU : UserObject;
 
   private userSub: Subscription;
+  private loading: LoadingScreen;
   constructor(
     private user: UserService,
     private auth: AuthService,
     private modalCtrl: ModalController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private loadingCtrl : LoadingController
   ) { 
+    this.loading = new LoadingScreen(loadingCtrl);
   }
 
-  
-
-  ngOnInit() {
+  public async ngOnInit() {
+    await this.loading.generateLoading();
+    await this.loading.loadingStart();
     this.userSub = this.user.objSub.subscribe((u)=>{
       if(u) this.singleU = u;
+      this.loading.loadingStop();
     });
     this.user.publish();
   }
@@ -49,11 +54,12 @@ export class ParamPageComponent implements OnInit,OnDestroy {
       }
     })
     modal.onDidDismiss()
-    .then((v)=>{
+    .then(async (v)=>{
       if(v.data){
+        await this.loading.loadingStart();
         this.auth.updateUserEmail(v.data.newEmail)
         .then((v)=>{
-          this.user.publish()
+          this.user.publish();
         })
       }
     })
@@ -67,10 +73,11 @@ export class ParamPageComponent implements OnInit,OnDestroy {
       initialBreakpoint: 0.3
     })
     modal.onDidDismiss()
-    .then((v)=>{
+    .then(async (v)=>{
       if(v.data){
+        await this.loading.loadingStart();
         this.auth.updateUserPassword(v.data.old,v.data.new)
-        .then((v)=>console.log('done'))
+        .then((v)=>this.loading.loadingStop())
         .catch((err)=>{throw err});
       }
     })
@@ -87,6 +94,21 @@ export class ParamPageComponent implements OnInit,OnDestroy {
       breakpoints: [0,0.4],
       initialBreakpoint: 0.4
     });
+    modal.onDidDismiss()
+    .then(async (r)=>{
+      if(r.data){
+        await this.loading.loadingStart();
+        if(s){
+          this.user.editSection(r.data.section,index)
+          .then((v)=>this.user.publish())
+          .catch(err=>{throw err});
+        } else {
+          this.user.addSection(r.data.section)
+          .then((v)=>this.user.publish())
+          .catch(err=>{throw err});
+        }
+      }
+    })
     return await modal.present();
   }
 

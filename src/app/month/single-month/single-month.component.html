@@ -33,13 +33,17 @@
     Dépenses :
   </div>
   <div *ngIf="month && month.expenseList && month.expenseList.length>0 && sectionList && sectionList.length>0 " class="pl-m pr-m gap">
-    <app-expense-el *ngFor="let e of month.expenseList; let i=index" 
-    [e]="e"
-    [close]="month.close"
-    [sectionList]="sectionList"
-    (onDelete)="onDelete(i)"
-    (onEdit)="onEdit(i)"
-    ></app-expense-el>
+    <app-single-el *ngFor="let e of month.expenseList; let i=index" [editable]="!month.close" [index]="e.name+ '-' + i"
+    (onDelete)="onDelete(i)" (onEdit)="onEdit(i)">
+      <div class="horizontal-stack justify-between div-title mb-s">
+        <div>{{ e.name }}</div>
+        <div>{{ e.amount }}€</div>
+      </div>
+      <div class="horizontal-stack justify-between sub-title">
+        <div *ngIf="sectionList && sectionList[e.section]" >{{ sectionList[e.section].name }}</div>
+        <div>Le {{ e.date | date:'dd/MM' }}</div>
+      </div>
+    </app-single-el>
   </div>
 
   <app-floating-btn *ngIf="month && !month.close" [buttons]="floatingBtn" (btnTrigger)="onAction($event)"></app-floating-btn>

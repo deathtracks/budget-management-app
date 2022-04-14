@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content *ngIf="singleU">
   <div class="horizontal-stack align-center text-primary pl-m pr-m"> <!--Header-->
     <div class="full-height horizontal-stack align-center" routerLink="/home">
       <ion-icon size="large" name="arrow-back-outline"></ion-icon>
@@ -25,11 +25,13 @@
       </div>
     </div>
     <div>
-        <app-section-el *ngFor="let s of singleU.sections; let i=index"
-        [s]="s"
-        (onEdit)="onEditSection(i)"
-        (onDelete)="onDeleteSection(i)"
-        ></app-section-el>
+      <app-single-el *ngFor="let s of singleU.sections; let i=index" [editable]="true" [index]="s.name+'-'+i"
+      (onDelete)="onDeleteSection(i)" (onEdit)="onEditSection(i)">
+        <div class="horizontal-stack justify-between align-center full-height div-title">
+          <div>{{ s.name }}</div>
+          <div>{{ s.partion*100 }}%</div>
+        </div>
+      </app-single-el>
     </div>
   </div>
 </ion-content>

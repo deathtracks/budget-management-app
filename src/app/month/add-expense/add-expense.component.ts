@@ -57,19 +57,11 @@ export class AddExpenseComponent implements OnInit {
       this.editedExpense.date = value.date;
       this.editedExpense.name = value.name;
       this.editedExpense.section = value.section;
-      this.monthService.editExpense(this.editedExpense,this.editedExpenseIndex)
-      .then((v)=>{
-        if(v) this.modalControler.dismiss();
-      })
-      .catch(err=>{throw err});
+      this.modalControler.dismiss({expense: this.editedExpense});
     } else {
       const value = this.addExpenseForm.value;
       const e = new Expense(value.name,value.date,value.amount,value.section);
-      this.monthService.addExpense(e)
-      .then((v)=>{
-        if(v) this.modalControler.dismiss();
-      })
-      .catch(err=>{throw err});
+      this.modalControler.dismiss({expense : e})
     }
     
   }
