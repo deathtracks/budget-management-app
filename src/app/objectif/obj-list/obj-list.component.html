@@ -6,7 +6,9 @@
     <div class="title text-center">Objectifs</div>
   </div>
   <div *ngIf="objList && objList.length>0" class="pl-m pr-m gap">
-    <app-single-el *ngFor="let o of objList; let i=index" [editable]="false" [index]="o.name+'-'+i" [routerLink]="'/obj/'+i">
+    <app-single-el *ngFor="let o of objList; let i=index" [editable]="true" [index]="o.name+'-'+i" 
+    (onDelete)="onDelete(i)" (onEdit)="onEdit(i)">
+    <div [routerLink]="'/obj/'+i">
       <div class="horizontal-stack justify-between div-title mb-s">
         <div>{{ o.name }}</div>
         <div>{{ o.amount }}€</div>
@@ -15,6 +17,7 @@
         <div>Début le {{ o.start | date:'dd/MM/yyyy' }}</div>
         <div>{{ o.total*100/o.amount }}%</div>
       </div>
+    </div>
     </app-single-el>
   </div>
   <div *ngIf="!objList || objList.length<1">

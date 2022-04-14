@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { Objectif } from 'src/app/class/base/objectif';
+import { Section } from 'src/app/class/base/section';
 import { LoadingScreen } from 'src/app/extra/loading-screen';
 import { UserService } from 'src/app/services/data/user.service';
 
@@ -11,6 +12,7 @@ import { UserService } from 'src/app/services/data/user.service';
   styleUrls: ['./add-obj.component.scss'],
 })
 export class AddObjComponent implements OnInit {
+  @Input() editedObj: Objectif;
   public objForm: FormGroup;
 
   private loading: LoadingScreen;
@@ -21,16 +23,30 @@ export class AddObjComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.objForm = this.formBuilder.group({
-      name: [null,[Validators.required]],
-      amount: [null,[Validators.required]]
-    })
+    if(this.editedObj){
+      this.objForm = this.formBuilder.group({
+        name: [this.editedObj.name,[Validators.required]],
+        amount: [this.editedObj.amount,[Validators.required,Validators.min(0)]]
+      })
+    } else {
+      this.objForm = this.formBuilder.group({
+        name: [null,[Validators.required]],
+        amount: [null,[Validators.required,Validators.min(0)]]
+      })
+    }
+    
   }
 
   onAddObj(){
     const value = this.objForm.value;
-    const n = new Objectif(value.name,new Date(),value.amount,false);
-    this.modalControler.dismiss({objectif: n});
+    if(this.editedObj){
+      this.editedObj.amount = value.amount;
+      this.editedObj.name = value.name;
+      this.modalControler.dismiss({objectif: this.editedObj});
+    } else {
+      const n = new Objectif(value.name,new Date(),value.amount,false);
+      this.modalControler.dismiss({objectif: n});
+    }
   }
 
 
