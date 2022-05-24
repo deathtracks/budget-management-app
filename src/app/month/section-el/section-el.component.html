@@ -5,6 +5,6 @@
   </div>
   <div class="horizontal-stack justify-between align-center gap">
     <app-progress-bar class="progress-bar-secondary" [value]="totalSection*100/budgetSection"></app-progress-bar>
-    <div>{{ totalSection*100/budgetSection }}%</div>
+    <div>{{ totalSection*100/budgetSection | number:'1.2-2' }}%</div>
   </div>
 </div>

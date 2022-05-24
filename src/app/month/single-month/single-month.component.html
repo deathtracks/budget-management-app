@@ -16,11 +16,11 @@
       <div>Buget</div>
       <div>{{ month.budget }} €</div>
       <div>Restant</div>
-      <div>{{ month.budget-month.getTotal() }} €</div>
+      <div>{{ month.budget-month.getTotal() | number:'1.2-2' }} €</div>
     </div>
     <div class="horizontal-stack align-center gap space-between pl-m pr-m">
       <app-progress-bar class="progress-bar-secondary" [value]="month.getTotal()*100/month.budget" ></app-progress-bar>
-      <div>{{ month.getTotal()*100/month.budget }}%</div>
+      <div>{{ month.getTotal()*100/month.budget | number:'1.2-2' }}%</div>
     </div>
   </div>
   <div class="div-title pl-m mb-s">

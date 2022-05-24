@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { getAuth, createUserWithEmailAndPassword, Auth, UserCredential, signInWithRedirect, getRedirectResult, User, onAuthStateChanged, setPersistence, browserSessionPersistence, browserLocalPersistence, sendPasswordResetEmail, AuthError, updatePassword, updateEmail, EmailAuthCredential} from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, Auth, UserCredential, signInWithRedirect, getRedirectResult, User, onAuthStateChanged, setPersistence, browserSessionPersistence, browserLocalPersistence, sendPasswordResetEmail, AuthError, updatePassword, updateEmail, EmailAuthCredential, inMemoryPersistence} from 'firebase/auth';
 import { signInWithEmailAndPassword, signOut, GoogleAuthProvider } from 'firebase/auth';
 import { UserService } from '../data/user.service';
 import { UserObject } from 'src/app/class/base/user-object';
@@ -22,7 +22,7 @@ export class AuthService {
     private monthService: MonthService
   ) {
     this.auth = getAuth();
-    setPersistence(this.auth,browserSessionPersistence)
+    setPersistence(this.auth,browserLocalPersistence)
     .catch(err=>{throw err});
     this.isAuth = new Subject();
     this.provider = new GoogleAuthProvider();
@@ -101,7 +101,7 @@ export class AuthService {
 
   public logIn(email: string, password: string, persitence: boolean): Promise<boolean | Error>{
     return new Promise<boolean | Error>((resolve,rejects)=>{
-      let p = browserSessionPersistence;
+      let p = browserLocalPersistence;
       if(persitence){
         p = browserLocalPersistence;
       }

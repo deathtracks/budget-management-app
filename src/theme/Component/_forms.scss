@@ -105,7 +105,7 @@ input[type="checkbox"]:disabled {
 }
 
 .floating-btn{
-    position: absolute;
+    position: fixed;
     height: 40px;
     width: 40px;
     border-radius: 20px;
@@ -116,10 +116,11 @@ input[type="checkbox"]:disabled {
     justify-content: center;
     align-items: center;
     transition: all ease-in-out 200ms;
+    z-index: 1;
 }
 
 .floating-btn.main{
-    z-index: 1;
+    z-index: 2;
 }
 
 .floating-btn.rotate{

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { initializeApp } from 'firebase/app';
 import { environment } from 'src/environments/environment';
+import { AuthService } from './services/base/auth.service';
 
 @Component({
   selector: 'app-root',
