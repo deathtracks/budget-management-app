@@ -34,7 +34,7 @@
     "firebaseui": "^4.8.0",
     "fs": "^0.0.1-security",
     "ionic": "^4.1.2",
-    "npm": "^8.5.4",
+    "npm": "^8.11.0",
     "progressbar.js": "^1.1.0",
     "rxjs": "~6.6.0",
     "timers-browserify": "^2.0.12",
